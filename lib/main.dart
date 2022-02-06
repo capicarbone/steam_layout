@@ -25,11 +25,13 @@ class SectionContainer extends StatelessWidget {
   final double height;
   final Color? color;
   final Widget? leftChild;
+  final bool showBorders;
   const SectionContainer(
       {Key? key,
       required this.child,
       this.color = Colors.black,
       this.leftChild = null,
+        this.showBorders = false,
       required this.height})
       : super(key: key);
 
@@ -44,17 +46,68 @@ class SectionContainer extends StatelessWidget {
         Container(
           width: 1220,
           height: double.infinity,
-          color: Colors.white.withOpacity(0.2),
+          color: showBorders ? Colors.white.withOpacity(0.2) : Colors.transparent,
           alignment: Alignment.centerRight,
           child: Container(
             width: 1033,
             height: double.infinity,
-            color: Colors.white.withOpacity(0.4),
+            color: showBorders ? Colors.white.withOpacity(0.2) : Colors.transparent,
             child: child,
           ),
         ),
         if (leftChild != null) leftChild!,
       ]),
+    );
+  }
+}
+
+class HeaderItem extends StatelessWidget {
+  final String text;
+  const HeaderItem({Key? key, required this.text}) : super(key: key);
+
+  TextStyle _itemStyle() {
+    return TextStyle(color: Color(0xffc5c3c0), decoration: TextDecoration.none, fontSize: 14);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(child: Text(text.toUpperCase(), style: _itemStyle(),), padding: EdgeInsets.only(right: 14),);
+  }
+}
+
+
+class Header extends StatelessWidget {
+  const Header({Key? key}) : super(key: key);
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 44),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Row(
+            children: [
+              HeaderItem(text: "Steam"), // TODO to logo
+              HeaderItem(text: "Store"),
+              HeaderItem(text: "Community"),
+              HeaderItem(text: "About"),
+              HeaderItem(text: "Support")
+            ],
+          ),
+          Positioned(
+            top: 0,
+              right: 0,
+              child: Container(
+                height: 23,
+                width: 234,
+                color: Colors.green,
+
+          ))
+        ],
+      ),
     );
   }
 }
@@ -68,11 +121,12 @@ class MyHomePage extends StatelessWidget {
       child: Column(
         children: [
           SectionContainer(
-            child: Text("Header"),
+            child: Header(),
             height: 104,
             color: Color(0xff171a21),
           ),
           SectionContainer(
+            showBorders: true,
             child: Text("Content"),
             height: 1921,
             color: Color(0xff1b2838),
@@ -83,15 +137,18 @@ class MyHomePage extends StatelessWidget {
             ),
           ),
           SectionContainer(
+            showBorders: true,
             child: Text("Tredings | Streaming | Updates"),
             height: 2143,
             color: Color(0xff1b2838),
           ),
           SectionContainer(
+            showBorders: true,
             child: Text("Looking for recommendations"),
             height: 214,
           ),
           SectionContainer(
+            showBorders: true,
             child: Text("Footer"),
             height: 156,
             color: Color(0xff171a21),
