@@ -24,8 +24,10 @@ class MyApp extends StatelessWidget {
 class SectionContainer extends StatelessWidget {
   final Widget child;
   final double height;
+  final Color? color;
   const SectionContainer({Key? key,
     required this.child,
+    this.color = Colors.black,
   required this.height}) : super(key: key);
 
   @override
@@ -33,7 +35,7 @@ class SectionContainer extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: height,
-      color: Colors.black,
+      color: color,
       alignment: Alignment.topCenter,
       child: Container(
         width: 1220,
@@ -60,11 +62,11 @@ class MyHomePage extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SectionContainer(child: Text("Header"), height: 104,),
-          SectionContainer(child: Text("Content"), height: 1921,),
-          SectionContainer(child: Text("Tredings | Streaming | Updates"), height: 2143,),
+          SectionContainer(child: Text("Header"), height: 104, color: Color(0xff171a21),),
+          SectionContainer(child: Text("Content"), height: 1921, color: Color(0xff1b2838),),
+          SectionContainer(child: Text("Tredings | Streaming | Updates"), height: 2143,color: Color(0xff1b2838),),
           SectionContainer(child: Text("Looking for recommendations"), height: 214,),
-          SectionContainer(child: Text("Footer"), height: 156,),
+          SectionContainer(child: Text("Footer"), height: 156, color: Color(0xff171a21),),
         ],
       ),
     );
