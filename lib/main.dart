@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:steam_flutter_layout/lateral_menu.dart';
+import 'package:steam_flutter_layout/section_title.dart';
+import 'package:steam_flutter_layout/steam_pager.dart';
 import 'package:steam_flutter_layout/store_navbar.dart';
 
 void main() {
@@ -128,12 +130,18 @@ class MyHomePage extends StatelessWidget {
             color: Color(0xff171a21),
           ),
           SectionContainer(
-            showBorders: true,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 31,),
                 StoreNavbar(),
-                SizedBox(height: 42,)
+                SizedBox(height: 42,),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 44),
+                  child: SectionTitle(text: "Featured & Recommended"),
+                ),
+                SizedBox(height: 14,),
+                SteamPager()
               ],
             ),
             height: 1921,
