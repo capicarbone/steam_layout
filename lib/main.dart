@@ -3,6 +3,7 @@ import 'package:steam_flutter_layout/lateral_menu.dart';
 import 'package:steam_flutter_layout/section_title.dart';
 import 'package:steam_flutter_layout/steam_pager.dart';
 import 'package:steam_flutter_layout/store_navbar.dart';
+import 'package:steam_flutter_layout/utils.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,7 +36,7 @@ class SectionContainer extends StatelessWidget {
       required this.child,
       this.color = Colors.black,
       this.leftChild = null,
-        this.showBorders = false,
+      this.showBorders = false,
       required this.height})
       : super(key: key);
 
@@ -50,12 +51,15 @@ class SectionContainer extends StatelessWidget {
         Container(
           width: 1220,
           height: double.infinity,
-          color: showBorders ? Colors.white.withOpacity(0.2) : Colors.transparent,
+          color:
+              showBorders ? Colors.white.withOpacity(0.2) : Colors.transparent,
           alignment: Alignment.centerRight,
           child: Container(
             width: 1033,
             height: double.infinity,
-            color: showBorders ? Colors.white.withOpacity(0.2) : Colors.transparent,
+            color: showBorders
+                ? Colors.white.withOpacity(0.2)
+                : Colors.transparent,
             child: child,
           ),
         ),
@@ -70,20 +74,26 @@ class HeaderItem extends StatelessWidget {
   const HeaderItem({Key? key, required this.text}) : super(key: key);
 
   TextStyle _itemStyle() {
-    return TextStyle(color: Color(0xffc5c3c0), decoration: TextDecoration.none, fontSize: 14);
+    return TextStyle(
+        color: Color(0xffc5c3c0),
+        decoration: TextDecoration.none,
+        fontSize: 14);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(child: Text(text.toUpperCase(), style: _itemStyle(),), padding: EdgeInsets.only(right: 14),);
+    return Container(
+      child: Text(
+        text.toUpperCase(),
+        style: _itemStyle(),
+      ),
+      padding: EdgeInsets.only(right: 14),
+    );
   }
 }
 
-
 class Header extends StatelessWidget {
   const Header({Key? key}) : super(key: key);
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -102,16 +112,33 @@ class Header extends StatelessWidget {
             ],
           ),
           Positioned(
-            top: 0,
+              top: 0,
               right: 0,
               child: Container(
                 height: 23,
                 width: 234,
                 color: Colors.green,
-
-          ))
+              ))
         ],
       ),
+    );
+  }
+}
+
+class _BluePanel extends StatelessWidget {
+  final String text;
+  const _BluePanel({Key? key, required this.text}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 58,
+      color: Colors.blue,
+      child: Center(
+          child: Text(
+        text.toUpperCase(),
+        style: TextStyle(color: Color(0xffffffff), fontSize: 16),
+      )),
     );
   }
 }
@@ -133,15 +160,62 @@ class MyHomePage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 31,),
-                StoreNavbar(),
-                SizedBox(height: 42,),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 44),
-                  child: SectionTitle(text: "Featured & Recommended"),
+                SizedBox(
+                  height: 31,
                 ),
-                SizedBox(height: 14,),
-                SteamPager()
+                StoreNavbar(),
+                SizedBox(
+                  height: 42,
+                ),
+                ContentPadding(
+                    child: SectionTitle(text: "Featured & Recommended")),
+                SteamPager(),
+                SizedBox(
+                  height: 46,
+                ),
+                ContentPadding(
+                    child: SectionTitle(
+                  text: "Special Offers",
+                  links: ['Browse More'],
+                )),
+                SteamPager(),
+                SizedBox(
+                  height: 46,
+                ),
+                ContentPadding(
+                    child: SectionTitle(
+                  text: "The Community Recommends",
+                  links: ['Customize, Explore By tag, & more'],
+                )),
+                SteamPager(),
+                SizedBox(
+                  height: 76,
+                ),
+                ContentPadding(child: SectionTitle(text: "Browser Steam")),
+                ContentPadding(
+                    child: Row(
+                  children: [
+                    Expanded(child: _BluePanel(text: "New Releases")),
+                    SizedBox(width: 8,),
+                    Expanded(child: _BluePanel(text: "Specials")),
+                    SizedBox(width: 8,),
+                    Expanded(child: _BluePanel(text: "Free Games")),
+                    SizedBox(width: 8,),
+                    Expanded(child: _BluePanel(text: "By user Tags"))
+                  ],
+                )),
+                SizedBox(
+                  height: 38,
+                ),
+                ContentPadding(
+                    child: SectionTitle(
+                      text: "Popular VR Games",
+                      links: ['Browse All'],
+                    )),
+                SteamPager(contentHeight: 134,),
+                SizedBox(
+                  height: 51,
+                ),
               ],
             ),
             height: 1921,
