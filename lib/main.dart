@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:steam_flutter_layout/lateral_menu.dart';
 
 void main() {
   runApp(const MyApp());
@@ -130,11 +131,7 @@ class MyHomePage extends StatelessWidget {
             child: Text("Content"),
             height: 1921,
             color: Color(0xff1b2838),
-            leftChild: Container(
-              color: Colors.white.withOpacity(0.6),
-              height: 1921,
-              width: 210,
-            ),
+            leftChild: LateralMenu(),
           ),
           SectionContainer(
             showBorders: true,
