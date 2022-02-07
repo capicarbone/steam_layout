@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:steam_flutter_layout/lateral_menu.dart';
+import 'package:steam_flutter_layout/store_navbar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -128,7 +129,13 @@ class MyHomePage extends StatelessWidget {
           ),
           SectionContainer(
             showBorders: true,
-            child: Text("Content"),
+            child: Column(
+              children: [
+                SizedBox(height: 31,),
+                StoreNavbar(),
+                SizedBox(height: 42,)
+              ],
+            ),
             height: 1921,
             color: Color(0xff1b2838),
             leftChild: LateralMenu(),
