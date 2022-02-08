@@ -94,8 +94,9 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
       padding: const EdgeInsets.symmetric(horizontal: 44),
+      height: double.infinity,
       child: Stack(
         alignment: Alignment.center,
         children: [
