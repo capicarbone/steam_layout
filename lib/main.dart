@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:steam_flutter_layout/games_sample.dart';
 import 'package:steam_flutter_layout/lateral_menu.dart';
 import 'package:steam_flutter_layout/section_title.dart';
 import 'package:steam_flutter_layout/steam_pager.dart';
@@ -36,7 +37,8 @@ class SectionContainer extends StatelessWidget {
       required this.child,
       this.color = Colors.black,
       this.leftChild = null,
-      this.showBorders = false, this.height = null})
+      this.showBorders = false,
+      this.height = null})
       : super(key: key);
 
   @override
@@ -59,7 +61,7 @@ class SectionContainer extends StatelessWidget {
                 : Colors.transparent,
             child: child,
           ),
-       ),
+        ),
         if (leftChild != null) leftChild!,
       ]),
     );
@@ -141,6 +143,29 @@ class _BluePanel extends StatelessWidget {
   }
 }
 
+class _SectionTab extends StatelessWidget {
+  final String text;
+  final bool selected;
+  const _SectionTab({Key? key, required this.text, required this.selected})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 24),
+      color: selected ? Color(0xff2a475e) : Color(0x00),
+      height: 29,
+      child: Text(
+        text,
+        style: TextStyle(
+            color: Color(0xffffffff),
+            fontSize: 14,
+            decoration: TextDecoration.none),
+      ),
+    );
+  }
+}
+
 class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
@@ -195,11 +220,17 @@ class MyHomePage extends StatelessWidget {
                     child: Row(
                   children: [
                     Expanded(child: _BluePanel(text: "New Releases")),
-                    SizedBox(width: 8,),
+                    SizedBox(
+                      width: 8,
+                    ),
                     Expanded(child: _BluePanel(text: "Specials")),
-                    SizedBox(width: 8,),
+                    SizedBox(
+                      width: 8,
+                    ),
                     Expanded(child: _BluePanel(text: "Free Games")),
-                    SizedBox(width: 8,),
+                    SizedBox(
+                      width: 8,
+                    ),
                     Expanded(child: _BluePanel(text: "By user Tags"))
                   ],
                 )),
@@ -208,10 +239,12 @@ class MyHomePage extends StatelessWidget {
                 ),
                 ContentPadding(
                     child: SectionTitle(
-                      text: "Popular VR Games",
-                      links: ['Browse All'],
-                    )),
-                SteamPager(contentHeight: 134,),
+                  text: "Popular VR Games",
+                  links: ['Browse All'],
+                )),
+                SteamPager(
+                  contentHeight: 134,
+                ),
                 SizedBox(
                   height: 51,
                 ),
@@ -222,11 +255,20 @@ class MyHomePage extends StatelessWidget {
             leftChild: LateralMenu(),
           ),
           SectionContainer(
-            showBorders: true,
-            child: Text("Tredings | Streaming | Updates"),
-            height: 2143,
+              color: Color(0xff1b2838),
+              child: Row(
+                children: [
+                  _SectionTab(text: "New & Trading", selected: true),
+                  _SectionTab(text: "Top Sellers", selected: false),
+                  _SectionTab(text: "Popular Upcoming", selected: false),
+                  _SectionTab(text: "Specials", selected: false),
+                ],
+              )),
+          SectionContainer(
             color: Color(0xff1b2838),
+            child: GamesSample(),
           ),
+          SizedBox(height: 62,),
           SectionContainer(
             showBorders: true,
             child: Text("Looking for recommendations"),
