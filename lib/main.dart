@@ -16,10 +16,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Steam',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        textTheme: TextTheme(
+          headline1: TextStyle(
+              color: Color(0xffc5c3c0),
+              decoration: TextDecoration.none,
+              fontSize: 14),
+          bodyText1: TextStyle(color: Color(0xffffffff))
+        )
       ),
       home: const MyHomePage(),
     );
@@ -35,7 +43,7 @@ class SectionContainer extends StatelessWidget {
   const SectionContainer(
       {Key? key,
       required this.child,
-      this.color = Colors.black,
+      this.color = const Color(0x00),
       this.leftChild = null,
       this.showBorders = false,
       this.height = null})
@@ -72,19 +80,12 @@ class HeaderItem extends StatelessWidget {
   final String text;
   const HeaderItem({Key? key, required this.text}) : super(key: key);
 
-  TextStyle _itemStyle() {
-    return TextStyle(
-        color: Color(0xffc5c3c0),
-        decoration: TextDecoration.none,
-        fontSize: 14);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Text(
         text.toUpperCase(),
-        style: _itemStyle(),
+        style: Theme.of(context).textTheme.headline1,
       ),
       padding: EdgeInsets.only(right: 14),
     );
@@ -172,115 +173,117 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SectionContainer(
-            child: Header(),
-            height: 104,
-            color: Color(0xff171a21),
-          ),
-          SectionContainer(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 31,
-                ),
-                StoreNavbar(),
-                SizedBox(
-                  height: 42,
-                ),
-                ContentPadding(
-                    child: SectionTitle(text: "Featured & Recommended")),
-                SteamPager(),
-                SizedBox(
-                  height: 46,
-                ),
-                ContentPadding(
-                    child: SectionTitle(
-                  text: "Special Offers",
-                  links: ['Browse More'],
-                )),
-                SteamPager(),
-                SizedBox(
-                  height: 46,
-                ),
-                ContentPadding(
-                    child: SectionTitle(
-                  text: "The Community Recommends",
-                  links: ['Customize, Explore By tag, & more'],
-                )),
-                SteamPager(),
-                SizedBox(
-                  height: 76,
-                ),
-                ContentPadding(child: SectionTitle(text: "Browser Steam")),
-                ContentPadding(
-                    child: Row(
+      child: Container(
+        color: Color(0xff1b2838),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SectionContainer(
+              child: Header(),
+              height: 104,
+              color: Color(0xff171a21),
+            ),
+            SectionContainer(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 31,
+                  ),
+                  StoreNavbar(),
+                  SizedBox(
+                    height: 42,
+                  ),
+                  ContentPadding(
+                      child: SectionTitle(text: "Featured & Recommended")),
+                  SteamPager(),
+                  SizedBox(
+                    height: 46,
+                  ),
+                  ContentPadding(
+                      child: SectionTitle(
+                    text: "Special Offers",
+                    links: ['Browse More'],
+                  )),
+                  SteamPager(),
+                  SizedBox(
+                    height: 46,
+                  ),
+                  ContentPadding(
+                      child: SectionTitle(
+                    text: "The Community Recommends",
+                    links: ['Customize, Explore By tag, & more'],
+                  )),
+                  SteamPager(),
+                  SizedBox(
+                    height: 76,
+                  ),
+                  ContentPadding(child: SectionTitle(text: "Browser Steam")),
+                  ContentPadding(
+                      child: Row(
+                    children: [
+                      Expanded(child: _BluePanel(text: "New Releases")),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Expanded(child: _BluePanel(text: "Specials")),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Expanded(child: _BluePanel(text: "Free Games")),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Expanded(child: _BluePanel(text: "By user Tags"))
+                    ],
+                  )),
+                  SizedBox(
+                    height: 38,
+                  ),
+                  ContentPadding(
+                      child: SectionTitle(
+                    text: "Popular VR Games",
+                    links: ['Browse All'],
+                  )),
+                  SteamPager(
+                    contentHeight: 134,
+                  ),
+                  SizedBox(
+                    height: 51,
+                  ),
+                ],
+              ),
+              //height: 1921,
+
+              leftChild: LateralMenu(),
+            ),
+            SectionContainer(
+                color: Color(0xff1b2838),
+                child: Row(
                   children: [
-                    Expanded(child: _BluePanel(text: "New Releases")),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Expanded(child: _BluePanel(text: "Specials")),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Expanded(child: _BluePanel(text: "Free Games")),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Expanded(child: _BluePanel(text: "By user Tags"))
+                    _SectionTab(text: "New & Trading", selected: true),
+                    _SectionTab(text: "Top Sellers", selected: false),
+                    _SectionTab(text: "Popular Upcoming", selected: false),
+                    _SectionTab(text: "Specials", selected: false),
                   ],
                 )),
-                SizedBox(
-                  height: 38,
-                ),
-                ContentPadding(
-                    child: SectionTitle(
-                  text: "Popular VR Games",
-                  links: ['Browse All'],
-                )),
-                SteamPager(
-                  contentHeight: 134,
-                ),
-                SizedBox(
-                  height: 51,
-                ),
-              ],
+            SectionContainer(
+              child: GamesSample(),
             ),
-            //height: 1921,
-            color: Color(0xff1b2838),
-            leftChild: LateralMenu(),
-          ),
-          SectionContainer(
-              color: Color(0xff1b2838),
-              child: Row(
-                children: [
-                  _SectionTab(text: "New & Trading", selected: true),
-                  _SectionTab(text: "Top Sellers", selected: false),
-                  _SectionTab(text: "Popular Upcoming", selected: false),
-                  _SectionTab(text: "Specials", selected: false),
-                ],
-              )),
-          SectionContainer(
-            color: Color(0xff1b2838),
-            child: GamesSample(),
-          ),
-          SizedBox(height: 62,),
-          SectionContainer(
-            showBorders: true,
-            child: Text("Looking for recommendations"),
-            height: 214,
-          ),
-          SectionContainer(
-            showBorders: true,
-            child: Text("Footer"),
-            height: 156,
-            color: Color(0xff171a21),
-          ),
-        ],
+            SizedBox(height: 62,),
+            SectionContainer(
+              showBorders: true,
+              child: Text("Looking for recommendations"),
+              height: 214,
+            ),
+            SectionContainer(
+              showBorders: true,
+              child: Text("Footer"),
+              height: 156,
+              color: Color(0xff171a21),
+            ),
+          ],
+        ),
       ),
     );
   }
