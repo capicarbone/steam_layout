@@ -5,6 +5,7 @@ import 'package:steam_flutter_layout/section_title.dart';
 import 'package:steam_flutter_layout/steam_pager.dart';
 import 'package:steam_flutter_layout/store_navbar.dart';
 import 'package:steam_flutter_layout/streams_grid.dart';
+import 'package:steam_flutter_layout/updates_and_offers.dart';
 import 'package:steam_flutter_layout/utils.dart';
 
 void main() {
@@ -17,19 +18,17 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       title: 'Steam',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        textTheme: TextTheme(
-          headline1: TextStyle(
-              color: Color(0xffc5c3c0),
-              decoration: TextDecoration.none,
-              fontSize: 14),
-          bodyText1: TextStyle(color: Color(0xffffffff))
-        )
-      ),
+          primarySwatch: Colors.blue,
+          textTheme: TextTheme(
+              headline1: TextStyle(
+                  color: Color(0xffc5c3c0),
+                  decoration: TextDecoration.none,
+                  fontSize: 14),
+              bodyText1: TextStyle(color: Color(0xffffffff)))),
       home: const MyHomePage(),
     );
   }
@@ -254,8 +253,6 @@ class MyHomePage extends StatelessWidget {
                   ),
                 ],
               ),
-              //height: 1921,
-
               leftChild: LateralMenu(),
             ),
             SectionContainer(
@@ -271,38 +268,65 @@ class MyHomePage extends StatelessWidget {
             SectionContainer(
               child: GamesSample(),
             ),
-            SizedBox(height: 62,),
+            SizedBox(
+              height: 62,
+            ),
             SectionContainer(
               child: Column(
                 children: [
-                  SectionTitle(text: "Games Streaming Now", links: ["View All"],),
+                  SectionTitle(
+                    text: "Games Streaming Now",
+                    links: ["View All"],
+                  ),
                   StreamsGrid()
                 ],
               ),
             ),
-            SizedBox(height: 64,),
-            SectionContainer(child: Column(
+            SizedBox(
+              height: 64,
+            ),
+            SectionContainer(
+                child: Column(
               children: [
                 SectionTitle(text: "Under \$10 USD"),
-                SteamPager(contentHeight: 134,)
+                SteamPager(
+                  contentHeight: 134,
+                )
               ],
             )),
-            SizedBox(height: 78,),
-            SectionContainer(child: Column(
-              children: [
-                SectionTitle(text: "Updates and Offers")
-
-              ],
-            )),
+            SizedBox(
+              height: 78,
+            ),
             SectionContainer(
-              showBorders: true,
-              child: Text("Footer"),
+                child: Column(
+              children: [
+                SectionTitle(text: "Updates and Offers"),
+                UpdatesAndOffers(),
+              ],
+            )),
+            SizedBox(
+              height: 50,
+            ),
+            SectionContainer(
+              color: Color(0xff000000),
+              height: 213,
+                child: Column(
+                  children: [
+                    SizedBox(height: 32,),
+                    Text("Looking for recommendations?", style: Theme.of(context).textTheme.bodyText1,),
+                    SizedBox(height: 28,),
+                    Text("Sign in to view personalized recommendations", style: Theme.of(context).textTheme.bodyText1,),
+                    SizedBox(height: 17,),
+                    Text("Sign In", style: Theme.of(context).textTheme.bodyText1,),
+                    SizedBox(height: 26,),
+                    Text("Or sign up and join Steam for free", style: Theme.of(context).textTheme.bodyText1,),
+                  ],
+                )),
+            SectionContainer(
+              child: Container(),
               height: 156,
               color: Color(0xff171a21),
             ),
-            SizedBox(
-              height: 50,
-            )
           ],
         ),
       ),
