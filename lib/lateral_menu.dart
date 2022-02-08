@@ -60,7 +60,6 @@ class LateralMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 1921,
       width: 210,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

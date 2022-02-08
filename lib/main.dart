@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
 
 class SectionContainer extends StatelessWidget {
   final Widget child;
-  final double height;
+  final double? height;
   final Color? color;
   final Widget? leftChild;
   final bool showBorders;
@@ -36,8 +36,7 @@ class SectionContainer extends StatelessWidget {
       required this.child,
       this.color = Colors.black,
       this.leftChild = null,
-      this.showBorders = false,
-      required this.height})
+      this.showBorders = false, this.height = null})
       : super(key: key);
 
   @override
@@ -50,19 +49,17 @@ class SectionContainer extends StatelessWidget {
       child: Stack(children: [
         Container(
           width: 1220,
-          height: double.infinity,
           color:
               showBorders ? Colors.white.withOpacity(0.2) : Colors.transparent,
           alignment: Alignment.centerRight,
           child: Container(
             width: 1033,
-            height: double.infinity,
             color: showBorders
                 ? Colors.white.withOpacity(0.2)
                 : Colors.transparent,
             child: child,
           ),
-        ),
+       ),
         if (leftChild != null) leftChild!,
       ]),
     );
@@ -150,6 +147,7 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           SectionContainer(
             child: Header(),
@@ -218,7 +216,7 @@ class MyHomePage extends StatelessWidget {
                 ),
               ],
             ),
-            height: 1921,
+            //height: 1921,
             color: Color(0xff1b2838),
             leftChild: LateralMenu(),
           ),
