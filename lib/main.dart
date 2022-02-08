@@ -4,6 +4,7 @@ import 'package:steam_flutter_layout/lateral_menu.dart';
 import 'package:steam_flutter_layout/section_title.dart';
 import 'package:steam_flutter_layout/steam_pager.dart';
 import 'package:steam_flutter_layout/store_navbar.dart';
+import 'package:steam_flutter_layout/streams_grid.dart';
 import 'package:steam_flutter_layout/utils.dart';
 
 void main() {
@@ -272,16 +273,36 @@ class MyHomePage extends StatelessWidget {
             ),
             SizedBox(height: 62,),
             SectionContainer(
-              showBorders: true,
-              child: Text("Looking for recommendations"),
-              height: 214,
+              child: Column(
+                children: [
+                  SectionTitle(text: "Games Streaming Now", links: ["View All"],),
+                  StreamsGrid()
+                ],
+              ),
             ),
+            SizedBox(height: 64,),
+            SectionContainer(child: Column(
+              children: [
+                SectionTitle(text: "Under \$10 USD"),
+                SteamPager(contentHeight: 134,)
+              ],
+            )),
+            SizedBox(height: 78,),
+            SectionContainer(child: Column(
+              children: [
+                SectionTitle(text: "Updates and Offers")
+
+              ],
+            )),
             SectionContainer(
               showBorders: true,
               child: Text("Footer"),
               height: 156,
               color: Color(0xff171a21),
             ),
+            SizedBox(
+              height: 50,
+            )
           ],
         ),
       ),
