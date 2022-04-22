@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class _NavbarItem extends StatelessWidget {
   final String text;
@@ -10,7 +11,7 @@ class _NavbarItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Text(text, style: TextStyle(fontSize: 13, decoration: TextDecoration.none)),
+      child: Text(text, style: Theme.of(context).textTheme.titleSmall),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:steam_flutter_layout/games_sample.dart';
 import 'package:steam_flutter_layout/lateral_menu.dart';
 import 'package:steam_flutter_layout/section_title.dart';
@@ -24,11 +25,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: Colors.blue,
           textTheme: TextTheme(
-              headline1: TextStyle(
+              titleSmall: GoogleFonts.nunito(
+                  fontSize: 13, decoration: TextDecoration.none),
+              headlineSmall: TextStyle(
                   color: Color(0xffc5c3c0),
                   decoration: TextDecoration.none,
                   fontSize: 14),
-              bodyText1: TextStyle(color: Color(0xffffffff)))),
+              bodyMedium: TextStyle(color: Color(0xffffffff)))),
       home: const MyHomePage(),
     );
   }
@@ -85,7 +88,7 @@ class HeaderItem extends StatelessWidget {
     return Container(
       child: Text(
         text.toUpperCase(),
-        style: Theme.of(context).textTheme.headline1,
+        style: Theme.of(context).textTheme.headlineSmall,
       ),
       padding: EdgeInsets.only(right: 14),
     );
@@ -308,18 +311,38 @@ class MyHomePage extends StatelessWidget {
               height: 50,
             ),
             SectionContainer(
-              color: Color(0xff000000),
-              height: 213,
+                color: Color(0xff000000),
+                height: 213,
                 child: Column(
                   children: [
-                    SizedBox(height: 32,),
-                    Text("Looking for recommendations?", style: Theme.of(context).textTheme.bodyText1,),
-                    SizedBox(height: 28,),
-                    Text("Sign in to view personalized recommendations", style: Theme.of(context).textTheme.bodyText1,),
-                    SizedBox(height: 17,),
-                    Text("Sign In", style: Theme.of(context).textTheme.bodyText1,),
-                    SizedBox(height: 26,),
-                    Text("Or sign up and join Steam for free", style: Theme.of(context).textTheme.bodyText1,),
+                    SizedBox(
+                      height: 32,
+                    ),
+                    Text(
+                      "Looking for recommendations?",
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    SizedBox(
+                      height: 28,
+                    ),
+                    Text(
+                      "Sign in to view personalized recommendations",
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    SizedBox(
+                      height: 17,
+                    ),
+                    Text(
+                      "Sign In",
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    SizedBox(
+                      height: 26,
+                    ),
+                    Text(
+                      "Or sign up and join Steam for free",
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
                   ],
                 )),
             SectionContainer(
