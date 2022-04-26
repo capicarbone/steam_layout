@@ -28,17 +28,20 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: Colors.blue,
           textTheme: TextTheme(
+             // Not used yet
               titleSmall: GoogleFonts.nunito(
-                  fontSize: 13, decoration: TextDecoration.none),
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  decoration: TextDecoration.none,
+                  color: Colors.white),
               headlineSmall: TextStyle(
                   color: AppColors.darkText,
                   decoration: TextDecoration.none,
                   fontSize: 14),
               bodySmall: GoogleFonts.nunito(
-                color: AppColors.darkText,
-                decoration: TextDecoration.none,
-                fontSize: 11
-              ),
+                  color: AppColors.darkText,
+                  decoration: TextDecoration.none,
+                  fontSize: 11),
               bodyMedium: TextStyle(color: Color(0xffffffff)))),
       home: const MyHomePage(),
     );

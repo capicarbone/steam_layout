@@ -5,13 +5,34 @@ import 'package:google_fonts/google_fonts.dart';
 
 class _NavbarItem extends StatelessWidget {
   final String text;
-  const _NavbarItem({Key? key, required this.text}) : super(key: key);
+  final IconData? icon;
+  const _NavbarItem({Key? key, required this.text, this.icon}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Text(text, style: Theme.of(context).textTheme.titleSmall),
+      child: Row(
+        children: [
+          if (icon != null)
+            Padding(
+              padding: const EdgeInsets.only(right: 2 ),
+              child: Icon(icon!, color: Colors.white.withOpacity(0.5),),
+            ),
+          Text(text, style:GoogleFonts.nunito(
+              fontSize: 13,
+              fontWeight: FontWeight.w700,
+              decoration: TextDecoration.none,
+              color: Colors.white,
+          shadows: <Shadow>[
+            Shadow(
+              offset: Offset(0, 2),
+              blurRadius: 2,
+              color: Color.fromRGBO(0, 0, 0, 0.3)
+            )
+          ] ) ),
+        ],
+      ),
     );
   }
 }
@@ -25,14 +46,32 @@ class StoreNavbar extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 44),
       child: Container(
-        color: Colors.blue,
+        decoration: BoxDecoration(
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Color.fromRGBO(0, 0, 0, 0.4),
+              offset: Offset(0, 0),
+              blurRadius: 3
+            )
+          ],
+          gradient: LinearGradient(
+            colors: <Color>[
+              Color.fromRGBO(62, 103, 150, 0.918),
+              Color.fromRGBO(58, 120, 177, 0.8),
+              Color.fromRGBO(15, 33, 110, 0.8),
+            ],
+            stops: <double>[
+              0.1138, 0.2523, 1
+            ]
+          )
+        ),
         width: double.infinity,
         height: 35,
         child: Row(
           children: [
             _NavbarItem(text: "Your Store"),
-            _NavbarItem(text: "New & Noteworthy"),
-            _NavbarItem(text: "Categories"),
+            _NavbarItem(text: "New & Noteworthy", icon: Icons.playlist_add,),
+            _NavbarItem(text: "Categories", icon: Icons.playlist_add,),
             _NavbarItem(text: "Points Shop"),
             _NavbarItem(text: "News"),
             _NavbarItem(text: "Labs"),
@@ -40,7 +79,15 @@ class StoreNavbar extends StatelessWidget {
             Container(
               height: 30,
               width: 203,
-              color: Colors.blueGrey,
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(49, 98, 130, 1),
+                borderRadius: BorderRadius.circular(3),
+                border: Border.all(color: Color.fromRGBO(0, 0, 0, 0.3), width: 1),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(color: Color.fromRGBO(255, 255, 255, 0.2), offset: Offset(1,1), blurRadius: 0, spreadRadius: 0)
+                ]
+              ),
+
             ),
             SizedBox(width: 3,)
           ],
