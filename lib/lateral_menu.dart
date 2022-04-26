@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:steam_flutter_layout/app_colors.dart';
 
 class _SteamGiftCardsBanner extends StatelessWidget {
   const _SteamGiftCardsBanner({Key? key}) : super(key: key);
@@ -7,22 +9,54 @@ class _SteamGiftCardsBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(bottom: 8),
       width: double.infinity,
       height: 108,
-      color: Colors.white.withOpacity(0.6),
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(width: 1, color: Color(0xff2f6182)))
+      ),
     );
   }
 }
 
 class _MenuItem extends StatelessWidget {
   final String text;
-  const _MenuItem({Key? key, required this.text}) : super(key: key);
+  final IconData? icon;
+  const _MenuItem({Key? key, required this.text, this.icon}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: TextStyle(fontSize: 13, decoration: TextDecoration.none),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 7),
+      child: Row(
+        children: [
+          if (icon != null)
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Container(
+                width: 16,
+                height: 16,
+                decoration: BoxDecoration(
+                    color: AppColors.darkerBackground,
+                    borderRadius: BorderRadius.circular(3)),
+                child: Center(
+                    child: Icon(
+                  icon,
+                  color: AppColors.highlightedText,
+                  size: 13,
+                )),
+              ),
+            ),
+          Text(
+            text,
+            style: GoogleFonts.nunito(
+                fontSize: 13,
+                decoration: TextDecoration.none,
+                fontWeight: FontWeight.w400,
+                color: AppColors.highlightedText),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -36,16 +70,19 @@ class _MenuGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8, top: 8),
+      padding: const EdgeInsets.only(bottom: 11),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title.toUpperCase(),
-            style: TextStyle(
-                fontSize: 11,
-                decoration: TextDecoration.none,
-                color: Colors.white),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Text(
+              title.toUpperCase(),
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  fontSize: 11,
+                  decoration: TextDecoration.none,
+                  color: AppColors.darkText),
+            ),
           ),
           ...items
         ],
@@ -69,21 +106,46 @@ class LateralMenu extends StatelessWidget {
               title: "Gift cards",
               items: [_MenuItem(text: "Now Available on Steam")]),
           _MenuGroup(title: "Recommended", items: [
-            _MenuItem(text: "By Friends"),
-            _MenuItem(text: "By Curators"),
-            _MenuItem(text: "Tags"),
+            _MenuItem(
+              text: "By Friends",
+              icon: Icons.group,
+            ),
+            _MenuItem(
+              text: "By Curators",
+              icon: Icons.wifi,
+            ),
+            _MenuItem(
+              text: "Tags",
+              icon: Icons.label,
+            ),
           ]),
           _MenuGroup(title: "Discovery queues", items: [
-            _MenuItem(text: "Recommendations"),
-            _MenuItem(text: "New Releases"),
+            _MenuItem(
+              text: "Recommendations",
+              icon: Icons.library_books_rounded,
+            ),
+            _MenuItem(
+              text: "New Releases",
+              icon: Icons.library_books_rounded,
+            ),
           ]),
           _MenuGroup(title: "Browse categories", items: [
-            _MenuItem(text: "Top Sellers"),
-            _MenuItem(text: "New Releases"),
-            _MenuItem(text: "Upcoming"),
-            _MenuItem(text: "Specials"),
-            _MenuItem(text: "VR Titles"),
-            _MenuItem(text: "Controller-Friendly"),
+            _MenuItem(
+              text: "Top Sellers",
+              icon: Icons.trending_up,
+            ),
+            _MenuItem(text: "New Releases", icon: Icons.add),
+            _MenuItem(text: "Upcoming", icon: Icons.watch_later_outlined),
+            _MenuItem(
+              text: "Specials",
+              icon: Icons.percent,
+            ),
+            _MenuItem(
+              text: "VR Titles",
+              icon: Icons.vrpano_outlined,
+            ),
+            _MenuItem(
+                text: "Controller-Friendly", icon: Icons.gamepad_outlined),
           ]),
           _MenuGroup(title: "Browse By Genre", items: [
             _MenuItem(text: "Free to Play"),
