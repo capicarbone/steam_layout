@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:steam_flutter_layout/app_colors.dart';
 
 class HeaderItem extends StatelessWidget {
   final String text;
@@ -41,9 +41,59 @@ class Header extends StatelessWidget {
               top: 0,
               right: 0,
               child: Container(
-                height: 23,
-                width: 234,
-                color: Colors.green,
+                padding: EdgeInsets.only(top: 6),
+                // height: 23,
+                // width: 234,
+                child: Row(
+                  children: [
+                    Container(
+                      height: 24,
+                      width: 110,
+                      color: AppColors.green,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 11),
+                            child: Icon(
+                              Icons.archive_sharp,
+                              color: Colors.white,
+                              size: 15,
+                            ),
+                          ),
+                          Text(
+                            "Install Steam",
+                            style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.white),
+                          )
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 11),
+                      child: Text(
+                        "login".toLowerCase(),
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ),
+                    Text(
+                      "|",
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 11),
+                      child: Row(
+                        children: [
+                          Text(
+                            "language".toLowerCase(),
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                          Icon(Icons.arrow_drop_down_outlined, color: AppColors.darkText,)
+                        ],
+                      ),
+                    )
+                  ],
+
+                ),
               ))
         ],
       ),

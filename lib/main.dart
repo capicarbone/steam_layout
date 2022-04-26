@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:steam_flutter_layout/app_colors.dart';
 import 'package:steam_flutter_layout/games_sample.dart';
 import 'package:steam_flutter_layout/lateral_menu.dart';
 import 'package:steam_flutter_layout/section_title.dart';
@@ -30,9 +31,14 @@ class MyApp extends StatelessWidget {
               titleSmall: GoogleFonts.nunito(
                   fontSize: 13, decoration: TextDecoration.none),
               headlineSmall: TextStyle(
-                  color: Color(0xffc5c3c0),
+                  color: AppColors.darkText,
                   decoration: TextDecoration.none,
                   fontSize: 14),
+              bodySmall: GoogleFonts.nunito(
+                color: AppColors.darkText,
+                decoration: TextDecoration.none,
+                fontSize: 11
+              ),
               bodyMedium: TextStyle(color: Color(0xffffffff)))),
       home: const MyHomePage(),
     );
@@ -80,7 +86,6 @@ class SectionContainer extends StatelessWidget {
     );
   }
 }
-
 
 class _BluePanel extends StatelessWidget {
   final String text;
