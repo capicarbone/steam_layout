@@ -13,8 +13,8 @@ class _SteamGiftCardsBanner extends StatelessWidget {
       width: double.infinity,
       height: 108,
       decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(width: 1, color: Color(0xff2f6182)))
-      ),
+          border:
+              Border(bottom: BorderSide(width: 1, color: Color(0xff2f6182)))),
     );
   }
 }
@@ -49,7 +49,7 @@ class _MenuItem extends StatelessWidget {
             ),
           Text(
             text,
-            style: GoogleFonts.nunito(
+            style: Theme.of(context).textTheme.displayMedium!.copyWith(
                 fontSize: 13,
                 decoration: TextDecoration.none,
                 fontWeight: FontWeight.w400,
