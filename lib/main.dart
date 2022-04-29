@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:steam_flutter_layout/app_colors.dart';
+import 'package:steam_flutter_layout/featured_game.dart';
 import 'package:steam_flutter_layout/games_sample.dart';
 import 'package:steam_flutter_layout/lateral_menu.dart';
 import 'package:steam_flutter_layout/section_title.dart';
@@ -28,16 +29,28 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: Colors.blue,
           textTheme: TextTheme(
-             // Not used yet
+              // Not used yet
+            titleLarge: GoogleFonts.nunito(
+              fontSize: 24,
+              fontWeight: FontWeight.w300,
+              decoration: TextDecoration.none,
+              color: Colors.white
+            ),
               titleSmall: GoogleFonts.nunito(
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
                   decoration: TextDecoration.none,
                   color: Colors.white),
+              titleMedium: GoogleFonts.nunito(
+                  fontSize: 14,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w400),
               headlineSmall: TextStyle(
                   color: AppColors.darkText,
                   decoration: TextDecoration.none,
                   fontSize: 14),
+              displayMedium:
+                  GoogleFonts.nunito(decoration: TextDecoration.none),
               bodySmall: GoogleFonts.nunito(
                   color: AppColors.darkText,
                   decoration: TextDecoration.none,
@@ -160,7 +173,11 @@ class MyHomePage extends StatelessWidget {
                   ),
                   ContentPadding(
                       child: SectionTitle(text: "Featured & Recommended")),
-                  SteamPager(),
+                  SteamPager(
+                    pages: [
+                      FeaturedGame()
+                    ],
+                  ),
                   SizedBox(
                     height: 46,
                   ),
@@ -169,7 +186,13 @@ class MyHomePage extends StatelessWidget {
                     text: "Special Offers",
                     links: ['Browse More'],
                   )),
-                  SteamPager(),
+                  SteamPager(
+                    pages: [
+                      Container(
+                        color: Colors.black.withOpacity(0.5),
+                      )
+                    ],
+                  ),
                   SizedBox(
                     height: 46,
                   ),
@@ -178,7 +201,13 @@ class MyHomePage extends StatelessWidget {
                     text: "The Community Recommends",
                     links: ['Customize, Explore By tag, & more'],
                   )),
-                  SteamPager(),
+                  SteamPager(
+                    pages: [
+                      Container(
+                        color: Colors.black.withOpacity(0.5),
+                      )
+                    ],
+                  ),
                   SizedBox(
                     height: 76,
                   ),
@@ -210,6 +239,11 @@ class MyHomePage extends StatelessWidget {
                     links: ['Browse All'],
                   )),
                   SteamPager(
+                    pages: [
+                      Container(
+                        color: Colors.black.withOpacity(0.5),
+                      )
+                    ],
                     contentHeight: 134,
                   ),
                   SizedBox(
@@ -254,6 +288,11 @@ class MyHomePage extends StatelessWidget {
               children: [
                 SectionTitle(text: "Under \$10 USD"),
                 SteamPager(
+                  pages: [
+                    Container(
+                      color: Colors.black.withOpacity(0.5),
+                    )
+                  ],
                   contentHeight: 134,
                 )
               ],
