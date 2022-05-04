@@ -231,10 +231,6 @@ class MyHomePage extends StatelessWidget {
                                 ),
                               ))
                           .toList()
-                      // Expanded(child: _BluePanel(text: "New Releases")),
-                      // Expanded(child: _BluePanel(text: "Specials")),
-                      // Expanded(child: _BluePanel(text: "Free Games")),
-                      // Expanded(child: _BluePanel(text: "By user Tags"))
                     ],
                   )),
                   SizedBox(
