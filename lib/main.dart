@@ -4,6 +4,7 @@ import 'package:steam_flutter_layout/app_colors.dart';
 import 'package:steam_flutter_layout/featured_game.dart';
 import 'package:steam_flutter_layout/games_sample.dart';
 import 'package:steam_flutter_layout/lateral_menu.dart';
+import 'package:steam_flutter_layout/offers_banner.dart';
 import 'package:steam_flutter_layout/section_title.dart';
 import 'package:steam_flutter_layout/steam_pager.dart';
 import 'package:steam_flutter_layout/store_navbar.dart';
@@ -187,10 +188,9 @@ class MyHomePage extends StatelessWidget {
                     links: ['Browse More'],
                   )),
                   SteamPager(
+                    contentHeight: 390,
                     pages: [
-                      Container(
-                        color: Colors.black.withOpacity(0.5),
-                      )
+                      OffersBanner()
                     ],
                   ),
                   SizedBox(

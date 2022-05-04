@@ -7,4 +7,5 @@ class AppColors {
   static Color darkColor = Color.fromRGBO(118, 126, 136, 1);
   static Color highlightedText = Color.fromRGBO(102, 192, 244, 1);
   static Color darkerBackground = Color(0xff29465e);
+
 }
