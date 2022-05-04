@@ -31,12 +31,11 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           textTheme: TextTheme(
               // Not used yet
-            titleLarge: GoogleFonts.nunito(
-              fontSize: 24,
-              fontWeight: FontWeight.w300,
-              decoration: TextDecoration.none,
-              color: Colors.white
-            ),
+              titleLarge: GoogleFonts.nunito(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w300,
+                  decoration: TextDecoration.none,
+                  color: Colors.white),
               titleSmall: GoogleFonts.nunito(
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
@@ -112,11 +111,17 @@ class _BluePanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 58,
-      color: Colors.blue,
+      decoration: BoxDecoration(
+          color: Colors.blue,
+          borderRadius: BorderRadius.circular(3),
+          boxShadow: <BoxShadow>[
+            BoxShadow(color: Colors.black, offset: Offset(0, 0), blurRadius: 4)
+          ]),
       child: Center(
           child: Text(
         text.toUpperCase(),
-        style: TextStyle(color: Color(0xffffffff), fontSize: 16),
+        style: Theme.of(context).textTheme.displayMedium!.copyWith(
+            fontSize: 16, color: Colors.white, fontWeight: FontWeight.w600),
       )),
     );
   }
@@ -173,32 +178,29 @@ class MyHomePage extends StatelessWidget {
                     height: 42,
                   ),
                   ContentPadding(
-                      child: SectionTitle(text: "Featured & Recommended")),
+                      child: SectionTitle(title: "Featured & Recommended")),
                   SteamPager(
-                    pages: [
-                      FeaturedGame()
-                    ],
+                    pages: [FeaturedGame()],
                   ),
                   SizedBox(
                     height: 46,
                   ),
                   ContentPadding(
                       child: SectionTitle(
-                    text: "Special Offers",
+                    title: "Special Offers",
                     links: ['Browse More'],
                   )),
                   SteamPager(
                     contentHeight: 390,
-                    pages: [
-                      OffersBanner()
-                    ],
+                    pages: [OffersBanner()],
                   ),
                   SizedBox(
                     height: 46,
                   ),
                   ContentPadding(
                       child: SectionTitle(
-                    text: "The Community Recommends",
+                    title: "The Community Recommends",
+                    subtitle: "These games today",
                     links: ['Customize, Explore By tag, & more'],
                   )),
                   SteamPager(
@@ -211,23 +213,28 @@ class MyHomePage extends StatelessWidget {
                   SizedBox(
                     height: 76,
                   ),
-                  ContentPadding(child: SectionTitle(text: "Browser Steam")),
+                  ContentPadding(child: SectionTitle(title: "Browser Steam")),
                   ContentPadding(
                       child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(child: _BluePanel(text: "New Releases")),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Expanded(child: _BluePanel(text: "Specials")),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Expanded(child: _BluePanel(text: "Free Games")),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      Expanded(child: _BluePanel(text: "By user Tags"))
+                      ...[
+                        "New Releases",
+                        "Specials",
+                        "Free Games",
+                        "By user Tags"
+                      ]
+                          .map((e) => Container(
+                                width: 228,
+                                child: _BluePanel(
+                                  text: e,
+                                ),
+                              ))
+                          .toList()
+                      // Expanded(child: _BluePanel(text: "New Releases")),
+                      // Expanded(child: _BluePanel(text: "Specials")),
+                      // Expanded(child: _BluePanel(text: "Free Games")),
+                      // Expanded(child: _BluePanel(text: "By user Tags"))
                     ],
                   )),
                   SizedBox(
@@ -235,7 +242,7 @@ class MyHomePage extends StatelessWidget {
                   ),
                   ContentPadding(
                       child: SectionTitle(
-                    text: "Popular VR Games",
+                    title: "Popular VR Games",
                     links: ['Browse All'],
                   )),
                   SteamPager(
@@ -273,7 +280,7 @@ class MyHomePage extends StatelessWidget {
               child: Column(
                 children: [
                   SectionTitle(
-                    text: "Games Streaming Now",
+                    title: "Games Streaming Now",
                     links: ["View All"],
                   ),
                   StreamsGrid()
@@ -286,7 +293,7 @@ class MyHomePage extends StatelessWidget {
             SectionContainer(
                 child: Column(
               children: [
-                SectionTitle(text: "Under \$10 USD"),
+                SectionTitle(title: "Under \$10 USD"),
                 SteamPager(
                   pages: [
                     Container(
@@ -303,7 +310,7 @@ class MyHomePage extends StatelessWidget {
             SectionContainer(
                 child: Column(
               children: [
-                SectionTitle(text: "Updates and Offers"),
+                SectionTitle(title: "Updates and Offers"),
                 UpdatesAndOffers(),
               ],
             )),

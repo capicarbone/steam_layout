@@ -3,22 +3,37 @@ import 'package:flutter/widgets.dart';
 import 'package:steam_flutter_layout/app_colors.dart';
 
 class SectionTitle extends StatelessWidget {
-  final String text;
+  final String title;
+  final String? subtitle;
   final List<String> links;
-  const SectionTitle({Key? key, required this.text, this.links = const []})
+  const SectionTitle({Key? key, required this.title, this.subtitle, this.links = const []})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    var titleWidget = subtitle == null ? Text(
+      title.toUpperCase(),
+      style: Theme.of(context).textTheme.titleMedium,
+    ): Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title.toUpperCase(),
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        Text(
+          subtitle!.toUpperCase(),
+          style: Theme.of(context).textTheme.titleMedium,
+        )
+      ],
+    );
     return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              text.toUpperCase(),
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
+            titleWidget,
             Row(
               children: [
                 ...links.map((e) => Container(
