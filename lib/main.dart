@@ -6,6 +6,7 @@ import 'package:steam_flutter_layout/games_sample.dart';
 import 'package:steam_flutter_layout/lateral_menu.dart';
 import 'package:steam_flutter_layout/offers_banner.dart';
 import 'package:steam_flutter_layout/section_title.dart';
+import 'package:steam_flutter_layout/simple_game_card.dart';
 import 'package:steam_flutter_layout/steam_pager.dart';
 import 'package:steam_flutter_layout/store_navbar.dart';
 import 'package:steam_flutter_layout/streams_grid.dart';
@@ -244,7 +245,27 @@ class MyHomePage extends StatelessWidget {
                   SteamPager(
                     pages: [
                       Container(
-                        color: Colors.black.withOpacity(0.5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                                width: 229,
+                                height: 134,
+                                child: SimpleGameCard()),
+                            Container(
+                                width: 229,
+                                height: 134,
+                                child: SimpleGameCard()),
+                            Container(
+                                width: 229,
+                                height: 134,
+                                child: SimpleGameCard()),
+                            Container(
+                                width: 229,
+                                height: 134,
+                                child: SimpleGameCard()),
+                          ],
+                        ),
                       )
                     ],
                     contentHeight: 134,
