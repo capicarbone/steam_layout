@@ -313,9 +313,27 @@ class MyHomePage extends StatelessWidget {
                 SectionTitle(title: "Under \$10 USD"),
                 SteamPager(
                   pages: [
-                    Container(
-                      color: Colors.black.withOpacity(0.5),
-                    )
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                            width: 229,
+                            height: 134,
+                            child: SimpleGameCard()),
+                        Container(
+                            width: 229,
+                            height: 134,
+                            child: SimpleGameCard()),
+                        Container(
+                            width: 229,
+                            height: 134,
+                            child: SimpleGameCard()),
+                        Container(
+                            width: 229,
+                            height: 134,
+                            child: SimpleGameCard()),
+                      ],
+                    ),
                   ],
                   contentHeight: 134,
                 )
