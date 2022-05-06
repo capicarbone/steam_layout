@@ -18,7 +18,7 @@ class _PriceTag extends StatelessWidget {
               "-20%",
               style: Theme.of(context).textTheme.displayMedium!.copyWith(
                   fontSize: 26,
-                  color: Color(0xffa4d007),
+                  color: AppColors.discountTagText,
                   fontWeight: FontWeight.w300),
             ),
           ),
@@ -116,8 +116,7 @@ class _Game extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(right: 11),
-      decoration: BoxDecoration(
-          boxShadow: <BoxShadow>[
+      decoration: BoxDecoration(boxShadow: <BoxShadow>[
         BoxShadow(color: Colors.black, offset: Offset(0, 0), blurRadius: 5)
       ]),
       child: Column(

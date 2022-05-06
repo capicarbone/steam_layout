@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
                   decoration: TextDecoration.none,
                   fontSize: 14),
               displayMedium:
-                  GoogleFonts.nunito(decoration: TextDecoration.none),
+                  GoogleFonts.nunito(decoration: TextDecoration.none, fontSize: 13),
               bodySmall: GoogleFonts.nunito(
                   color: AppColors.darkText,
                   decoration: TextDecoration.none,
@@ -66,11 +66,13 @@ class SectionContainer extends StatelessWidget {
   final Widget child;
   final double? height;
   final Color? color;
+  final Gradient? gradient;
   final Widget? leftChild;
   final bool showBorders;
   const SectionContainer(
       {Key? key,
       required this.child,
+      this.gradient,
       this.color = const Color(0x00),
       this.leftChild = null,
       this.showBorders = false,
@@ -82,7 +84,7 @@ class SectionContainer extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: height,
-      color: color,
+      decoration: gradient != null ? BoxDecoration(gradient: gradient) : BoxDecoration(color: color),
       alignment: Alignment.topCenter,
       child: Stack(children: [
         Container(
@@ -138,14 +140,19 @@ class _SectionTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 24),
-      color: selected ? Color(0xff2a475e) : Color(0x00),
+      decoration: BoxDecoration(
+          color: selected ? Color(0xff2a475e) : Color(0x00),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(3), topRight: Radius.circular(3))),
       height: 29,
-      child: Text(
-        text,
-        style: TextStyle(
-            color: Color(0xffffffff),
-            fontSize: 14,
-            decoration: TextDecoration.none),
+      child: Center(
+        child: Text(
+          text,
+          style: Theme.of(context).textTheme.displayMedium!.copyWith(
+              color: selected ? Color(0xffffffff) : Color(0xff2f89bc),
+              fontSize: 14,
+              decoration: TextDecoration.none),
+        ),
       ),
     );
   }
@@ -279,16 +286,29 @@ class MyHomePage extends StatelessWidget {
             ),
             SectionContainer(
                 color: Color(0xff1b2838),
-                child: Row(
-                  children: [
-                    _SectionTab(text: "New & Trading", selected: true),
-                    _SectionTab(text: "Top Sellers", selected: false),
-                    _SectionTab(text: "Popular Upcoming", selected: false),
-                    _SectionTab(text: "Specials", selected: false),
-                  ],
+                child: ContentPadding(
+                  child: Row(
+                    children: [
+                      _SectionTab(text: "New & Trading", selected: true),
+                      _SectionTab(text: "Top Sellers", selected: false),
+                      _SectionTab(text: "Popular Upcoming", selected: false),
+                      _SectionTab(text: "Specials", selected: false),
+                    ],
+                  ),
                 )),
             SectionContainer(
-              child: GamesSample(),
+              gradient: LinearGradient(colors: [
+                Color.fromRGBO(42, 71, 94, 1),
+                Color.fromRGBO(42, 71, 94, 0)
+              ],
+              stops: [
+                0.05,
+                0.7
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomLeft
+                ),
+              child: ContentPadding(child: GamesSample()),
             ),
             SizedBox(
               height: 62,
@@ -296,11 +316,13 @@ class MyHomePage extends StatelessWidget {
             SectionContainer(
               child: Column(
                 children: [
-                  SectionTitle(
-                    title: "Games Streaming Now",
-                    links: ["View All"],
+                  ContentPadding(
+                    child: SectionTitle(
+                      title: "Games Streaming Now",
+                      links: ["View All"],
+                    ),
                   ),
-                  StreamsGrid()
+                  ContentPadding(child: StreamsGrid())
                 ],
               ),
             ),
@@ -310,28 +332,20 @@ class MyHomePage extends StatelessWidget {
             SectionContainer(
                 child: Column(
               children: [
-                SectionTitle(title: "Under \$10 USD"),
+                ContentPadding(child: SectionTitle(title: "Under \$10 USD")),
                 SteamPager(
                   pages: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                            width: 229,
-                            height: 134,
-                            child: SimpleGameCard()),
+                            width: 229, height: 134, child: SimpleGameCard()),
                         Container(
-                            width: 229,
-                            height: 134,
-                            child: SimpleGameCard()),
+                            width: 229, height: 134, child: SimpleGameCard()),
                         Container(
-                            width: 229,
-                            height: 134,
-                            child: SimpleGameCard()),
+                            width: 229, height: 134, child: SimpleGameCard()),
                         Container(
-                            width: 229,
-                            height: 134,
-                            child: SimpleGameCard()),
+                            width: 229, height: 134, child: SimpleGameCard()),
                       ],
                     ),
                   ],
@@ -345,8 +359,8 @@ class MyHomePage extends StatelessWidget {
             SectionContainer(
                 child: Column(
               children: [
-                SectionTitle(title: "Updates and Offers"),
-                UpdatesAndOffers(),
+                ContentPadding(child: SectionTitle(title: "Updates and Offers")),
+                ContentPadding(child: UpdatesAndOffers()),
               ],
             )),
             SizedBox(
