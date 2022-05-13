@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:steam_flutter_layout/app_colors.dart';
@@ -50,8 +51,8 @@ class MyApp extends StatelessWidget {
                   color: AppColors.darkText,
                   decoration: TextDecoration.none,
                   fontSize: 14),
-              displayMedium:
-                  GoogleFonts.nunito(decoration: TextDecoration.none, fontSize: 13),
+              displayMedium: GoogleFonts.nunito(
+                  decoration: TextDecoration.none, fontSize: 13),
               bodySmall: GoogleFonts.nunito(
                   color: AppColors.darkText,
                   decoration: TextDecoration.none,
@@ -84,7 +85,9 @@ class SectionContainer extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: height,
-      decoration: gradient != null ? BoxDecoration(gradient: gradient) : BoxDecoration(color: color),
+      decoration: gradient != null
+          ? BoxDecoration(gradient: gradient)
+          : BoxDecoration(color: color),
       alignment: Alignment.topCenter,
       child: Stack(children: [
         Container(
@@ -300,14 +303,10 @@ class MyHomePage extends StatelessWidget {
               gradient: LinearGradient(colors: [
                 Color.fromRGBO(42, 71, 94, 1),
                 Color.fromRGBO(42, 71, 94, 0)
-              ],
-              stops: [
+              ], stops: [
                 0.05,
                 0.7
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomLeft
-                ),
+              ], begin: Alignment.topLeft, end: Alignment.bottomLeft),
               child: ContentPadding(child: GamesSample()),
             ),
             SizedBox(
@@ -359,7 +358,8 @@ class MyHomePage extends StatelessWidget {
             SectionContainer(
                 child: Column(
               children: [
-                ContentPadding(child: SectionTitle(title: "Updates and Offers")),
+                ContentPadding(
+                    child: SectionTitle(title: "Updates and Offers")),
                 ContentPadding(child: UpdatesAndOffers()),
               ],
             )),
@@ -368,7 +368,6 @@ class MyHomePage extends StatelessWidget {
             ),
             SectionContainer(
                 color: Color(0xff000000),
-                height: 213,
                 child: Column(
                   children: [
                     SizedBox(
@@ -376,28 +375,78 @@ class MyHomePage extends StatelessWidget {
                     ),
                     Text(
                       "Looking for recommendations?",
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: Theme.of(context)
+                          .textTheme
+                          .displayMedium!
+                          .copyWith(color: Color(0xff67c1f5), fontSize: 24),
                     ),
                     SizedBox(
                       height: 28,
                     ),
                     Text(
                       "Sign in to view personalized recommendations",
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .copyWith(fontSize: 15, color: Color(0xff8f98a0)),
                     ),
                     SizedBox(
                       height: 17,
                     ),
-                    Text(
-                      "Sign In",
-                      style: Theme.of(context).textTheme.bodyText1,
+                    Container(
+                      padding: EdgeInsets.all(1),
+                      // color: Colors.blue,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          border:
+                              Border.all(width: 2, color: Color(0xff172030)),
+                          gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: <Color>[
+                                Color(0xffa4d007),
+                                Color(0xff536904),
+                              ],
+                              stops: <double>[
+                                0.05,
+                                0.95
+                              ])),
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 7, horizontal: 16),
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                              Color(0xff799905),
+                              Color(0xff536904),
+                            ],
+                                stops: [
+                              0.05,
+                              0.95
+                            ])),
+                        child: Text(
+                          "Sign In",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(color: Color(0xffD2E885)),
+                        ),
+                      ),
                     ),
                     SizedBox(
                       height: 26,
                     ),
-                    Text(
-                      "Or sign up and join Steam for free",
-                      style: Theme.of(context).textTheme.bodyText1,
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 21),
+                      child: Text(
+                        "Or sign up and join Steam for free",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1!
+                            .copyWith(color: Color(0xff8f98a0), fontSize: 15),
+                      ),
                     ),
                   ],
                 )),
