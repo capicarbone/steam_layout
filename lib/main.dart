@@ -440,20 +440,303 @@ class MyHomePage extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 21),
-                      child: Text(
-                        "Or sign up and join Steam for free",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText1!
-                            .copyWith(color: Color(0xff8f98a0), fontSize: 15),
+                      child: RichText(
+                        text: TextSpan(
+                            text: "Or ",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText1!
+                                .copyWith(
+                                    color: Color(0xff8f98a0), fontSize: 15),
+                            children: const <TextSpan>[
+                              TextSpan(
+                                  text: 'sign up',
+                                  style: TextStyle(color: Colors.white)),
+                              TextSpan(text: " and join Steam for free")
+                            ]),
                       ),
                     ),
                   ],
                 )),
             SectionContainer(
-              child: Container(),
-              height: 156,
+              // height: 156,
               color: Color(0xff171a21),
+              child: Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        border: Border(
+                            bottom: BorderSide(
+                                color: Color(0xffc6d4df), width: 0.5))),
+                    height: 32,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 10, bottom: 15),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12),
+                          child: Container(
+                            height: 25,
+                            width: 88,
+                            color: Colors.blue,
+                          ),
+                        ),
+                        Expanded(
+                            child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "© 2022 Valve Corporation.  All rights reserved.  All trademarks are property of their respective owners in the US and other countries.",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
+                                      color: Color(0xff8F98A0), fontSize: 13),
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "VAT included in all prices where applicable.",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                          color: Color(0xff8F98A0),
+                                          fontSize: 13),
+                                ),
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 10),
+                                      child: Text(
+                                        "Privacy Policy",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 12),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 12,
+                                      width: 1,
+                                      color: Color(0xFF8F98A0),
+                                    ),
+                                    Padding(
+                                      padding:
+                                      EdgeInsets.symmetric(horizontal: 10),
+                                      child: Text(
+                                        "Legal",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 12),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 12,
+                                      width: 1,
+                                      color: Color(0xFF8F98A0),
+                                    ),
+                                    Padding(
+                                      padding:
+                                      EdgeInsets.symmetric(horizontal: 10),
+                                      child: Text(
+                                        "Steam Subscriber Agreement",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 12),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 12,
+                                      width: 1,
+                                      color: Color(0xFF8F98A0),
+                                    ),
+                                    Padding(
+                                      padding:
+                                      EdgeInsets.symmetric(horizontal: 10),
+                                      child: Text(
+                                        "Refunds",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 12),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 12,
+                                      width: 1,
+                                      color: Color(0xFF8F98A0),
+                                    ),
+                                    Padding(
+                                      padding:
+                                      EdgeInsets.symmetric(horizontal: 10),
+                                      child: Text(
+                                        "Cookies",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 12),
+                                      ),
+                                    ),
+
+                                  ],
+                                )
+                              ],
+                            ),
+                          ],
+                        )),
+                        Container(
+                          height: 22,
+                          width: 90,
+                          color: Colors.blue,
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 20,
+                    decoration: BoxDecoration(
+                        border: Border(
+                            top: BorderSide(
+                                color: Color(0xffc6d4df), width: 0.5))),
+                  ),
+
+                  Row(
+                    children: [
+                      Padding(
+                        padding:
+                        EdgeInsets.symmetric(horizontal: 10),
+                        child: Text(
+                          "About Valve",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
+                        ),
+                      ),
+                      Container(
+                        height: 12,
+                        width: 1,
+                        color: Color(0xFF8F98A0),
+                      ),
+                      Padding(
+                        padding:
+                        EdgeInsets.symmetric(horizontal: 10),
+                        child: Text(
+                          "Jobs",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
+                        ),
+                      ),
+                      Container(
+                        height: 12,
+                        width: 1,
+                        color: Color(0xFF8F98A0),
+                      ),
+                      Padding(
+                        padding:
+                        EdgeInsets.symmetric(horizontal: 10),
+                        child: Text(
+                          "Steamworks",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
+                        ),
+                      ),
+                      Container(
+                        height: 12,
+                        width: 1,
+                        color: Color(0xFF8F98A0),
+                      ),
+                      Padding(
+                        padding:
+                        EdgeInsets.symmetric(horizontal: 10),
+                        child: Text(
+                          "Steam Distribution",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
+                        ),
+                      ),
+                      Container(
+                        height: 12,
+                        width: 1,
+                        color: Color(0xFF8F98A0),
+                      ),
+                      Padding(
+                        padding:
+                        EdgeInsets.symmetric(horizontal: 10),
+                        child: Text(
+                          "Support",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
+                        ),
+                      ),
+                      Container(
+                        height: 12,
+                        width: 1,
+                        color: Color(0xFF8F98A0),
+                      ),
+                      Padding(
+                        padding:
+                        EdgeInsets.symmetric(horizontal: 10),
+                        child: Text(
+                          "Gift Cards",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
+                        ),
+                      ),
+                      Container(
+                        height: 12,
+                        width: 1,
+                        color: Color(0xFF8F98A0),
+                      ),
+                      Padding(
+                        padding:
+                        EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(width: 14, height: 14, child: Placeholder(), margin: EdgeInsets.only(right: 8),),
+                            Text(
+                              "@Steam",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
+                            ),
+                          ],
+                        ),
+                      ),Container(
+                        height: 12,
+                        width: 1,
+                        color: Color(0xFF8F98A0),
+                      ),
+                      Padding(
+                        padding:
+                        EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(width: 14, height: 14, child: Placeholder(), margin: EdgeInsets.only(right: 8),),
+                            Text(
+                              "@Steam",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
+                            ),
+                          ],
+                        ),
+                      ),
+
+
+                    ],
+
+                  ),
+                  SizedBox(height: 32,)
+                ],
+              ),
             ),
           ],
         ),
