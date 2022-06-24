@@ -5,6 +5,7 @@ import 'package:steam_flutter_layout/app_colors.dart';
 import 'package:steam_flutter_layout/featured_game.dart';
 import 'package:steam_flutter_layout/games_sample.dart';
 import 'package:steam_flutter_layout/lateral_menu.dart';
+import 'package:steam_flutter_layout/limited_promo_banner.dart';
 import 'package:steam_flutter_layout/offers_banner.dart';
 import 'package:steam_flutter_layout/section_title.dart';
 import 'package:steam_flutter_layout/simple_game_card.dart';
@@ -161,6 +162,7 @@ class _SectionTab extends StatelessWidget {
   }
 }
 
+
 class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
@@ -176,6 +178,17 @@ class MyHomePage extends StatelessWidget {
               child: Header(),
               height: 104,
               color: Color(0xff171a21),
+            ),
+            Container(
+              width: double.infinity,
+              color: Color(0xff384582),
+              child: Center(
+                child: Container(
+                  height: 450,
+                  // width: 1850,
+                  child: LimitedPromoBanner(),
+                ),
+              ),
             ),
             SectionContainer(
               child: Column(
@@ -515,7 +528,10 @@ class MyHomePage extends StatelessWidget {
                                         "Privacy Policy",
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 12),
+                                            .bodyMedium!
+                                            .copyWith(
+                                                color: Color(0xFFC6D4DF),
+                                                fontSize: 12),
                                       ),
                                     ),
                                     Container(
@@ -525,12 +541,15 @@ class MyHomePage extends StatelessWidget {
                                     ),
                                     Padding(
                                       padding:
-                                      EdgeInsets.symmetric(horizontal: 10),
+                                          EdgeInsets.symmetric(horizontal: 10),
                                       child: Text(
                                         "Legal",
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 12),
+                                            .bodyMedium!
+                                            .copyWith(
+                                                color: Color(0xFFC6D4DF),
+                                                fontSize: 12),
                                       ),
                                     ),
                                     Container(
@@ -540,12 +559,15 @@ class MyHomePage extends StatelessWidget {
                                     ),
                                     Padding(
                                       padding:
-                                      EdgeInsets.symmetric(horizontal: 10),
+                                          EdgeInsets.symmetric(horizontal: 10),
                                       child: Text(
                                         "Steam Subscriber Agreement",
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 12),
+                                            .bodyMedium!
+                                            .copyWith(
+                                                color: Color(0xFFC6D4DF),
+                                                fontSize: 12),
                                       ),
                                     ),
                                     Container(
@@ -555,12 +577,15 @@ class MyHomePage extends StatelessWidget {
                                     ),
                                     Padding(
                                       padding:
-                                      EdgeInsets.symmetric(horizontal: 10),
+                                          EdgeInsets.symmetric(horizontal: 10),
                                       child: Text(
                                         "Refunds",
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 12),
+                                            .bodyMedium!
+                                            .copyWith(
+                                                color: Color(0xFFC6D4DF),
+                                                fontSize: 12),
                                       ),
                                     ),
                                     Container(
@@ -570,15 +595,17 @@ class MyHomePage extends StatelessWidget {
                                     ),
                                     Padding(
                                       padding:
-                                      EdgeInsets.symmetric(horizontal: 10),
+                                          EdgeInsets.symmetric(horizontal: 10),
                                       child: Text(
                                         "Cookies",
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 12),
+                                            .bodyMedium!
+                                            .copyWith(
+                                                color: Color(0xFFC6D4DF),
+                                                fontSize: 12),
                                       ),
                                     ),
-
                                   ],
                                 )
                               ],
@@ -600,17 +627,16 @@ class MyHomePage extends StatelessWidget {
                             top: BorderSide(
                                 color: Color(0xffc6d4df), width: 0.5))),
                   ),
-
                   Row(
                     children: [
                       Padding(
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 10),
                         child: Text(
                           "About Valve",
                           style: Theme.of(context)
                               .textTheme
-                              .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
+                              .bodyMedium!
+                              .copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
                         ),
                       ),
                       Container(
@@ -619,13 +645,13 @@ class MyHomePage extends StatelessWidget {
                         color: Color(0xFF8F98A0),
                       ),
                       Padding(
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 10),
                         child: Text(
                           "Jobs",
                           style: Theme.of(context)
                               .textTheme
-                              .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
+                              .bodyMedium!
+                              .copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
                         ),
                       ),
                       Container(
@@ -634,13 +660,13 @@ class MyHomePage extends StatelessWidget {
                         color: Color(0xFF8F98A0),
                       ),
                       Padding(
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 10),
                         child: Text(
                           "Steamworks",
                           style: Theme.of(context)
                               .textTheme
-                              .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
+                              .bodyMedium!
+                              .copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
                         ),
                       ),
                       Container(
@@ -649,13 +675,13 @@ class MyHomePage extends StatelessWidget {
                         color: Color(0xFF8F98A0),
                       ),
                       Padding(
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 10),
                         child: Text(
                           "Steam Distribution",
                           style: Theme.of(context)
                               .textTheme
-                              .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
+                              .bodyMedium!
+                              .copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
                         ),
                       ),
                       Container(
@@ -664,13 +690,13 @@ class MyHomePage extends StatelessWidget {
                         color: Color(0xFF8F98A0),
                       ),
                       Padding(
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 10),
                         child: Text(
                           "Support",
                           style: Theme.of(context)
                               .textTheme
-                              .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
+                              .bodyMedium!
+                              .copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
                         ),
                       ),
                       Container(
@@ -679,13 +705,13 @@ class MyHomePage extends StatelessWidget {
                         color: Color(0xFF8F98A0),
                       ),
                       Padding(
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 10),
                         child: Text(
                           "Gift Cards",
                           style: Theme.of(context)
                               .textTheme
-                              .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
+                              .bodyMedium!
+                              .copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
                         ),
                       ),
                       Container(
@@ -694,47 +720,59 @@ class MyHomePage extends StatelessWidget {
                         color: Color(0xFF8F98A0),
                       ),
                       Padding(
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 10),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Container(width: 14, height: 14, child: Placeholder(), margin: EdgeInsets.only(right: 8),),
+                            Container(
+                              width: 14,
+                              height: 14,
+                              child: Placeholder(),
+                              margin: EdgeInsets.only(right: 8),
+                            ),
                             Text(
                               "@Steam",
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
+                                  .bodyMedium!
+                                  .copyWith(
+                                      color: Color(0xFFC6D4DF), fontSize: 13),
                             ),
                           ],
                         ),
-                      ),Container(
+                      ),
+                      Container(
                         height: 12,
                         width: 1,
                         color: Color(0xFF8F98A0),
                       ),
                       Padding(
-                        padding:
-                        EdgeInsets.symmetric(horizontal: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 10),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Container(width: 14, height: 14, child: Placeholder(), margin: EdgeInsets.only(right: 8),),
+                            Container(
+                              width: 14,
+                              height: 14,
+                              child: Placeholder(),
+                              margin: EdgeInsets.only(right: 8),
+                            ),
                             Text(
                               "@Steam",
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyMedium!.copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
+                                  .bodyMedium!
+                                  .copyWith(
+                                      color: Color(0xFFC6D4DF), fontSize: 13),
                             ),
                           ],
                         ),
                       ),
-
-
                     ],
-
                   ),
-                  SizedBox(height: 32,)
+                  SizedBox(
+                    height: 32,
+                  )
                 ],
               ),
             ),
