@@ -179,25 +179,29 @@ class MyHomePage extends StatelessWidget {
               height: 104,
               color: Color(0xff171a21),
             ),
-            Container(
-              width: double.infinity,
-              color: Color(0xff384582),
-              child: Center(
-                child: Container(
-                  height: 450,
-                  // width: 1850,
-                  child: LimitedPromoBanner(),
+            Stack(
+              children: [
+                Container(
+                  width: double.infinity,
+                  color: Color(0xff384582),
+                  child: Center(
+                    child: Container(
+                      height: 450,
+                      // width: 1850,
+                      child: LimitedPromoBanner(),
+                    ),
+                  ),
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 31),
+                  child: SectionContainer(child: StoreNavbar()),
+                ),
+              ],
             ),
             SectionContainer(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 31,
-                  ),
-                  StoreNavbar(),
                   SizedBox(
                     height: 42,
                   ),
