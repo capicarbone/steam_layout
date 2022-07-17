@@ -493,11 +493,7 @@ class MyHomePage extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(right: 12),
-                          child: Container(
-                            height: 25,
-                            width: 88,
-                            color: Colors.blue,
-                          ),
+                          child: Image.asset("images/footerLogo_valve_new.png", height: 25, width: 88,)
                         ),
                         Expanded(
                             child: Column(
@@ -616,11 +612,7 @@ class MyHomePage extends StatelessWidget {
                             ),
                           ],
                         )),
-                        Container(
-                          height: 22,
-                          width: 90,
-                          color: Colors.blue,
-                        )
+                        Image.asset("images/logo_steam_footer.png")
                       ],
                     ),
                   ),
@@ -731,8 +723,8 @@ class MyHomePage extends StatelessWidget {
                             Container(
                               width: 14,
                               height: 14,
-                              child: Placeholder(),
-                              margin: EdgeInsets.only(right: 8),
+                              child: Image.asset("images/ico_facebook.gif"),
+                              margin: EdgeInsets.only(right: 4),
                             ),
                             Text(
                               "@Steam",
@@ -758,8 +750,8 @@ class MyHomePage extends StatelessWidget {
                             Container(
                               width: 14,
                               height: 14,
-                              child: Placeholder(),
-                              margin: EdgeInsets.only(right: 8),
+                              child: Image.asset("images/ico_twitter.gif"),
+                              margin: EdgeInsets.only(right: 4),
                             ),
                             Text(
                               "@Steam",

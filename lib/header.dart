@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:steam_flutter_layout/app_colors.dart';
 
 class HeaderItem extends StatelessWidget {
@@ -30,8 +31,10 @@ class Header extends StatelessWidget {
         children: [
           Row(
             children: [
-              HeaderItem(text: "Steam"), // TODO to logo
-              HeaderItem(text: "Store"),
+              Padding(
+                padding: const EdgeInsets.only(right: 63),
+                child: SvgPicture.asset("images/logo_steam.svg", width: 176, height: 44,),
+              ),
               HeaderItem(text: "Community"),
               HeaderItem(text: "About"),
               HeaderItem(text: "Support")

@@ -10,11 +10,11 @@ class _SteamGiftCardsBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: 8),
-      width: double.infinity,
-      height: 108,
-      decoration: BoxDecoration(
-          border:
-              Border(bottom: BorderSide(width: 1, color: Color(0xff2f6182)))),
+      width: 210,
+      // decoration: BoxDecoration(
+      //     border:
+      //         Border(bottom: BorderSide(width: 1, color: Color(0xff2f6182)))),
+      child: Image.asset("images/steamcards_promo_02.png"),
     );
   }
 }
@@ -98,6 +98,7 @@ class LateralMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 210,
+      padding: EdgeInsets.only(top: 26),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
