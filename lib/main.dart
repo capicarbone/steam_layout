@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:steam_flutter_layout/app_colors.dart';
+import 'package:steam_flutter_layout/data/games_provider.dart';
 import 'package:steam_flutter_layout/featured_game.dart';
 import 'package:steam_flutter_layout/games_sample.dart';
 import 'package:steam_flutter_layout/lateral_menu.dart';
@@ -208,7 +209,7 @@ class MyHomePage extends StatelessWidget {
                   ContentPadding(
                       child: SectionTitle(title: "Featured & Recommended")),
                   SteamPager(
-                    pages: [FeaturedGame()],
+                    pages: GamesProvider.getRandomGames(1).map((e) => FeaturedGame(game: e)).toList(),
                   ),
                   SizedBox(
                     height: 46,

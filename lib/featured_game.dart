@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:steam_flutter_layout/app_colors.dart';
 import 'package:steam_flutter_layout/game_tag.dart';
 
+import 'data/game.dart';
+
 class FeaturedGame extends StatelessWidget {
-  const FeaturedGame({Key? key}) : super(key: key);
+  final Game game;
+  const FeaturedGame({Key? key, required this.game}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +22,14 @@ class FeaturedGame extends StatelessWidget {
         children: [
           Container(
             width: 616,
-            decoration:
-                BoxDecoration(color: Colors.yellow, boxShadow: <BoxShadow>[
+            decoration: BoxDecoration(boxShadow: <BoxShadow>[
               BoxShadow(
                   color: Colors.black,
                   offset: Offset(0, 0),
                   blurRadius: 10,
                   spreadRadius: 5)
             ]),
+            child: Image.asset(game.horizontal_capsule_asset),
           ),
           Expanded(
               child: Container(
@@ -43,8 +46,11 @@ class FeaturedGame extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       height: 63,
                       child: Text(
-                        "Cybepunk 2077: Go to the space expansion",
-                        style: Theme.of(context).textTheme.titleLarge!.copyWith(height: 1),
+                        game.name,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge!
+                            .copyWith(height: 1),
                       )),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 13),
@@ -53,7 +59,7 @@ class FeaturedGame extends StatelessWidget {
                         Expanded(
                             child: Container(
                           height: 69,
-                          color: Colors.blue,
+                          child: Image.asset(game.screenshots[0]),
                         )),
                         SizedBox(
                           width: 10,
@@ -61,7 +67,7 @@ class FeaturedGame extends StatelessWidget {
                         Expanded(
                             child: Container(
                           height: 69,
-                          color: Colors.blue,
+                          child: Image.asset(game.screenshots[1]),
                         )),
                       ],
                     ),
@@ -73,7 +79,7 @@ class FeaturedGame extends StatelessWidget {
                         Expanded(
                             child: Container(
                           height: 69,
-                          color: Colors.blue,
+                          child: Image.asset(game.screenshots[2]),
                         )),
                         SizedBox(
                           width: 10,
@@ -81,7 +87,7 @@ class FeaturedGame extends StatelessWidget {
                         Expanded(
                             child: Container(
                           height: 69,
-                          color: Colors.blue,
+                          child: Image.asset(game.screenshots[3]),
                         )),
                       ],
                     ),
@@ -95,9 +101,7 @@ class FeaturedGame extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      GameTag(tag: "Top Seller"),
-                      GameTag(tag: "Top Seller"),
-                      GameTag(tag: "Top Seller")
+                      ...game.tags.map((e) => GameTag(tag: e)).toList()
                     ],
                   ),
                   Expanded(child: Container()),
@@ -111,12 +115,22 @@ class FeaturedGame extends StatelessWidget {
                             .bodySmall!
                             .copyWith(color: AppColors.highlightedText),
                       ),
-                      Row(children: [
-                        ...[Icons.window, Icons.apple, Icons.android].map((e) => Padding(
-                          padding: const EdgeInsets.only(left: 2),
-                          child: Icon(e, color: AppColors.darkText, size: 17,),
-                        ))
-                      ],)
+                      Row(
+                        children: [
+                          ...[Icons.window, Icons.apple]
+                              .where((icon) =>
+                                  (icon == Icons.window && game.for_windows) ||
+                                  (icon == Icons.apple && game.for_mac))
+                              .map((e) => Padding(
+                                    padding: const EdgeInsets.only(left: 2),
+                                    child: Icon(
+                                      e,
+                                      color: AppColors.darkText,
+                                      size: 17,
+                                    ),
+                                  ))
+                        ],
+                      )
                     ],
                   )
                 ],

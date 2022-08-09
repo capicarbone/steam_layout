@@ -16,7 +16,7 @@ class GameTag extends StatelessWidget {
         borderRadius: BorderRadius.circular(2),
       ),
       child: Text(
-        "Top Seller",
+        tag,
         style: Theme.of(context)
             .textTheme
             .bodySmall!
