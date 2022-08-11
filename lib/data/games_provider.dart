@@ -8,7 +8,9 @@ class GamesProvider {
   static final games = [
     Game(
       name: "F1 22",
-      base_price: "\$59.99",
+      price: Price(
+        59.99
+      ),
       for_mac: false,
       for_windows: true,
       assetsFolder: "f122",

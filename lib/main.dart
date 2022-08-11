@@ -163,7 +163,6 @@ class _SectionTab extends StatelessWidget {
   }
 }
 
-
 class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
@@ -188,7 +187,7 @@ class MyHomePage extends StatelessWidget {
                   child: Center(
                     child: Container(
                       height: 450,
-                      // width: 1850,
+
                       child: LimitedPromoBanner(),
                     ),
                   ),
@@ -209,7 +208,9 @@ class MyHomePage extends StatelessWidget {
                   ContentPadding(
                       child: SectionTitle(title: "Featured & Recommended")),
                   SteamPager(
-                    pages: GamesProvider.getRandomGames(1).map((e) => FeaturedGame(game: e)).toList(),
+                    pages: GamesProvider.getRandomGames(1)
+                        .map((e) => FeaturedGame(game: e))
+                        .toList(),
                   ),
                   SizedBox(
                     height: 46,
@@ -221,7 +222,7 @@ class MyHomePage extends StatelessWidget {
                   )),
                   SteamPager(
                     contentHeight: 390,
-                    pages: [OffersBanner()],
+                    pages: [OffersBanner(games: GamesProvider.getRandomGames(4),)],
                   ),
                   SizedBox(
                     height: 46,
@@ -493,9 +494,12 @@ class MyHomePage extends StatelessWidget {
                     child: Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(right: 12),
-                          child: Image.asset("images/footerLogo_valve_new.png", height: 25, width: 88,)
-                        ),
+                            padding: const EdgeInsets.only(right: 12),
+                            child: Image.asset(
+                              "images/footerLogo_valve_new.png",
+                              height: 25,
+                              width: 88,
+                            )),
                         Expanded(
                             child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

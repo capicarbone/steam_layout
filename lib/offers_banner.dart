@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:steam_flutter_layout/app_colors.dart';
 import 'package:steam_flutter_layout/game_tag.dart';
 
+import 'data/game.dart';
+
 class _PriceTag extends StatelessWidget {
-  const _PriceTag({Key? key}) : super(key: key);
+  final Price price;
+  const _PriceTag({Key? key,required this.price}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +18,7 @@ class _PriceTag extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 7),
             color: Color(0xff4c6b22),
             child: Text(
-              "-20%",
+              price.discount_formatted,
               style: Theme.of(context).textTheme.displayMedium!.copyWith(
                   fontSize: 26,
                   color: AppColors.discountTagText,
@@ -29,7 +32,7 @@ class _PriceTag extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  "\$39.99",
+                  price.base_price_formatted,
                   style: Theme.of(context).textTheme.displayMedium!.copyWith(
                       fontWeight: FontWeight.w300,
                       fontSize: 11,
@@ -37,7 +40,7 @@ class _PriceTag extends StatelessWidget {
                       color: Color(0xff7193a6)),
                 ),
                 Text(
-                  "\$31.99 usd".toUpperCase(),
+                  "${price.offer_price_formatted} ${price.currency}".toUpperCase(),
                   style: Theme.of(context).textTheme.displayMedium!.copyWith(
                       fontWeight: FontWeight.w300,
                       fontSize: 13,
@@ -53,7 +56,8 @@ class _PriceTag extends StatelessWidget {
 }
 
 class _GameSmallFormat extends StatelessWidget {
-  const _GameSmallFormat({Key? key}) : super(key: key);
+  final Game game;
+  const _GameSmallFormat({Key? key, required this.game}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +69,13 @@ class _GameSmallFormat extends StatelessWidget {
         children: [
           Container(
             height: 143,
-            color: Colors.red,
+            child: Image.asset(
+              game.horizontal_capsule_asset,
+              fit: BoxFit.cover,
+              width: double.infinity,
+              alignment: Alignment.topCenter,
+
+            ),
           ),
           Expanded(
               child: Container(
@@ -99,7 +109,7 @@ class _GameSmallFormat extends StatelessWidget {
                     )
                   ],
                 ),
-                _PriceTag()
+                _PriceTag(price: game.price,)
               ],
             ),
           ))
@@ -110,7 +120,8 @@ class _GameSmallFormat extends StatelessWidget {
 }
 
 class _Game extends StatelessWidget {
-  const _Game({Key? key}) : super(key: key);
+  final Game game;
+  const _Game({Key? key, required this.game}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +134,8 @@ class _Game extends StatelessWidget {
         children: [
           Container(
             height: 277,
-            color: Colors.red,
+            width: double.infinity,
+            child: Image.asset(game.vertical_capsule_asset, fit: BoxFit.cover, alignment: Alignment.topCenter),
           ),
           Expanded(
               child: Container(
@@ -145,7 +157,7 @@ class _Game extends StatelessWidget {
                       .displayMedium!
                       .copyWith(fontSize: 12),
                 ),
-                _PriceTag()
+                _PriceTag(price: game.price,)
               ],
             ),
           ))
@@ -156,7 +168,8 @@ class _Game extends StatelessWidget {
 }
 
 class OffersBanner extends StatelessWidget {
-  const OffersBanner({Key? key}) : super(key: key);
+  final List<Game> games;
+  const OffersBanner({Key? key, required this.games}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -164,19 +177,31 @@ class OffersBanner extends StatelessWidget {
       child: Row(
         children: [
           // Column 1
-          Expanded(child: _Game()),
+          Expanded(
+              child: _Game(
+            game: games[0],
+          )),
           // Column 2
-          Expanded(child: _Game()),
+          Expanded(
+              child: _Game(
+            game: games[1],
+          )),
           // Column 3
           Expanded(
             child: Container(
               child: Column(
                 children: [
-                  Expanded(child: _GameSmallFormat()),
+                  Expanded(
+                      child: _GameSmallFormat(
+                    game: games[2],
+                  )),
                   SizedBox(
                     height: 15,
                   ),
-                  Expanded(child: _GameSmallFormat()),
+                  Expanded(
+                      child: _GameSmallFormat(
+                    game: games[3],
+                  )),
                 ],
               ),
             ),
