@@ -29,7 +29,7 @@ class FeaturedGame extends StatelessWidget {
                   blurRadius: 10,
                   spreadRadius: 5)
             ]),
-            child: Image.asset(game.horizontal_capsule_asset),
+            child: Image.asset(game.horizontalCapsuleAsset),
           ),
           Expanded(
               child: Container(
@@ -119,8 +119,8 @@ class FeaturedGame extends StatelessWidget {
                         children: [
                           ...[Icons.window, Icons.apple]
                               .where((icon) =>
-                                  (icon == Icons.window && game.for_windows) ||
-                                  (icon == Icons.apple && game.for_mac))
+                                  (icon == Icons.window && game.forWindows) ||
+                                  (icon == Icons.apple && game.forMac))
                               .map((e) => Padding(
                                     padding: const EdgeInsets.only(left: 2),
                                     child: Icon(

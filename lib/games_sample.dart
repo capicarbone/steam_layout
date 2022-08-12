@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:steam_flutter_layout/app_colors.dart';
+import 'package:steam_flutter_layout/data/games_provider.dart';
 
+import 'data/game.dart';
 import 'game_tag.dart';
 
 class _GameItem extends StatelessWidget {
+  final Game game;
   final bool selected;
-  const _GameItem({Key? key, this.selected = false}) : super(key: key);
+  const _GameItem({Key? key, required this.game, this.selected = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +25,7 @@ class _GameItem extends StatelessWidget {
           children: [
             Container(
               width: 184,
-              color: Colors.blue,
+              child: Image.asset(game.horizontalSmallCapsuleAsset),
             ),
             Container(
               width: 324,
@@ -32,7 +36,7 @@ class _GameItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Trek to Yomi",
+                      game.name,
                       style: Theme.of(context)
                           .textTheme
                           .displayMedium!
@@ -50,13 +54,14 @@ class _GameItem extends StatelessWidget {
                           size: 15,
                           color: Color.fromRGBO(56, 73, 89, 1),
                         ),
+                        if (game.price.hasDiscount)
                         Container(
                           color: AppColors.green,
                           height: 18,
                           width: 40,
                           child: Center(
                             child: Text(
-                              "-25%",
+                              game.price.discountFormatted,
                               style: Theme.of(context)
                                   .textTheme
                                   .displayMedium!
@@ -69,7 +74,13 @@ class _GameItem extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      "Strategy, Action, 2D, Singleplayer",
+                      game.tags
+                          .asMap()
+                          .map((key, value) => MapEntry(key,
+                              key != game.tags.length - 1 ? "$value, " : value))
+                          .values
+                          .toList()
+                          .reduce((value, element) => value + element),
                       style: Theme.of(context)
                           .textTheme
                           .displayMedium!
@@ -87,15 +98,16 @@ class _GameItem extends StatelessWidget {
                 child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                if (game.price.hasDiscount)
                 Text(
-                  "\$24.99",
+                  game.price.basePriceFormatted,
                   style: Theme.of(context).textTheme.displayMedium!.copyWith(
                       color: selected ? Color(0xff7193a6) : Color(0xff7193a6),
                       fontSize: 11,
                       decoration: TextDecoration.lineThrough),
                 ),
                 Text(
-                  "\$24.99",
+                  game.price.currentPriceFormatted,
                   style: Theme.of(context).textTheme.displayMedium!.copyWith(
                       fontSize: 13,
                       color: selected ? Color(0xff263645) : Color(0xffacdbf5)),
@@ -110,7 +122,8 @@ class _GameItem extends StatelessWidget {
 }
 
 class _GameList extends StatelessWidget {
-  const _GameList({Key? key}) : super(key: key);
+  final List<Game> games;
+  const _GameList({Key? key, required this.games}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -153,30 +166,40 @@ class _GameList extends StatelessWidget {
             ],
           ),
         ),
-        _GameItem(
-          selected: true,
-        ),
-        _GameItem(),
-        _GameItem(),
-        _GameItem(),
-        _GameItem(),
-        _GameItem(),
-        _GameItem(),
-        _GameItem(),
-        _GameItem(),
-        _GameItem(),
+        ...games
+            .asMap()
+            .map((key, value) => MapEntry(
+                key,
+                _GameItem(
+                  game: value,
+                  selected: key == 0,
+                )))
+            .values
+            .toList()
+        // _GameItem(
+        //   selected: true,
+        // ),
+        // _GameItem(),
+        // _GameItem(),
+        // _GameItem(),
+        // _GameItem(),
+        // _GameItem(),
+        // _GameItem(),
+        // _GameItem(),
+        // _GameItem(),
+        // _GameItem(),
       ],
     );
   }
 }
 
 class _GamePreview extends StatelessWidget {
-  const _GamePreview({Key? key}) : super(key: key);
+  final Game game;
+  const _GamePreview({Key? key, required this.game}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-
       decoration: BoxDecoration(
         color: Color(0xff93b7cf),
       ),
@@ -188,7 +211,7 @@ class _GamePreview extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 12),
               child: Text(
-                "Track To Yumi",
+                game.name,
                 style: Theme.of(context).textTheme.displayMedium!.copyWith(
                     fontSize: 21, color: Color.fromRGBO(38, 54, 59, 1)),
               ),
@@ -220,26 +243,21 @@ class _GamePreview extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Row(children: [
-              GameTag(
-                tag: "Top Seller",
-                lightBackground: true,
-              ),GameTag(
-                tag: "Mining",
-                lightBackground: true,
-              ),GameTag(
-                tag: "Simulation",
-                lightBackground: true,
-              ),
-            ]),
-            SizedBox(height: 6,),
+            Row(children: game.tags.map((e) => GameTag(
+              tag: e,
+              lightBackground: true,
+            ),).toList()),
+            SizedBox(
+              height: 6,
+            ),
             Column(
-              children: [
-                Container(height: 150, width: 274, color: Colors.blue, margin: EdgeInsets.only(bottom: 3),),
-                Container(height: 150, width: 274, color: Colors.blue, margin: EdgeInsets.only(bottom: 3),),
-                Container(height: 150, width: 274, color: Colors.blue, margin: EdgeInsets.only(bottom: 3),),
-                Container(height: 150, width: 274, color: Colors.blue, margin: EdgeInsets.only(bottom: 3),),
-              ],
+              children: game.screenshots.map((e) => Container(
+                height: 150,
+                width: 274,
+                color: Colors.blue,
+                margin: EdgeInsets.only(bottom: 3),
+                child: Image.asset(e, fit: BoxFit.cover,),
+              ),).toList(),
             )
           ],
         ),
@@ -253,6 +271,7 @@ class GamesSample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var games = GamesProvider.getMany(10);
     return Padding(
       padding: const EdgeInsets.only(top: 9),
       child: Row(
@@ -260,9 +279,11 @@ class GamesSample extends StatelessWidget {
         children: [
           Container(
             width: 632,
-            child: _GameList(),
+            child: _GameList(
+              games: games,
+            ),
           ),
-          Expanded(child: _GamePreview())
+          Expanded(child: _GamePreview(game: games[0]))
         ],
       ),
     );

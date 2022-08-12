@@ -30,7 +30,7 @@ class SimpleGameCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Image.asset(
-                  constraints.maxHeight > constraints.maxWidth ? game.vertical_capsule_asset : game.horizontal_capsule_asset,
+                  constraints.maxHeight > constraints.maxWidth ? game.verticalCapsuleAsset : game.horizontalCapsuleAsset,
                   fit: BoxFit.cover,
                   alignment: Alignment.topCenter,
                   width: double.infinity,
@@ -48,7 +48,7 @@ class SimpleGameCard extends StatelessWidget {
                       height: 17,
                       padding: EdgeInsets.symmetric(horizontal: 4),
                       child: Text(
-                        game.price.current_price_formatted,
+                        game.price.currentPriceFormatted,
                         style: Theme.of(context)
                             .textTheme
                             .displayMedium!

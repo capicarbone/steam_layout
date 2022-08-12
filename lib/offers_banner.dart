@@ -18,7 +18,7 @@ class _PriceTag extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 7),
             color: Color(0xff4c6b22),
             child: Text(
-              price.discount_formatted,
+              price.discountFormatted,
               style: Theme.of(context).textTheme.displayMedium!.copyWith(
                   fontSize: 26,
                   color: AppColors.discountTagText,
@@ -32,7 +32,7 @@ class _PriceTag extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  price.base_price_formatted,
+                  price.basePriceFormatted,
                   style: Theme.of(context).textTheme.displayMedium!.copyWith(
                       fontWeight: FontWeight.w300,
                       fontSize: 11,
@@ -40,7 +40,7 @@ class _PriceTag extends StatelessWidget {
                       color: Color(0xff7193a6)),
                 ),
                 Text(
-                  "${price.offer_price_formatted} ${price.currency}".toUpperCase(),
+                  "${price.offerPriceFormatted} ${price.currency}".toUpperCase(),
                   style: Theme.of(context).textTheme.displayMedium!.copyWith(
                       fontWeight: FontWeight.w300,
                       fontSize: 13,
@@ -70,7 +70,7 @@ class _GameSmallFormat extends StatelessWidget {
           Container(
             height: 143,
             child: Image.asset(
-              game.horizontal_capsule_asset,
+              game.horizontalCapsuleAsset,
               fit: BoxFit.cover,
               width: double.infinity,
               alignment: Alignment.topCenter,
@@ -135,7 +135,7 @@ class _Game extends StatelessWidget {
           Container(
             height: 277,
             width: double.infinity,
-            child: Image.asset(game.vertical_capsule_asset, fit: BoxFit.cover, alignment: Alignment.topCenter),
+            child: Image.asset(game.verticalCapsuleAsset, fit: BoxFit.cover, alignment: Alignment.topCenter),
           ),
           Expanded(
               child: Container(

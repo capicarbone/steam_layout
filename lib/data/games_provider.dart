@@ -11,8 +11,8 @@ class GamesProvider {
       price: Price(
         59.99
       ),
-      for_mac: false,
-      for_windows: true,
+      forMac: false,
+      forWindows: true,
       assetsFolder: "f122",
       tags: ["Racing", "Sports", "Multiplayer", "VR"],
     )
