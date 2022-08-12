@@ -3,6 +3,8 @@ class Price {
   double offer_price = 0;
   String currency = "USD";
 
+  get current_price => offer_price > 0 ? offer_price : base_price;
+
   get has_discount => offer_price > 0;
 
   get discount => offer_price / base_price;
@@ -11,6 +13,9 @@ class Price {
 
   get base_price_formatted => "\$$base_price";
   get offer_price_formatted => "\$$offer_price";
+  get current_price_formatted => "\$$current_price";
+
+
 
   Price(this.base_price, [this.offer_price = 0, this.currency = "USD"]);
 }

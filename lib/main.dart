@@ -208,7 +208,7 @@ class MyHomePage extends StatelessWidget {
                   ContentPadding(
                       child: SectionTitle(title: "Featured & Recommended")),
                   SteamPager(
-                    pages: GamesProvider.getRandomGames(1)
+                    pages: GamesProvider.getMany(1)
                         .map((e) => FeaturedGame(game: e))
                         .toList(),
                   ),
@@ -222,7 +222,7 @@ class MyHomePage extends StatelessWidget {
                   )),
                   SteamPager(
                     contentHeight: 390,
-                    pages: [OffersBanner(games: GamesProvider.getRandomGames(4),)],
+                    pages: [OffersBanner(games: GamesProvider.getMany(4),)],
                   ),
                   SizedBox(
                     height: 46,
@@ -276,24 +276,10 @@ class MyHomePage extends StatelessWidget {
                       Container(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                                width: 229,
-                                height: 134,
-                                child: SimpleGameCard()),
-                            Container(
-                                width: 229,
-                                height: 134,
-                                child: SimpleGameCard()),
-                            Container(
-                                width: 229,
-                                height: 134,
-                                child: SimpleGameCard()),
-                            Container(
-                                width: 229,
-                                height: 134,
-                                child: SimpleGameCard()),
-                          ],
+                          children: GamesProvider.getMany(4).map((e) => Container(
+                              width: 229,
+                              height: 134,
+                              child: SimpleGameCard(game: e,)),).toList()
                         ),
                       )
                     ],
@@ -355,16 +341,10 @@ class MyHomePage extends StatelessWidget {
                   pages: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                            width: 229, height: 134, child: SimpleGameCard()),
-                        Container(
-                            width: 229, height: 134, child: SimpleGameCard()),
-                        Container(
-                            width: 229, height: 134, child: SimpleGameCard()),
-                        Container(
-                            width: 229, height: 134, child: SimpleGameCard()),
-                      ],
+                        children: GamesProvider.getMany(4).map((e) => Container(
+                            width: 229,
+                            height: 134,
+                            child: SimpleGameCard(game: e,)),).toList()
                     ),
                   ],
                   contentHeight: 134,
@@ -379,7 +359,7 @@ class MyHomePage extends StatelessWidget {
               children: [
                 ContentPadding(
                     child: SectionTitle(title: "Updates and Offers")),
-                ContentPadding(child: UpdatesAndOffers()),
+                ContentPadding(child: UpdatesAndOffers(featuredGame: GamesProvider.getOne(), games: GamesProvider.getMany(2),)),
               ],
             )),
             SizedBox(

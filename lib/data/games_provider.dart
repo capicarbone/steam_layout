@@ -18,7 +18,11 @@ class GamesProvider {
     )
   ];
 
-  static List<Game> getRandomGames(int count) {
+  static List<Game> getMany(int count) {
     return List<Game>.filled(count, games[0]);
+  }
+  
+  static getOne() {
+    return getMany(1)[0];
   }
 }
