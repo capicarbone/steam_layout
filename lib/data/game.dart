@@ -9,7 +9,7 @@ class Price {
 
   get discount => offerPrice / basePrice;
 
-  get discountFormatted => "-$discount%";
+  get discountFormatted => "-${((discount * 100) as double).toStringAsFixed(0)}%";
 
   get basePriceFormatted => "\$$basePrice";
   get offerPriceFormatted => "\$$offerPrice";

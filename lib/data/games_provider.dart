@@ -9,7 +9,8 @@ class GamesProvider {
     Game(
       name: "F1 22",
       price: Price(
-        59.99
+        59.99,
+        29.99
       ),
       forMac: false,
       forWindows: true,

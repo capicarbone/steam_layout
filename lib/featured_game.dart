@@ -4,6 +4,29 @@ import 'package:steam_flutter_layout/game_tag.dart';
 
 import 'data/game.dart';
 
+class _Screenshot extends StatelessWidget {
+  final String asset;
+  const _Screenshot({Key? key, required this.asset}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          child: Image.asset(
+            colorBlendMode: BlendMode.dstATop,
+            color: Colors.black.withOpacity(0.6),
+            asset,
+            height: 69,
+            width: 162,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class _GameDetails extends StatelessWidget {
   final Game game;
   const _GameDetails({Key? key, required this.game}) : super(key: key);
@@ -37,53 +60,36 @@ class _GameDetails extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 13),
               child: Row(
                 children: [
-                  Container(
-                    child: Image.asset(
-                      game.screenshots[0],
-                      height: 69,
-                      width: 162,
-                      fit: BoxFit.cover,
+                  Expanded(
+                    child: _Screenshot(
+                      asset: game.screenshots[0],
                     ),
                   ),
                   SizedBox(
                     width: 10,
                   ),
-                  Expanded(
-                      child: Container(
-                    child: Image.asset(
-                      game.screenshots[1],
-                      height: 69,
-                      width: 162,
-                      fit: BoxFit.cover,
-                    ),
-                  )),
+                  _Screenshot(
+                    asset: game.screenshots[1],
+                  ),
                 ],
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 13),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Container(
-                    child: Image.asset(
-                      game.screenshots[2],
-                      height: 69,
-                      width: 162,
-                      fit: BoxFit.cover,
+                  Expanded(
+                    child: _Screenshot(
+                      asset: game.screenshots[2],
                     ),
                   ),
                   SizedBox(
                     width: 10,
                   ),
-                  Expanded(
-                      child: Container(
-                    child: Image.asset(
-                      game.screenshots[3],
-                      height: 69,
-                      width: 162,
-                      fit: BoxFit.cover,
-                    ),
-                  )),
+                  _Screenshot(
+                    asset: game.screenshots[3],
+                  ),
                 ],
               ),
             ),
@@ -109,13 +115,62 @@ class _GameDetails extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          game.price.currentPriceFormatted,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall!
-                              .copyWith(color: AppColors.highlightedText),
-                        ),
+                        if (game.price.hasDiscount)
+                          Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 5),
+                                color: AppColors.green,
+                                height: 15,
+                                child: Text(
+                                  game.price.discountFormatted,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall!
+                                      .copyWith(
+                                    fontSize: 12,
+                                          color: AppColors.greenLight),
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 5, vertical: 1),
+                                color: Colors.black,
+                                child: Text(
+                                  game.price.basePriceFormatted,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall!
+                                      .copyWith(
+                                          color: Color(0xff7193a6),
+                                          decoration:
+                                              TextDecoration.lineThrough),
+                                ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 5, vertical: 1),
+                                color: Colors.black,
+                                child: Text(
+                                  game.price.currentPriceFormatted,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall!
+                                      .copyWith(
+                                          color: AppColors.highlightedText),
+                                ),
+                              ),
+                            ],
+                          ),
+                        if (!game.price.hasDiscount)
+                          Text(
+                            game.price.currentPriceFormatted,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall!
+                                .copyWith(color: AppColors.highlightedText),
+                          ),
                         Row(
                           children: [
                             ...[Icons.window, Icons.apple]
@@ -172,8 +227,7 @@ class FeaturedGame extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Container(
                 width: 616,
-                decoration: BoxDecoration(
-                    boxShadow: <BoxShadow>[
+                decoration: BoxDecoration(boxShadow: <BoxShadow>[
                   BoxShadow(
                       color: Colors.black,
                       offset: Offset(0, 0),
