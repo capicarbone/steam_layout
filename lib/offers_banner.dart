@@ -6,7 +6,7 @@ import 'data/game.dart';
 
 class _PriceTag extends StatelessWidget {
   final Price price;
-  const _PriceTag({Key? key,required this.price}) : super(key: key);
+  const _PriceTag({Key? key, required this.price}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,8 @@ class _PriceTag extends StatelessWidget {
                       color: Color(0xff7193a6)),
                 ),
                 Text(
-                  "${price.offerPriceFormatted} ${price.currency}".toUpperCase(),
+                  "${price.offerPriceFormatted} ${price.currency}"
+                      .toUpperCase(),
                   style: Theme.of(context).textTheme.displayMedium!.copyWith(
                       fontWeight: FontWeight.w300,
                       fontSize: 13,
@@ -74,7 +75,6 @@ class _GameSmallFormat extends StatelessWidget {
               fit: BoxFit.cover,
               width: double.infinity,
               alignment: Alignment.topCenter,
-
             ),
           ),
           Expanded(
@@ -109,7 +109,9 @@ class _GameSmallFormat extends StatelessWidget {
                     )
                   ],
                 ),
-                _PriceTag(price: game.price,)
+                _PriceTag(
+                  price: game.price,
+                )
               ],
             ),
           ))
@@ -135,13 +137,21 @@ class _Game extends StatelessWidget {
           Container(
             height: 277,
             width: double.infinity,
-            child: Image.asset(game.verticalCapsuleAsset, fit: BoxFit.cover, alignment: Alignment.topCenter),
+            child: Image.asset(game.verticalCapsuleAsset,
+                fit: BoxFit.cover, alignment: Alignment.topCenter),
           ),
           Expanded(
               child: Container(
             width: double.infinity,
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            color: Color(0xff1c6f95),
+            decoration: BoxDecoration(
+                color: Color(0xff1c6f95),
+              image: DecorationImage(
+                fit: BoxFit.fitWidth,
+                image: AssetImage('images/background_spotlight.jpg')
+              )
+            ),
+
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -155,9 +165,11 @@ class _Game extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .displayMedium!
-                      .copyWith(fontSize: 12),
+                      .copyWith(fontSize: 12, color: Color(0xffacdbf5)),
                 ),
-                _PriceTag(price: game.price,)
+                _PriceTag(
+                  price: game.price,
+                )
               ],
             ),
           ))
