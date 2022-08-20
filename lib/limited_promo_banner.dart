@@ -32,13 +32,15 @@ class _LimitedPromoBannerState extends State<LimitedPromoBanner> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: _controller.value.isInitialized
-          ? AspectRatio(
-              aspectRatio: _controller.value.aspectRatio,
-              child: VideoPlayer(_controller),
-            )
-          : Container(),
+    return OverflowBox(
+      minHeight: 450,
+      minWidth: 1850,
+      maxHeight: 450,
+      maxWidth: 1850,
+      child: Container(
+        // TODO add background image
+        child: _controller.value.isInitialized ? VideoPlayer(_controller) : Container(),
+      ),
     );
   }
 }
