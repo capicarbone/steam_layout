@@ -111,6 +111,90 @@ class SectionContainer extends StatelessWidget {
   }
 }
 
+class _SignInSection extends StatelessWidget {
+  const _SignInSection({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 28,
+        ),
+        Text(
+          "Sign in to view personalized recommendations",
+          style: Theme.of(context)
+              .textTheme
+              .bodyText1!
+              .copyWith(fontSize: 15, color: Color(0xff8f98a0)),
+        ),
+        SizedBox(
+          height: 17,
+        ),
+        Container(
+          padding: EdgeInsets.all(1),
+          // color: Colors.blue,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              border: Border.all(width: 2, color: Color(0xff172030)),
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: <Color>[
+                    Color(0xffa4d007),
+                    Color(0xff536904),
+                  ],
+                  stops: <double>[
+                    0.05,
+                    0.95
+                  ])),
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 7, horizontal: 16),
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                  Color(0xff799905),
+                  Color(0xff536904),
+                ],
+                    stops: [
+                  0.05,
+                  0.95
+                ])),
+            child: Text(
+              "Sign In",
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText1!
+                  .copyWith(color: Color(0xffD2E885)),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 26,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 21),
+          child: RichText(
+            text: TextSpan(
+                text: "Or ",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText1!
+                    .copyWith(color: Color(0xff8f98a0), fontSize: 15),
+                children: const <TextSpan>[
+                  TextSpan(
+                      text: 'sign up', style: TextStyle(color: Colors.white)),
+                  TextSpan(text: " and join Steam for free")
+                ]),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class _BluePanel extends StatelessWidget {
   final String text;
   const _BluePanel({Key? key, required this.text}) : super(key: key);
@@ -187,7 +271,6 @@ class MyHomePage extends StatelessWidget {
                   child: Center(
                     child: Container(
                       height: 450,
-
                       child: LimitedPromoBanner(),
                     ),
                   ),
@@ -223,24 +306,19 @@ class MyHomePage extends StatelessWidget {
                   )),
                   SteamPager(
                     contentHeight: 390,
-                    pages: [OffersBanner(games: GamesProvider.getMany(4),)],
-                  ),
-                  SizedBox(
-                    height: 46,
-                  ),
-                  ContentPadding(
-                      child: SectionTitle(
-                    title: "The Community Recommends",
-                    subtitle: "These games today",
-                    links: ['Customize, Explore By tag, & more'],
-                  )),
-                  SteamPager(
                     pages: [
-                      Container(
-                        color: Colors.black.withOpacity(0.5),
+                      OffersBanner(
+                        games: GamesProvider.getMany(4),
                       )
                     ],
                   ),
+                  SizedBox(
+                    height: 76,
+                  ),
+                  ContentPadding(child: Container(
+                    width: double.infinity,
+                    color: Colors.black.withOpacity(0.2),
+                      child: _SignInSection())),
                   SizedBox(
                     height: 76,
                   ),
@@ -276,12 +354,17 @@ class MyHomePage extends StatelessWidget {
                     pages: [
                       Container(
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: GamesProvider.getMany(4).map((e) => Container(
-                              width: 229,
-                              height: 134,
-                              child: SimpleGameCard(game: e,)),).toList()
-                        ),
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: GamesProvider.getMany(4)
+                                .map(
+                                  (e) => Container(
+                                      width: 229,
+                                      height: 134,
+                                      child: SimpleGameCard(
+                                        game: e,
+                                      )),
+                                )
+                                .toList()),
                       )
                     ],
                     contentHeight: 134,
@@ -341,12 +424,17 @@ class MyHomePage extends StatelessWidget {
                 SteamPager(
                   pages: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: GamesProvider.getMany(4).map((e) => Container(
-                            width: 229,
-                            height: 134,
-                            child: SimpleGameCard(game: e,)),).toList()
-                    ),
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: GamesProvider.getMany(4)
+                            .map(
+                              (e) => Container(
+                                  width: 229,
+                                  height: 134,
+                                  child: SimpleGameCard(
+                                    game: e,
+                                  )),
+                            )
+                            .toList()),
                   ],
                   contentHeight: 134,
                 )
@@ -360,7 +448,11 @@ class MyHomePage extends StatelessWidget {
               children: [
                 ContentPadding(
                     child: SectionTitle(title: "Updates and Offers")),
-                ContentPadding(child: UpdatesAndOffers(featuredGame: GamesProvider.getOne(), games: GamesProvider.getMany(2),)),
+                ContentPadding(
+                    child: UpdatesAndOffers(
+                  featuredGame: GamesProvider.getOne(),
+                  games: GamesProvider.getMany(2),
+                )),
               ],
             )),
             SizedBox(
@@ -380,82 +472,7 @@ class MyHomePage extends StatelessWidget {
                           .displayMedium!
                           .copyWith(color: Color(0xff67c1f5), fontSize: 24),
                     ),
-                    SizedBox(
-                      height: 28,
-                    ),
-                    Text(
-                      "Sign in to view personalized recommendations",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1!
-                          .copyWith(fontSize: 15, color: Color(0xff8f98a0)),
-                    ),
-                    SizedBox(
-                      height: 17,
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(1),
-                      // color: Colors.blue,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          border:
-                              Border.all(width: 2, color: Color(0xff172030)),
-                          gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: <Color>[
-                                Color(0xffa4d007),
-                                Color(0xff536904),
-                              ],
-                              stops: <double>[
-                                0.05,
-                                0.95
-                              ])),
-                      child: Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 7, horizontal: 16),
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [
-                              Color(0xff799905),
-                              Color(0xff536904),
-                            ],
-                                stops: [
-                              0.05,
-                              0.95
-                            ])),
-                        child: Text(
-                          "Sign In",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(color: Color(0xffD2E885)),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 26,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 21),
-                      child: RichText(
-                        text: TextSpan(
-                            text: "Or ",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1!
-                                .copyWith(
-                                    color: Color(0xff8f98a0), fontSize: 15),
-                            children: const <TextSpan>[
-                              TextSpan(
-                                  text: 'sign up',
-                                  style: TextStyle(color: Colors.white)),
-                              TextSpan(text: " and join Steam for free")
-                            ]),
-                      ),
-                    ),
+                    _SignInSection()
                   ],
                 )),
             SectionContainer(
