@@ -315,10 +315,11 @@ class MyHomePage extends StatelessWidget {
                   SizedBox(
                     height: 76,
                   ),
-                  ContentPadding(child: Container(
-                    width: double.infinity,
-                    color: Colors.black.withOpacity(0.2),
-                      child: _SignInSection())),
+                  ContentPadding(
+                      child: Container(
+                          width: double.infinity,
+                          color: Colors.black.withOpacity(0.2),
+                          child: _SignInSection())),
                   SizedBox(
                     height: 76,
                   ),
