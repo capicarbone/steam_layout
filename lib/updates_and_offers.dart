@@ -25,21 +25,25 @@ class UpdatesAndOffers extends StatelessWidget {
           Expanded(
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: games
+                children: [0,3]
                     .map(
                       (e) => Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: List.generate(
                             3,
-                            (index) => Expanded(
-                                  child: Container(
-                                    padding: EdgeInsets.only(left: 10),
-                                    height: 206,
-                                    child: SimpleGameCard(
-                                      game: e,
-                                    ),
-                                  ),
-                                )),
+                            (index) => Builder(
+                              builder: (context) {
+                                return Expanded(
+                                      child: Container(
+                                        padding: EdgeInsets.only(left: 10),
+                                        height: 206,
+                                        child: SimpleGameCard(
+                                          game: games[e + index],
+                                        ),
+                                      ),
+                                    );
+                              }
+                            )),
                       ),
                     )
                     .toList()),

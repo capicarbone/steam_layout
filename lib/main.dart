@@ -450,10 +450,15 @@ class MyHomePage extends StatelessWidget {
                 ContentPadding(
                     child: SectionTitle(title: "Updates and Offers")),
                 ContentPadding(
-                    child: UpdatesAndOffers(
-                  featuredGame: GamesProvider.getOne(),
-                  games: GamesProvider.getMany(2),
-                )),
+                    child: Builder(
+                      builder: (context) {
+                        var games = GamesProvider.getMany(7);
+                        return UpdatesAndOffers(
+                  featuredGame: games[0],
+                  games: games.sublist(1, 7),
+                );
+                      }
+                    )),
               ],
             )),
             SizedBox(
