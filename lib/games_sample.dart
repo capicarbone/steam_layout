@@ -17,105 +17,126 @@ class _GameItem extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(bottom: 5),
       height: 69,
-      color: Color(0xff93b7cf).withOpacity(selected ? 1 : 0),
-      child: Container(
-        margin: EdgeInsets.only(right: 14),
-        color: Color(0x00000000).withOpacity(selected ? 0.0 : 0.2),
-        child: Row(
-          children: [
-            Container(
-              width: 184,
-              child: Image.asset(game.horizontalSmallCapsuleAsset),
-            ),
-            Container(
-              width: 324,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      game.name,
-                      style: Theme.of(context)
-                          .textTheme
-                          .displayMedium!
-                          .copyWith(
-                              fontSize: 15,
-                              color: selected
-                                  ? Color(0xff10161b)
-                                  : Color(0xffc7d5e0)),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Icon(
-                          Icons.android,
-                          size: 15,
-                          color: Color.fromRGBO(56, 73, 89, 1),
-                        ),
-                        if (game.price.hasDiscount)
-                        Container(
-                          color: AppColors.green,
-                          height: 18,
-                          width: 40,
-                          child: Center(
-                            child: Text(
-                              game.price.discountFormatted,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .displayMedium!
-                                  .copyWith(
-                                      color: AppColors.discountTagText,
-                                      fontSize: 14),
-                            ),
+      decoration: BoxDecoration(
+        color: Color(0xff93b7cf).withOpacity(selected ? 1 : 0),
+      ),
+      child: Row(
+        children: [
+          Image.asset(game.horizontalSmallCapsuleAsset,
+              width: 184, fit: BoxFit.fill),
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.only(right: 14),
+              decoration: BoxDecoration(
+                color: Color(0x00000000).withOpacity(selected ? 0.0 : 0.2),
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: 324,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 7),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            game.name,
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayMedium!
+                                .copyWith(
+                                    fontSize: 15,
+                                    color: selected
+                                        ? Color(0xff10161b)
+                                        : Color(0xffc7d5e0)),
                           ),
-                        )
-                      ],
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Icon(
+                                Icons.android,
+                                size: 15,
+                                color: Color.fromRGBO(56, 73, 89, 1),
+                              ),
+                              if (game.price.hasDiscount)
+                                Container(
+                                  color: AppColors.green,
+                                  height: 18,
+                                  width: 40,
+                                  child: Center(
+                                    child: Text(
+                                      game.price.discountFormatted,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displayMedium!
+                                          .copyWith(
+                                              color: AppColors.discountTagText,
+                                              fontSize: 14),
+                                    ),
+                                  ),
+                                )
+                            ],
+                          ),
+                          Text(
+                            game.tags
+                                .asMap()
+                                .map((key, value) => MapEntry(
+                                    key,
+                                    key != game.tags.length - 1
+                                        ? "$value, "
+                                        : value))
+                                .values
+                                .toList()
+                                .reduce((value, element) => value + element),
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayMedium!
+                                .copyWith(
+                                    fontSize: 12,
+                                    color: selected
+                                        ? Color(0xff384959)
+                                        : Color.fromRGBO(56, 73, 89, 1)),
+                          ),
+                        ],
+                      ),
                     ),
-                    Text(
-                      game.tags
-                          .asMap()
-                          .map((key, value) => MapEntry(key,
-                              key != game.tags.length - 1 ? "$value, " : value))
-                          .values
-                          .toList()
-                          .reduce((value, element) => value + element),
-                      style: Theme.of(context)
-                          .textTheme
-                          .displayMedium!
-                          .copyWith(
-                              fontSize: 12,
-                              color: selected
-                                  ? Color(0xff384959)
-                                  : Color.fromRGBO(56, 73, 89, 1)),
-                    ),
-                  ],
-                ),
+                  ),
+                  Expanded(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (game.price.hasDiscount)
+                        Text(
+                          game.price.basePriceFormatted,
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayMedium!
+                              .copyWith(
+                                  color: selected
+                                      ? Color(0xff7193a6)
+                                      : Color(0xff7193a6),
+                                  fontSize: 11,
+                                  decoration: TextDecoration.lineThrough),
+                        ),
+                      Text(
+                        game.price.currentPriceFormatted,
+                        style: Theme.of(context)
+                            .textTheme
+                            .displayMedium!
+                            .copyWith(
+                                fontSize: 13,
+                                color: selected
+                                    ? Color(0xff263645)
+                                    : Color(0xffacdbf5)),
+                      ),
+                    ],
+                  ))
+                ],
               ),
             ),
-            Expanded(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (game.price.hasDiscount)
-                Text(
-                  game.price.basePriceFormatted,
-                  style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                      color: selected ? Color(0xff7193a6) : Color(0xff7193a6),
-                      fontSize: 11,
-                      decoration: TextDecoration.lineThrough),
-                ),
-                Text(
-                  game.price.currentPriceFormatted,
-                  style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                      fontSize: 13,
-                      color: selected ? Color(0xff263645) : Color(0xffacdbf5)),
-                ),
-              ],
-            ))
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -176,18 +197,6 @@ class _GameList extends StatelessWidget {
                 )))
             .values
             .toList()
-        // _GameItem(
-        //   selected: true,
-        // ),
-        // _GameItem(),
-        // _GameItem(),
-        // _GameItem(),
-        // _GameItem(),
-        // _GameItem(),
-        // _GameItem(),
-        // _GameItem(),
-        // _GameItem(),
-        // _GameItem(),
       ],
     );
   }
@@ -243,21 +252,33 @@ class _GamePreview extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Row(children: game.tags.map((e) => GameTag(
-              tag: e,
-              lightBackground: true,
-            ),).toList()),
+            Row(
+                children: game.tags
+                    .map(
+                      (e) => GameTag(
+                        tag: e,
+                        lightBackground: true,
+                      ),
+                    )
+                    .toList()),
             SizedBox(
               height: 6,
             ),
             Column(
-              children: game.screenshots.map((e) => Container(
-                height: 150,
-                width: 274,
-                color: Colors.blue,
-                margin: EdgeInsets.only(bottom: 3),
-                child: Image.asset(e, fit: BoxFit.cover,),
-              ),).toList(),
+              children: game.screenshots
+                  .map(
+                    (e) => Container(
+                      height: 150,
+                      width: 274,
+                      color: Colors.blue,
+                      margin: EdgeInsets.only(bottom: 3),
+                      child: Image.asset(
+                        e,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  )
+                  .toList(),
             )
           ],
         ),
@@ -274,18 +295,25 @@ class GamesSample extends StatelessWidget {
     var games = GamesProvider.getMany(10);
     return Padding(
       padding: const EdgeInsets.only(top: 9),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 632,
-            child: _GameList(
-              games: games,
+      child: LayoutBuilder(builder: (context, constraints) {
+        // Used a stack to deal with antialiasing "issue" https://github.com/flutter/flutter/issues/17084#issuecomment-385718108
+        return Stack(
+          children: [
+            Container(
+              width: 633,
+              child: _GameList(
+                games: games,
+              ),
             ),
-          ),
-          Expanded(child: _GamePreview(game: games[0]))
-        ],
-      ),
+            Positioned(
+              right: 0,
+              child: Container(
+                  width: constraints.maxWidth - 632,
+                  child: _GamePreview(game: games[0])),
+            )
+          ],
+        );
+      }),
     );
   }
 }
