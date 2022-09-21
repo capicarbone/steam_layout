@@ -6,50 +6,93 @@ class _StreamItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: Color(0xff323e4c),
-          boxShadow: <BoxShadow>[
-            BoxShadow(color: Colors.black, blurRadius: 5)
-          ]),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            color: Colors.blue,
-            height: 143,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Forza Horizon 5",
-                  style: Theme.of(context)
-                      .textTheme
-                      .displayMedium!
-                      .copyWith(fontSize: 13, color: Color(0xffc7d5e0)),
-                ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 6),
-                      child: Icon(Icons.people, color: Color(0xffc7d5e0), size: 16,),
+    return LayoutBuilder(builder: (context, constraints) {
+      return Container(
+        decoration: BoxDecoration(
+            color: Color(0xff323e4c),
+            boxShadow: <BoxShadow>[
+              BoxShadow(color: Colors.black, blurRadius: 5)
+            ]),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              height: 143,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Image.asset(
+                    "games/acc/streaming.jpg",
+                    fit: BoxFit.fitWidth,
+                    width: constraints.maxWidth,
+                  ),
+                  Positioned(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 3, horizontal: 5),
+                      margin: EdgeInsets.all(5),
+                      decoration: BoxDecoration(color: Colors.black),
+                      child: Row(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(right: 7),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Color.fromRGBO(169, 72, 71, 1)),
+                            height: 10,
+                            width: 10,
+                          ),
+                          Text(
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayMedium!
+                                  .copyWith(fontSize: 12, color: Colors.white, letterSpacing: 1),
+                              "Live".toUpperCase()),
+                        ],
+                      ),
                     ),
-                    Text("1,322",
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayMedium!
-                            .copyWith(fontSize: 13, color: Color(0xffc7d5e0)))
-                  ],
-                )
-              ],
+                    top: 0,
+                    left: 0,
+                  ),
+                  Image.asset("images/play_icon80.png")
+                ],
+              ),
             ),
-          )
-        ],
-      ),
-    );
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Forza Horizon 5",
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayMedium!
+                        .copyWith(fontSize: 13, color: Color(0xffc7d5e0)),
+                  ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 6),
+                        child: Icon(
+                          Icons.people,
+                          color: Color(0xffc7d5e0),
+                          size: 16,
+                        ),
+                      ),
+                      Text("1,322",
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayMedium!
+                              .copyWith(fontSize: 13, color: Color(0xffc7d5e0)))
+                    ],
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      );
+    });
   }
 }
 
