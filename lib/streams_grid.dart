@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import 'data/game.dart';
+
 class _StreamItem extends StatelessWidget {
-  const _StreamItem({Key? key}) : super(key: key);
+  final Game game;
+  const _StreamItem({Key? key, required this.game}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,7 @@ class _StreamItem extends StatelessWidget {
                 alignment: Alignment.center,
                 children: [
                   Image.asset(
-                    "games/acc/streaming.jpg",
+                    game.streamingScreenshot,
                     fit: BoxFit.fitWidth,
                     width: constraints.maxWidth,
                   ),
@@ -97,7 +100,8 @@ class _StreamItem extends StatelessWidget {
 }
 
 class StreamsGrid extends StatelessWidget {
-  const StreamsGrid({Key? key}) : super(key: key);
+  late List<Game> games;
+  StreamsGrid({Key? key, required this.games}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +113,7 @@ class StreamsGrid extends StatelessWidget {
         crossAxisSpacing: 5,
         crossAxisCount: 3,
         mainAxisSpacing: 8,
-        children: List.generate(6, (index) => _StreamItem()),
+        children: games.map((e) => _StreamItem(game: e,)).toList(),
       ),
     );
   }

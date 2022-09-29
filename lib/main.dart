@@ -411,7 +411,10 @@ class MyHomePage extends StatelessWidget {
                       links: ["View All"],
                     ),
                   ),
-                  ContentPadding(child: StreamsGrid())
+                  ContentPadding(
+                      child: StreamsGrid(
+                    games: GamesProvider.getMany(6, hasStreaming: true),
+                  ))
                 ],
               ),
             ),
@@ -449,16 +452,13 @@ class MyHomePage extends StatelessWidget {
               children: [
                 ContentPadding(
                     child: SectionTitle(title: "Updates and Offers")),
-                ContentPadding(
-                    child: Builder(
-                      builder: (context) {
-                        var games = GamesProvider.getMany(7);
-                        return UpdatesAndOffers(
-                  featuredGame: games[0],
-                  games: games.sublist(1, 7),
-                );
-                      }
-                    )),
+                ContentPadding(child: Builder(builder: (context) {
+                  var games = GamesProvider.getMany(7);
+                  return UpdatesAndOffers(
+                    featuredGame: games[0],
+                    games: games.sublist(1, 7),
+                  );
+                })),
               ],
             )),
             SizedBox(

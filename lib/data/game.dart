@@ -27,6 +27,7 @@ class Game {
   Price price;
   String assetsFolder;
   List<String> tags;
+  bool hasStreaming;
   // String usersReview;
 
   String get horizontalCapsuleAsset =>
@@ -41,12 +42,15 @@ class Game {
         "games/$assetsFolder/screenshot4.jpg",
       ];
 
+  String get streamingScreenshot => "games/$assetsFolder/streaming.jpg";
+
   Game(
       {required this.name,
       required this.forWindows,
       required this.forMac,
       required this.price,
       required this.tags,
+        required this.hasStreaming,
       // required this.usersReview,
       required this.assetsFolder});
 }
