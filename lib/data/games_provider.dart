@@ -18,7 +18,7 @@ class GamesProvider {
       price: Price(59.99),
       forMac: false,
       forWindows: true,
-      hasStreaming: true,
+      hasStreaming: false,
       assetsFolder: "spiderman",
       tags: ["Superhero", "Action", "Open World", "Singleplayer"],
     ),
