@@ -6,137 +6,162 @@ import 'package:steam_flutter_layout/data/games_provider.dart';
 import 'data/game.dart';
 import 'game_tag.dart';
 
+class GamesSampleModel extends InheritedNotifier<ValueNotifier<int>> {
+  GamesSampleModel({required super.child, required super.notifier});
+
+  static int of(BuildContext context) {
+    return context
+        .dependOnInheritedWidgetOfExactType<GamesSampleModel>()!
+        .notifier!
+        .value;
+  }
+
+  static void updateGameIndex(BuildContext context, int newValue) {
+    context.dependOnInheritedWidgetOfExactType<GamesSampleModel>()!
+        .notifier!.value = newValue;
+
+  }
+
+}
+
 class _GameItem extends StatelessWidget {
+  final int itemIndex;
   final Game game;
   final bool selected;
-  const _GameItem({Key? key, required this.game, this.selected = false})
+  const _GameItem({Key? key, required this.game, required this.itemIndex, this.selected = false})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 5),
-      height: 69,
-      decoration: BoxDecoration(
-        color: Color(0xff93b7cf).withOpacity(selected ? 1 : 0),
-      ),
-      child: Row(
-        children: [
-          Image.asset(game.horizontalSmallCapsuleAsset,
-              width: 184, fit: BoxFit.fill),
-          Expanded(
-            child: Container(
-              margin: EdgeInsets.only(right: 14),
-              decoration: BoxDecoration(
-                color: Color(0x00000000).withOpacity(selected ? 0.0 : 0.2),
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    width: 324,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 14, vertical: 7),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            game.name,
-                            style: Theme.of(context)
-                                .textTheme
-                                .displayMedium!
-                                .copyWith(
-                                    fontSize: 15,
-                                    color: selected
-                                        ? Color(0xff10161b)
-                                        : Color(0xffc7d5e0)),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Icon(
-                                Icons.android,
-                                size: 15,
-                                color: Color.fromRGBO(56, 73, 89, 1),
-                              ),
-                              if (game.price.hasDiscount)
-                                Container(
-                                  color: AppColors.green,
-                                  height: 18,
-                                  width: 40,
-                                  child: Center(
-                                    child: Text(
-                                      game.price.discountFormatted,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .displayMedium!
-                                          .copyWith(
-                                              color: AppColors.discountTagText,
-                                              fontSize: 14),
+    return MouseRegion(
+      onEnter: (_){
+        print("Element highlighted");
+        GamesSampleModel.updateGameIndex(context, itemIndex);
+      },
+      child: Container(
+        margin: EdgeInsets.only(bottom: 5),
+        height: 69,
+        decoration: BoxDecoration(
+          color: Color(0xff93b7cf).withOpacity(selected ? 1 : 0),
+        ),
+        child: Row(
+          children: [
+            Image.asset(game.horizontalSmallCapsuleAsset,
+                width: 184, fit: BoxFit.fill),
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.only(right: 14),
+                decoration: BoxDecoration(
+                  color: Color(0x00000000).withOpacity(selected ? 0.0 : 0.2),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 324,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 14, vertical: 7),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              game.name,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayMedium!
+                                  .copyWith(
+                                      fontSize: 15,
+                                      color: selected
+                                          ? Color(0xff10161b)
+                                          : Color(0xffc7d5e0)),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(
+                                  Icons.android,
+                                  size: 15,
+                                  color: Color.fromRGBO(56, 73, 89, 1),
+                                ),
+                                if (game.price.hasDiscount)
+                                  Container(
+                                    color: AppColors.green,
+                                    height: 18,
+                                    width: 40,
+                                    child: Center(
+                                      child: Text(
+                                        game.price.discountFormatted,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .displayMedium!
+                                            .copyWith(
+                                                color: AppColors.discountTagText,
+                                                fontSize: 14),
+                                      ),
                                     ),
-                                  ),
-                                )
-                            ],
-                          ),
-                          Text(
-                            game.tags
-                                .asMap()
-                                .map((key, value) => MapEntry(
-                                    key,
-                                    key != game.tags.length - 1
-                                        ? "$value, "
-                                        : value))
-                                .values
-                                .toList()
-                                .reduce((value, element) => value + element),
-                            style: Theme.of(context)
-                                .textTheme
-                                .displayMedium!
-                                .copyWith(
-                                    fontSize: 12,
-                                    color: selected
-                                        ? Color(0xff384959)
-                                        : Color.fromRGBO(56, 73, 89, 1)),
-                          ),
-                        ],
+                                  )
+                              ],
+                            ),
+                            Text(
+                              game.tags
+                                  .asMap()
+                                  .map((key, value) => MapEntry(
+                                      key,
+                                      key != game.tags.length - 1
+                                          ? "$value, "
+                                          : value))
+                                  .values
+                                  .toList()
+                                  .reduce((value, element) => value + element),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayMedium!
+                                  .copyWith(
+                                      fontSize: 12,
+                                      color: selected
+                                          ? Color(0xff384959)
+                                          : Color.fromRGBO(56, 73, 89, 1)),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (game.price.hasDiscount)
+                    Expanded(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (game.price.hasDiscount)
+                          Text(
+                            game.price.basePriceFormatted,
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayMedium!
+                                .copyWith(
+                                    color: selected
+                                        ? Color(0xff7193a6)
+                                        : Color(0xff7193a6),
+                                    fontSize: 11,
+                                    decoration: TextDecoration.lineThrough),
+                          ),
                         Text(
-                          game.price.basePriceFormatted,
+                          game.price.currentPriceFormatted,
                           style: Theme.of(context)
                               .textTheme
                               .displayMedium!
                               .copyWith(
+                                  fontSize: 13,
                                   color: selected
-                                      ? Color(0xff7193a6)
-                                      : Color(0xff7193a6),
-                                  fontSize: 11,
-                                  decoration: TextDecoration.lineThrough),
+                                      ? Color(0xff263645)
+                                      : Color(0xffacdbf5)),
                         ),
-                      Text(
-                        game.price.currentPriceFormatted,
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayMedium!
-                            .copyWith(
-                                fontSize: 13,
-                                color: selected
-                                    ? Color(0xff263645)
-                                    : Color(0xffacdbf5)),
-                      ),
-                    ],
-                  ))
-                ],
+                      ],
+                    ))
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -148,56 +173,61 @@ class _GameList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          margin: EdgeInsets.only(right: 14),
-          padding: EdgeInsets.only(right: 5),
-          height: 36,
-          color: Color(0x00000000).withOpacity(0.2),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 5),
-                child: Text(
-                  "See more:",
-                  style: Theme.of(context)
-                      .textTheme
-                      .displayMedium!
-                      .copyWith(color: Color(0xffffffff), fontSize: 12),
-                ),
-              ),
-              Container(
-                width: 109,
-                height: 26,
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.white.withOpacity(0.4)),
-                    borderRadius: BorderRadius.circular(3)),
-                child: Center(
+
+    var selectedIndex = GamesSampleModel.of(context);
+    return GestureDetector(
+      child: Column(
+        children: [
+          Container(
+            margin: EdgeInsets.only(right: 14),
+            padding: EdgeInsets.only(right: 5),
+            height: 36,
+            color: Color(0x00000000).withOpacity(0.2),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 5),
                   child: Text(
-                    "New releases",
+                    "See more:",
                     style: Theme.of(context)
                         .textTheme
                         .displayMedium!
                         .copyWith(color: Color(0xffffffff), fontSize: 12),
                   ),
                 ),
-              ),
-            ],
+                Container(
+                  width: 109,
+                  height: 26,
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white.withOpacity(0.4)),
+                      borderRadius: BorderRadius.circular(3)),
+                  child: Center(
+                    child: Text(
+                      "New releases",
+                      style: Theme.of(context)
+                          .textTheme
+                          .displayMedium!
+                          .copyWith(color: Color(0xffffffff), fontSize: 12),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        ...games
-            .asMap()
-            .map((key, value) => MapEntry(
-                key,
-                _GameItem(
-                  game: value,
-                  selected: key == 0,
-                )))
-            .values
-            .toList()
-      ],
+          ...games
+              .asMap()
+              .map((key, value) => MapEntry(
+                  key,
+                  _GameItem(
+                    game: value,
+                    itemIndex: key,
+                    selected: key == selectedIndex,
+                  )))
+              .values
+              .toList()
+        ],
+      ),
     );
   }
 }
@@ -293,27 +323,35 @@ class GamesSample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var games = GamesProvider.getMany(10);
-    return Padding(
-      padding: const EdgeInsets.only(top: 9),
-      child: LayoutBuilder(builder: (context, constraints) {
-        // Used a stack to deal with antialiasing "issue" https://github.com/flutter/flutter/issues/17084#issuecomment-385718108
-        return Stack(
-          children: [
-            Container(
-              width: 633,
-              child: _GameList(
-                games: games,
+    return GamesSampleModel(
+      notifier: ValueNotifier<int>(0),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 9),
+        child: LayoutBuilder(builder: (context, constraints) {
+          // Used a stack to deal with antialiasing "issue" https://github.com/flutter/flutter/issues/17084#issuecomment-385718108
+          return Stack(
+            children: [
+              Container(
+                width: 633,
+                child: _GameList(
+                  games: games,
+                ),
               ),
-            ),
-            Positioned(
-              right: 0,
-              child: Container(
-                  width: constraints.maxWidth - 632,
-                  child: _GamePreview(game: games[0])),
-            )
-          ],
-        );
-      }),
+              Positioned(
+                right: 0,
+                child: Container(
+                    width: constraints.maxWidth - 632,
+                    child: Builder(
+                      builder: (context) {
+                        var gameIndex = GamesSampleModel.of(context);
+                        return _GamePreview(game: games[gameIndex]);
+                      }
+                    )),
+              )
+            ],
+          );
+        }),
+      ),
     );
   }
 }
