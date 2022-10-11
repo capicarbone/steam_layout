@@ -247,7 +247,7 @@ class _GamePreviewState extends State<_GamePreview>  with SingleTickerProviderSt
 
   @override
   void initState() {
-    _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 200));
     _animation = CurvedAnimation(
       parent: _controller,
         curve: Curves.easeIn
@@ -267,6 +267,7 @@ class _GamePreviewState extends State<_GamePreview>  with SingleTickerProviderSt
   Widget build(BuildContext context) {
     _controller.forward();
     return Container(
+      height: 771,
       decoration: BoxDecoration(
         color: Color(0xff93b7cf),
       ),
@@ -277,10 +278,12 @@ class _GamePreviewState extends State<_GamePreview>  with SingleTickerProviderSt
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 12),
+              Container(
+                margin: const EdgeInsets.only(bottom: 12),
+                height: 25,
                 child: Text(
                   widget.game.name,
+                  overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.displayMedium!.copyWith(
                       fontSize: 21, color: Color.fromRGBO(38, 54, 59, 1)),
                 ),
@@ -330,8 +333,9 @@ class _GamePreviewState extends State<_GamePreview>  with SingleTickerProviderSt
                       (e) => Container(
                         height: 150,
                         width: 274,
-                        color: Colors.blue,
                         margin: EdgeInsets.only(bottom: 3),
+                        decoration: BoxDecoration(
+                        ),
                         child: Image.asset(
                           e,
                           fit: BoxFit.cover,
