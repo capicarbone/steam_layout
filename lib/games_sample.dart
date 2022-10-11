@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:steam_flutter_layout/app_colors.dart';
@@ -35,7 +37,6 @@ class _GameItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return MouseRegion(
       onEnter: (_){
-        print("Element highlighted");
         GamesSampleModel.updateGameIndex(context, itemIndex);
       },
       child: Container(
@@ -232,85 +233,115 @@ class _GameList extends StatelessWidget {
   }
 }
 
-class _GamePreview extends StatelessWidget {
+class _GamePreview extends StatefulWidget{
   final Game game;
-  const _GamePreview({Key? key, required this.game}) : super(key: key);
+  _GamePreview({Key? key, required this.game}) : super(key: key);
+
+  @override
+  State<_GamePreview> createState() => _GamePreviewState();
+}
+
+class _GamePreviewState extends State<_GamePreview>  with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 300));
+    _animation = CurvedAnimation(
+      parent: _controller,
+        curve: Curves.easeIn
+    );
+    super.initState();
+  }
+
+
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    _controller.forward();
     return Container(
       decoration: BoxDecoration(
         color: Color(0xff93b7cf),
       ),
       child: Padding(
         padding: const EdgeInsets.only(right: 16, left: 16, bottom: 5, top: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: Text(
-                game.name,
-                style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                    fontSize: 21, color: Color.fromRGBO(38, 54, 59, 1)),
+        child: FadeTransition(
+          opacity: _animation,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: Text(
+                  widget.game.name,
+                  style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                      fontSize: 21, color: Color.fromRGBO(38, 54, 59, 1)),
+                ),
               ),
-            ),
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 7, vertical: 5),
-              decoration: BoxDecoration(
-                  color: Color(0xff516b7d),
-                  borderRadius: BorderRadius.circular(2)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Overall user review:",
-                    style: Theme.of(context)
-                        .textTheme
-                        .displayMedium!
-                        .copyWith(color: AppColors.darkText, fontSize: 12),
-                  ),
-                  Text(
-                    "Mostly Positive",
-                    style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                        color: AppColors.highlightedText, fontSize: 12),
-                  )
-                ],
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(horizontal: 7, vertical: 5),
+                decoration: BoxDecoration(
+                    color: Color(0xff516b7d),
+                    borderRadius: BorderRadius.circular(2)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Overall user review:",
+                      style: Theme.of(context)
+                          .textTheme
+                          .displayMedium!
+                          .copyWith(color: AppColors.darkText, fontSize: 12),
+                    ),
+                    Text(
+                      "Mostly Positive",
+                      style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                          color: AppColors.highlightedText, fontSize: 12),
+                    )
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-                children: game.tags
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                  children: widget.game.tags
+                      .map(
+                        (e) => GameTag(
+                          tag: e,
+                          lightBackground: true,
+                        ),
+                      )
+                      .toList()),
+              SizedBox(
+                height: 6,
+              ),
+              Column(
+                children: widget.game.screenshots
                     .map(
-                      (e) => GameTag(
-                        tag: e,
-                        lightBackground: true,
+                      (e) => Container(
+                        height: 150,
+                        width: 274,
+                        color: Colors.blue,
+                        margin: EdgeInsets.only(bottom: 3),
+                        child: Image.asset(
+                          e,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     )
-                    .toList()),
-            SizedBox(
-              height: 6,
-            ),
-            Column(
-              children: game.screenshots
-                  .map(
-                    (e) => Container(
-                      height: 150,
-                      width: 274,
-                      color: Colors.blue,
-                      margin: EdgeInsets.only(bottom: 3),
-                      child: Image.asset(
-                        e,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  )
-                  .toList(),
-            )
-          ],
+                    .toList(),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -344,7 +375,7 @@ class GamesSample extends StatelessWidget {
                     child: Builder(
                       builder: (context) {
                         var gameIndex = GamesSampleModel.of(context);
-                        return _GamePreview(game: games[gameIndex]);
+                        return _GamePreview( key: Key(games[gameIndex].name), game: games[gameIndex]);
                       }
                     )),
               )
