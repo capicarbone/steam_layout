@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -76,9 +78,12 @@ class _ControlButtonState extends State<_ControlButton> {
 }
 
 class SteamPager extends StatefulWidget {
+
+  static const SECONDS_PER_PAGE = 5;
   final contentHeight;
+  final bool automatic;
   final List<Widget> pages;
-  const SteamPager({Key? key, this.contentHeight = 352, required this.pages})
+  const SteamPager({Key? key, this.contentHeight = 352, this.automatic = false, required this.pages})
       : super(key: key);
 
   @override
@@ -91,12 +96,17 @@ class _SteamPagerState extends State<SteamPager> with SingleTickerProviderStateM
   late Animation<double> _OutAnimation;
   var _selectedIndex = 0;
   var _lastIndex = 0;
+  Timer? countdownTimer;
 
   @override
   void initState() {
     _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 500));
     _InAnimation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
     _OutAnimation = ReverseAnimation(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+
+    if (widget.automatic)
+      countdownTimer = Timer.periodic(Duration(seconds: SteamPager.SECONDS_PER_PAGE), autoUpdate);
+
     super.initState();
   }
 
@@ -104,6 +114,32 @@ class _SteamPagerState extends State<SteamPager> with SingleTickerProviderStateM
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  void autoUpdate(timer) {
+        setState(() {
+      moveForward();
+    });
+  }
+
+  void moveForward() {
+    _lastIndex = _selectedIndex;
+    _selectedIndex = (_selectedIndex + 1) % widget.pages.length;
+    _controller.forward(from: 0.0);
+  }
+
+  void moveBackward() {
+    _lastIndex = _selectedIndex;
+    _selectedIndex = (_selectedIndex - 1) % widget.pages.length;
+    _controller.forward(from: 0.0);
+  }
+
+  void restartTimer(){
+    if (null != countdownTimer){
+      countdownTimer!.cancel();
+      countdownTimer = Timer.periodic(Duration(seconds: SteamPager.SECONDS_PER_PAGE), autoUpdate);
+    }
+
   }
 
   @override
@@ -116,9 +152,8 @@ class _SteamPagerState extends State<SteamPager> with SingleTickerProviderStateM
             GestureDetector(
                 onTap: () {
                   setState(() {
-                    _lastIndex = _selectedIndex;
-                    _selectedIndex = (_selectedIndex - 1) % widget.pages.length;
-                    _controller.forward(from: 0.0);
+                    restartTimer();
+                    moveBackward();
                   });
                 },
                 child: const _ControlButton(
@@ -143,9 +178,8 @@ class _SteamPagerState extends State<SteamPager> with SingleTickerProviderStateM
             GestureDetector(
               onTap: () {
                 setState(() {
-                  _lastIndex = _selectedIndex;
-                  _selectedIndex = (_selectedIndex + 1) % widget.pages.length;
-                  _controller.forward(from: 0.0);
+                  restartTimer();
+                  moveForward();
                 });
               },
               child: _ControlButton(leftDirection: false,),

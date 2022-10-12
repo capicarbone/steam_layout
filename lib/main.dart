@@ -292,6 +292,7 @@ class MyHomePage extends StatelessWidget {
                       child: SectionTitle(title: "Featured & Recommended")),
                   SteamPager(
                     contentHeight: 353,
+                    automatic: true,
                     pages: GamesProvider.getMany(10)
                         .map((e) => FeaturedGame(game: e))
                         .toList(),
