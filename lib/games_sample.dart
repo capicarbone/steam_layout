@@ -19,24 +19,28 @@ class GamesSampleModel extends InheritedNotifier<ValueNotifier<int>> {
   }
 
   static void updateGameIndex(BuildContext context, int newValue) {
-    context.dependOnInheritedWidgetOfExactType<GamesSampleModel>()!
-        .notifier!.value = newValue;
-
+    context
+        .dependOnInheritedWidgetOfExactType<GamesSampleModel>()!
+        .notifier!
+        .value = newValue;
   }
-
 }
 
 class _GameItem extends StatelessWidget {
   final int itemIndex;
   final Game game;
   final bool selected;
-  const _GameItem({Key? key, required this.game, required this.itemIndex, this.selected = false})
+  const _GameItem(
+      {Key? key,
+      required this.game,
+      required this.itemIndex,
+      this.selected = false})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
-      onEnter: (_){
+      onEnter: (_) {
         GamesSampleModel.updateGameIndex(context, itemIndex);
       },
       child: Container(
@@ -96,7 +100,8 @@ class _GameItem extends StatelessWidget {
                                             .textTheme
                                             .displayMedium!
                                             .copyWith(
-                                                color: AppColors.discountTagText,
+                                                color:
+                                                    AppColors.discountTagText,
                                                 fontSize: 14),
                                       ),
                                     ),
@@ -174,7 +179,6 @@ class _GameList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     var selectedIndex = GamesSampleModel.of(context);
     return GestureDetector(
       child: Column(
@@ -233,7 +237,7 @@ class _GameList extends StatelessWidget {
   }
 }
 
-class _GamePreview extends StatefulWidget{
+class _GamePreview extends StatefulWidget {
   final Game game;
   _GamePreview({Key? key, required this.game}) : super(key: key);
 
@@ -241,21 +245,18 @@ class _GamePreview extends StatefulWidget{
   State<_GamePreview> createState() => _GamePreviewState();
 }
 
-class _GamePreviewState extends State<_GamePreview>  with SingleTickerProviderStateMixin {
+class _GamePreviewState extends State<_GamePreview>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
   @override
   void initState() {
-    _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 200));
-    _animation = CurvedAnimation(
-      parent: _controller,
-        curve: Curves.easeIn
-    );
+    _controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
     super.initState();
   }
-
-
 
   @override
   void dispose() {
@@ -306,8 +307,11 @@ class _GamePreviewState extends State<_GamePreview>  with SingleTickerProviderSt
                     ),
                     Text(
                       "Mostly Positive",
-                      style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                          color: AppColors.highlightedText, fontSize: 12),
+                      style: Theme.of(context)
+                          .textTheme
+                          .displayMedium!
+                          .copyWith(
+                              color: AppColors.highlightedText, fontSize: 12),
                     )
                   ],
                 ),
@@ -334,8 +338,7 @@ class _GamePreviewState extends State<_GamePreview>  with SingleTickerProviderSt
                         height: 150,
                         width: 274,
                         margin: EdgeInsets.only(bottom: 3),
-                        decoration: BoxDecoration(
-                        ),
+                        decoration: BoxDecoration(),
                         child: Image.asset(
                           e,
                           fit: BoxFit.cover,
@@ -376,12 +379,12 @@ class GamesSample extends StatelessWidget {
                 right: 0,
                 child: Container(
                     width: constraints.maxWidth - 632,
-                    child: Builder(
-                      builder: (context) {
-                        var gameIndex = GamesSampleModel.of(context);
-                        return _GamePreview( key: Key(games[gameIndex].name), game: games[gameIndex]);
-                      }
-                    )),
+                    child: Builder(builder: (context) {
+                      var gameIndex = GamesSampleModel.of(context);
+                      return _GamePreview(
+                          key: Key(games[gameIndex].name),
+                          game: games[gameIndex]);
+                    })),
               )
             ],
           );
