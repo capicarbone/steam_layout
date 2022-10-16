@@ -8,21 +8,41 @@ import 'package:steam_flutter_layout/data/games_provider.dart';
 import 'data/game.dart';
 import 'game_tag.dart';
 
-class GamesSampleModel extends InheritedNotifier<ValueNotifier<int>> {
+class _SelectionModel {
+  final int selectedIndex;
+  final int previousSelectedIndex;
+
+  const _SelectionModel(this.selectedIndex, this.previousSelectedIndex);
+}
+
+class GamesSampleModel
+    extends InheritedNotifier<ValueNotifier<_SelectionModel>> {
   GamesSampleModel({required super.child, required super.notifier});
 
-  static int of(BuildContext context) {
+  static _SelectionModel of(BuildContext context) {
     return context
         .dependOnInheritedWidgetOfExactType<GamesSampleModel>()!
         .notifier!
         .value;
   }
 
-  static void updateGameIndex(BuildContext context, int newValue) {
-    context
+  static void updateSelectedIndex(BuildContext context, int newIndex) {
+    var notifier = context
         .dependOnInheritedWidgetOfExactType<GamesSampleModel>()!
-        .notifier!
-        .value = newValue;
+        .notifier!;
+
+    var newValue =
+        _SelectionModel(newIndex, notifier.value.previousSelectedIndex);
+    notifier.value = newValue;
+  }
+
+  static void updatePreviousSelectedIndex(BuildContext context, int newIndex) {
+    var notifier = context
+        .dependOnInheritedWidgetOfExactType<GamesSampleModel>()!
+        .notifier!;
+
+    var newValue = _SelectionModel(notifier.value.selectedIndex, newIndex);
+    notifier.value = newValue;
   }
 }
 
@@ -41,7 +61,10 @@ class _GameItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return MouseRegion(
       onEnter: (_) {
-        GamesSampleModel.updateGameIndex(context, itemIndex);
+        GamesSampleModel.updateSelectedIndex(context, itemIndex);
+      },
+      onExit: (_) {
+        GamesSampleModel.updatePreviousSelectedIndex(context, itemIndex);
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 5),
@@ -179,7 +202,7 @@ class _GameList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var selectedIndex = GamesSampleModel.of(context);
+    var selectedIndex = GamesSampleModel.of(context).selectedIndex;
     return GestureDetector(
       child: Column(
         children: [
@@ -239,7 +262,10 @@ class _GameList extends StatelessWidget {
 
 class _GamePreview extends StatefulWidget {
   final Game game;
-  _GamePreview({Key? key, required this.game}) : super(key: key);
+  final bool fadeout;
+  final bool fadein;
+  _GamePreview({Key? key, required this.game, this.fadeout = false, this.fadein = false})
+      : super(key: key);
 
   @override
   State<_GamePreview> createState() => _GamePreviewState();
@@ -254,7 +280,9 @@ class _GamePreviewState extends State<_GamePreview>
   void initState() {
     _controller =
         AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+
     _animation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
+    if (widget.fadeout) _animation = ReverseAnimation(_animation);
     super.initState();
   }
 
@@ -266,89 +294,88 @@ class _GamePreviewState extends State<_GamePreview>
 
   @override
   Widget build(BuildContext context) {
-    _controller.forward();
-    return Container(
-      height: 771,
-      decoration: BoxDecoration(
-        color: Color(0xff93b7cf),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(right: 16, left: 16, bottom: 5, top: 20),
-        child: FadeTransition(
-          opacity: _animation,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: 12),
-                height: 25,
-                child: Text(
-                  widget.game.name,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                      fontSize: 21, color: Color.fromRGBO(38, 54, 59, 1)),
-                ),
+    if (widget.fadein || widget.fadeout){
+      _controller.forward(from: 0);
+    } else{
+      _controller.value = 1;
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(right: 16, left: 16, bottom: 5, top: 20),
+      child: FadeTransition(
+        opacity: _animation,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              margin: const EdgeInsets.only(bottom: 12),
+              height: 25,
+              child: Text(
+                widget.game.name,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                    fontSize: 21, color: Color.fromRGBO(38, 54, 59, 1)),
               ),
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 7, vertical: 5),
-                decoration: BoxDecoration(
-                    color: Color(0xff516b7d),
-                    borderRadius: BorderRadius.circular(2)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Overall user review:",
-                      style: Theme.of(context)
-                          .textTheme
-                          .displayMedium!
-                          .copyWith(color: AppColors.darkText, fontSize: 12),
-                    ),
-                    Text(
-                      "Mostly Positive",
-                      style: Theme.of(context)
-                          .textTheme
-                          .displayMedium!
-                          .copyWith(
-                              color: AppColors.highlightedText, fontSize: 12),
-                    )
-                  ],
-                ),
+            ),
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.symmetric(horizontal: 7, vertical: 5),
+              decoration: BoxDecoration(
+                  color: Color(0xff516b7d),
+                  borderRadius: BorderRadius.circular(2)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Overall user review:",
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayMedium!
+                        .copyWith(color: AppColors.darkText, fontSize: 12),
+                  ),
+                  Text(
+                    "Mostly Positive",
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayMedium!
+                        .copyWith(
+                            color: AppColors.highlightedText, fontSize: 12),
+                  )
+                ],
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                  children: widget.game.tags
-                      .map(
-                        (e) => GameTag(
-                          tag: e,
-                          lightBackground: true,
-                        ),
-                      )
-                      .toList()),
-              SizedBox(
-                height: 6,
-              ),
-              Column(
-                children: widget.game.screenshots
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+                children: widget.game.tags
                     .map(
-                      (e) => Container(
-                        height: 150,
-                        width: 274,
-                        margin: EdgeInsets.only(bottom: 3),
-                        decoration: BoxDecoration(),
-                        child: Image.asset(
-                          e,
-                          fit: BoxFit.cover,
-                        ),
+                      (e) => GameTag(
+                        tag: e,
+                        lightBackground: true,
                       ),
                     )
-                    .toList(),
-              )
-            ],
-          ),
+                    .toList()),
+            SizedBox(
+              height: 6,
+            ),
+            Column(
+              children: widget.game.screenshots
+                  .map(
+                    (e) => Container(
+                      height: 150,
+                      width: 274,
+                      margin: EdgeInsets.only(bottom: 3),
+                      decoration: BoxDecoration(),
+                      child: Image.asset(
+                        e,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  )
+                  .toList(),
+            )
+          ],
         ),
       ),
     );
@@ -362,7 +389,7 @@ class GamesSample extends StatelessWidget {
   Widget build(BuildContext context) {
     var games = GamesProvider.getMany(10);
     return GamesSampleModel(
-      notifier: ValueNotifier<int>(0),
+      notifier: ValueNotifier<_SelectionModel>(_SelectionModel(0, 0)),
       child: Padding(
         padding: const EdgeInsets.only(top: 9),
         child: LayoutBuilder(builder: (context, constraints) {
@@ -380,10 +407,29 @@ class GamesSample extends StatelessWidget {
                 child: Container(
                     width: constraints.maxWidth - 632,
                     child: Builder(builder: (context) {
-                      var gameIndex = GamesSampleModel.of(context);
-                      return _GamePreview(
-                          key: Key(games[gameIndex].name),
-                          game: games[gameIndex]);
+                      var gameIndex =
+                          GamesSampleModel.of(context).selectedIndex;
+                      var outGameIndex = GamesSampleModel.of(context).previousSelectedIndex;
+                      return Container(
+                        height: 771,
+                        decoration: BoxDecoration(
+                          color: Color(0xff93b7cf),
+                        ),
+                        child: Stack(
+                          children: [
+                            if (gameIndex != outGameIndex)
+                            _GamePreview(
+                              key: Key("fadeout"),
+                              game: games[outGameIndex],
+                              fadeout: true,
+                            ),
+                            _GamePreview(
+                              game: games[gameIndex],
+                              fadein: gameIndex != outGameIndex,
+                            ),
+                          ],
+                        ),
+                      );
                     })),
               )
             ],
