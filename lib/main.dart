@@ -309,8 +309,17 @@ class MyHomePage extends StatelessWidget {
                     contentHeight: 390,
                     pages: [
                       OffersBanner(
-                        games: GamesProvider.getMany(4),
-                      )
+                        games: GamesProvider.getMany(4, hasOffer: true),
+                      ),
+                      OffersBanner(
+                        games: GamesProvider.getMany(4, hasOffer: true),
+                      ),
+                      OffersBanner(
+                        games: GamesProvider.getMany(4, hasOffer: true),
+                      ),
+                      OffersBanner(
+                        games: GamesProvider.getMany(4, hasOffer: true),
+                      ),
                     ],
                   ),
                   SizedBox(
@@ -353,22 +362,23 @@ class MyHomePage extends StatelessWidget {
                     links: ['Browse All'],
                   )),
                   SteamPager(
-                    pages: [
-                      Container(
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: GamesProvider.getMany(4)
-                                .map(
-                                  (e) => Container(
-                                      width: 229,
-                                      height: 134,
-                                      child: SimpleGameCard(
-                                        game: e,
-                                      )),
-                                )
-                                .toList()),
-                      )
-                    ],
+                    pages: List<Widget>.generate(
+                        7,
+                        (index) => Container(
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: GamesProvider.getMany(4)
+                                      .map(
+                                        (e) => Container(
+                                            width: 229,
+                                            height: 134,
+                                            child: SimpleGameCard(
+                                              game: e,
+                                            )),
+                                      )
+                                      .toList()),
+                            )),
                     contentHeight: 134,
                   ),
                   SizedBox(
@@ -427,8 +437,9 @@ class MyHomePage extends StatelessWidget {
               children: [
                 ContentPadding(child: SectionTitle(title: "Under \$10 USD")),
                 SteamPager(
-                  pages: [
-                    Row(
+                  pages: List<Widget>.generate(
+                    4,
+                    (index) => Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: GamesProvider.getMany(4)
                             .map(
@@ -440,7 +451,7 @@ class MyHomePage extends StatelessWidget {
                                   )),
                             )
                             .toList()),
-                  ],
+                  ),
                   contentHeight: 134,
                 )
               ],

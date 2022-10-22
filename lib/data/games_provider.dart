@@ -96,15 +96,15 @@ class GamesProvider {
     ),
   ];
 
-  static List<Game> getMany(int count, {hasStreaming: false}) {
-    games.shuffle();
-    if (hasStreaming) {
-      return games
-          .where((element) => element.hasStreaming == true)
-          .toList()
-          .sublist(0, count);
-    }
-    return games.sublist(0, count);
+  static List<Game> getMany(int count, {hasStreaming: false, hasOffer: false}) {
+    var result = List<Game>.from(games)..shuffle();
+
+    return result
+        .where((element) =>
+            (hasStreaming && element.hasStreaming) ||
+            (hasOffer && element.price.hasDiscount) ||
+            (!hasStreaming && !hasOffer))
+        .toList().sublist(0, count);
   }
 
   static getOne() {
