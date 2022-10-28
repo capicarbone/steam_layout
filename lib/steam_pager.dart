@@ -160,21 +160,25 @@ class _SteamPagerState extends State<SteamPager> with SingleTickerProviderStateM
                   leftDirection: true,
                 )),
             Expanded(
-                child: Container(
+                child: MouseRegion(
+                  onEnter: (_) => countdownTimer?.cancel(),
+                  onExit: (_) => restartTimer(),
+                  child: Container(
               height: widget.contentHeight,
               child: Stack(
-                children: [
-                  FadeTransition(
-                    opacity: _OutAnimation,
-                    child: widget.pages[_lastIndex],
-                  ),
-                  FadeTransition(
-                    opacity: _InAnimation,
-                    child: widget.pages[_selectedIndex],
-                  ),
-                ],
+                  children: [
+                    FadeTransition(
+                      opacity: _OutAnimation,
+                      child: widget.pages[_lastIndex],
+                    ),
+                    FadeTransition(
+                      opacity: _InAnimation,
+                      child: widget.pages[_selectedIndex],
+                    ),
+                  ],
               ),
-            )),
+            ),
+                )),
             GestureDetector(
               onTap: () {
                 setState(() {
