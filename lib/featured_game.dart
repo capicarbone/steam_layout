@@ -6,7 +6,9 @@ import 'data/game.dart';
 
 class _Screenshot extends StatelessWidget {
   final String asset;
-  const _Screenshot({Key? key, required this.asset}) : super(key: key);
+  final bool selected;
+  const _Screenshot({Key? key, required this.asset, this.selected = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class _Screenshot extends StatelessWidget {
         Container(
           child: Image.asset(
             colorBlendMode: BlendMode.dstATop,
-            color: Colors.black.withOpacity(0.6),
+            color: Colors.black.withOpacity(selected ? 1.0 : 0.6),
             asset,
             height: 69,
             width: 162,
@@ -29,7 +31,27 @@ class _Screenshot extends StatelessWidget {
 
 class _GameDetails extends StatelessWidget {
   final Game game;
-  const _GameDetails({Key? key, required this.game}) : super(key: key);
+  final selectedIndex;
+  final Function onMouseEnter;
+  final Function onMouseExit;
+  const _GameDetails(
+      {Key? key,
+      required this.game,
+      required this.onMouseEnter,
+      required this.onMouseExit,
+      required this.selectedIndex})
+      : super(key: key);
+
+  Widget _screenshotWrapper(int position) {
+    return MouseRegion(
+      onExit: (_) => onMouseExit(position),
+      onEnter: (_) => onMouseEnter(position),
+      child: _Screenshot(
+        asset: game.screenshots[position],
+        selected: selectedIndex == position,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,16 +83,12 @@ class _GameDetails extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: _Screenshot(
-                      asset: game.screenshots[0],
-                    ),
+                    child: _screenshotWrapper(0),
                   ),
                   SizedBox(
                     width: 10,
                   ),
-                  _Screenshot(
-                    asset: game.screenshots[1],
-                  ),
+                  _screenshotWrapper(1),
                 ],
               ),
             ),
@@ -80,16 +98,12 @@ class _GameDetails extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Expanded(
-                    child: _Screenshot(
-                      asset: game.screenshots[2],
-                    ),
+                    child: _screenshotWrapper(2),
                   ),
                   SizedBox(
                     width: 10,
                   ),
-                  _Screenshot(
-                    asset: game.screenshots[3],
-                  ),
+                  _screenshotWrapper(3),
                 ],
               ),
             ),
@@ -119,8 +133,7 @@ class _GameDetails extends StatelessWidget {
                           Row(
                             children: [
                               Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 5),
+                                padding: EdgeInsets.symmetric(horizontal: 5),
                                 color: AppColors.green,
                                 height: 15,
                                 child: Text(
@@ -129,7 +142,7 @@ class _GameDetails extends StatelessWidget {
                                       .textTheme
                                       .bodySmall!
                                       .copyWith(
-                                    fontSize: 12,
+                                          fontSize: 12,
                                           color: AppColors.greenLight),
                                 ),
                               ),
@@ -200,10 +213,16 @@ class _GameDetails extends StatelessWidget {
   }
 }
 
-class FeaturedGame extends StatelessWidget {
+class FeaturedGame extends StatefulWidget {
   final Game game;
   const FeaturedGame({Key? key, required this.game}) : super(key: key);
 
+  @override
+  State<FeaturedGame> createState() => _FeaturedGameState();
+}
+
+class _FeaturedGameState extends State<FeaturedGame> {
+  int _selectedIndex = -1;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -219,7 +238,14 @@ class FeaturedGame extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             mainAxisSize: MainAxisSize.max,
-            children: [_GameDetails(game: game)],
+            children: [
+              _GameDetails(
+                game: widget.game,
+                onMouseEnter: (i) => setState(() => _selectedIndex = i),
+                onMouseExit: (i) => setState(() => _selectedIndex = -1),
+                selectedIndex: _selectedIndex,
+              )
+            ],
           ),
           ClipRect(
             child: Container(
@@ -234,7 +260,11 @@ class FeaturedGame extends StatelessWidget {
                       blurRadius: 10,
                       spreadRadius: 5)
                 ]),
-                child: Image.asset(game.horizontalCapsuleAsset),
+                child: Image.asset(_selectedIndex == -1
+                    ? widget.game.horizontalCapsuleAsset
+                    : widget.game.screenshots[_selectedIndex],
+                  fit:BoxFit.fitWidth,
+                ),
               ),
             ),
           ),
