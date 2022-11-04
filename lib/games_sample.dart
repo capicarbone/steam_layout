@@ -6,6 +6,7 @@ import 'package:steam_flutter_layout/app_colors.dart';
 import 'package:steam_flutter_layout/data/games_provider.dart';
 
 import 'data/game.dart';
+import 'game_commons.dart';
 import 'game_tag.dart';
 
 class _SelectionModel {
@@ -260,18 +261,23 @@ class _GameList extends StatelessWidget {
   }
 }
 
-class _GamePreview extends StatefulWidget {
+
+class GamePreview extends StatefulWidget {
   final Game game;
   final bool fadeout;
   final bool fadein;
-  _GamePreview({Key? key, required this.game, this.fadeout = false, this.fadein = false})
+  GamePreview(
+      {Key? key,
+        required this.game,
+        this.fadeout = false,
+        this.fadein = false})
       : super(key: key);
 
   @override
-  State<_GamePreview> createState() => _GamePreviewState();
+  State<GamePreview> createState() => _GamePreviewState();
 }
 
-class _GamePreviewState extends State<_GamePreview>
+class _GamePreviewState extends State<GamePreview>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
@@ -294,9 +300,9 @@ class _GamePreviewState extends State<_GamePreview>
 
   @override
   Widget build(BuildContext context) {
-    if (widget.fadein || widget.fadeout){
+    if (widget.fadein || widget.fadeout) {
       _controller.forward(from: 0);
-    } else{
+    } else {
       _controller.value = 1;
     }
 
@@ -307,43 +313,8 @@ class _GamePreviewState extends State<_GamePreview>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              margin: const EdgeInsets.only(bottom: 12),
-              height: 25,
-              child: Text(
-                widget.game.name,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                    fontSize: 21, color: Color.fromRGBO(38, 54, 59, 1)),
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 7, vertical: 5),
-              decoration: BoxDecoration(
-                  color: Color(0xff516b7d),
-                  borderRadius: BorderRadius.circular(2)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Overall user review:",
-                    style: Theme.of(context)
-                        .textTheme
-                        .displayMedium!
-                        .copyWith(color: AppColors.darkText, fontSize: 12),
-                  ),
-                  Text(
-                    "Mostly Positive",
-                    style: Theme.of(context)
-                        .textTheme
-                        .displayMedium!
-                        .copyWith(
-                            color: AppColors.highlightedText, fontSize: 12),
-                  )
-                ],
-              ),
-            ),
+            GameName(name: widget.game.name),
+            UsersReview(),
             SizedBox(
               height: 10,
             ),
@@ -351,10 +322,10 @@ class _GamePreviewState extends State<_GamePreview>
                 children: widget.game.tags
                     .map(
                       (e) => GameTag(
-                        tag: e,
-                        lightBackground: true,
-                      ),
-                    )
+                    tag: e,
+                    lightBackground: true,
+                  ),
+                )
                     .toList()),
             SizedBox(
               height: 6,
@@ -363,16 +334,16 @@ class _GamePreviewState extends State<_GamePreview>
               children: widget.game.screenshots
                   .map(
                     (e) => Container(
-                      height: 150,
-                      width: 274,
-                      margin: EdgeInsets.only(bottom: 3),
-                      decoration: BoxDecoration(),
-                      child: Image.asset(
-                        e,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  )
+                  height: 150,
+                  width: 274,
+                  margin: EdgeInsets.only(bottom: 3),
+                  decoration: BoxDecoration(),
+                  child: Image.asset(
+                    e,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              )
                   .toList(),
             )
           ],
@@ -381,6 +352,8 @@ class _GamePreviewState extends State<_GamePreview>
     );
   }
 }
+
+
 
 class GamesSample extends StatelessWidget {
   const GamesSample({Key? key}) : super(key: key);
@@ -418,12 +391,12 @@ class GamesSample extends StatelessWidget {
                         child: Stack(
                           children: [
                             if (gameIndex != outGameIndex)
-                            _GamePreview(
+                            GamePreview(
                               key: Key("fadeout"),
                               game: games[outGameIndex],
                               fadeout: true,
                             ),
-                            _GamePreview(
+                            GamePreview(
                               game: games[gameIndex],
                               fadein: gameIndex != outGameIndex,
                             ),
