@@ -51,7 +51,7 @@ class _ControlButtonState extends State<_ControlButton> {
       },
       child: Container(
         height: 108,
-        width: 46,
+        width: 45,
         decoration: BoxDecoration(
             gradient: LinearGradient(colors: [
           (_hovered)
@@ -145,65 +145,79 @@ class _SteamPagerState extends State<SteamPager> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     _controller.forward();
-    return Column(
-      children: [
-        Row(
-          children: [
-            GestureDetector(
-                onTap: () {
-                  setState(() {
-                    restartTimer();
-                    moveBackward();
-                  });
-                },
-                child: const _ControlButton(
-                  leftDirection: true,
-                )),
-            Expanded(
-                child: MouseRegion(
-                  onEnter: (_) => countdownTimer?.cancel(),
-                  onExit: (_) => restartTimer(),
-                  child: Container(
-              height: widget.contentHeight,
-              child: Stack(
-                  children: [
-                    FadeTransition(
-                      opacity: _OutAnimation,
-                      child: widget.pages[_lastIndex],
-                    ),
-                    FadeTransition(
-                      opacity: _InAnimation,
-                      child: widget.pages[_selectedIndex],
-                    ),
-                  ],
+    return Container(
+      width: 1030,
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              Row(
+                children: [
+                  GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          restartTimer();
+                          moveBackward();
+                        });
+                      },
+                      child: const _ControlButton(
+                        leftDirection: true,
+                      )),
+                  Expanded(child: Container(height: widget.contentHeight,)),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        restartTimer();
+                        moveForward();
+                      });
+                    },
+                    child: _ControlButton(leftDirection: false,),
+                  ),
+                ],
               ),
-            ),
-                )),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  restartTimer();
-                  moveForward();
-                });
-              },
-              child: _ControlButton(leftDirection: false,),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 12,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ...widget.pages
-                .asMap()
-                .entries
-                .map((e) => _PageMarker(active: e.key == _selectedIndex))
-                .toList()
-          ],
-        )
-      ],
+              Row(
+                children: [
+                  Container(width: 45,),
+                  Expanded(
+                      child: MouseRegion(
+                        onEnter: (_) => countdownTimer?.cancel(),
+                        onExit: (_) => restartTimer(),
+                        child: Container(
+                          height: widget.contentHeight,
+                          child: Stack(
+                            children: [
+                              FadeTransition(
+                                opacity: _OutAnimation,
+                                child: widget.pages[_lastIndex],
+                              ),
+                              FadeTransition(
+                                opacity: _InAnimation,
+                                child: widget.pages[_selectedIndex],
+                              ),
+                            ],
+                          ),
+                        ),
+                      )),
+                  Container(width: 45,),
+                ],
+              )
+            ],
+          ),
+          SizedBox(
+            height: 12,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ...widget.pages
+                  .asMap()
+                  .entries
+                  .map((e) => _PageMarker(active: e.key == _selectedIndex))
+                  .toList()
+            ],
+          )
+        ],
+      ),
     );
   }
 }

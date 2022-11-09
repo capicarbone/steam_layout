@@ -5,8 +5,9 @@ import 'data/game.dart';
 
 class GameTag extends StatelessWidget {
   final String tag;
-  final bool lightBackground;
-  const GameTag({Key? key, required this.tag, this.lightBackground = false}) : super(key: key);
+  final Color backgroundColor;
+  const GameTag({Key? key, required this.tag, this.backgroundColor = const Color(0xff3c444b)})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class GameTag extends StatelessWidget {
       margin: EdgeInsets.only(right: 2),
       padding: EdgeInsets.symmetric(vertical: 3, horizontal: 5),
       decoration: BoxDecoration(
-        color: lightBackground ? Color(0xff50687a) : Color(0xff3c444b) ,
+        color: backgroundColor,
         borderRadius: BorderRadius.circular(2),
       ),
       child: Text(
@@ -28,20 +29,27 @@ class GameTag extends StatelessWidget {
   }
 }
 
-class GameName extends StatelessWidget {
+class GameTitle extends StatelessWidget {
   final String name;
-  const GameName({Key? key, required this.name}) : super(key: key);
+  final EdgeInsetsGeometry margin;
+  const GameTitle(
+      {Key? key,
+      required this.name,
+      this.margin = const EdgeInsets.only(bottom: 12)})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: margin,
       height: 25,
       child: Text(
         name,
         overflow: TextOverflow.ellipsis,
-        style: Theme.of(context).textTheme.displayMedium!.copyWith(
-            fontSize: 21, color: Color.fromRGBO(38, 54, 59, 1)),
+        style: Theme.of(context)
+            .textTheme
+            .displayMedium!
+            .copyWith(fontSize: 21, color: Color.fromRGBO(38, 54, 59, 1)),
       ),
     );
   }
@@ -56,8 +64,7 @@ class UsersReview extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 7, vertical: 5),
       decoration: BoxDecoration(
-          color: Color(0xff516b7d),
-          borderRadius: BorderRadius.circular(2)),
+          color: Color(0xff516b7d), borderRadius: BorderRadius.circular(2)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -70,8 +77,10 @@ class UsersReview extends StatelessWidget {
           ),
           Text(
             "Mostly Positive",
-            style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                color: AppColors.highlightedText, fontSize: 12),
+            style: Theme.of(context)
+                .textTheme
+                .displayMedium!
+                .copyWith(color: AppColors.highlightedText, fontSize: 12),
           )
         ],
       ),

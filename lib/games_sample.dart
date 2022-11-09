@@ -7,7 +7,6 @@ import 'package:steam_flutter_layout/data/games_provider.dart';
 
 import 'data/game.dart';
 import 'game_commons.dart';
-import 'game_tag.dart';
 
 class _SelectionModel {
   final int selectedIndex;
@@ -313,7 +312,7 @@ class _GamePreviewState extends State<GamePreview>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            GameName(name: widget.game.name),
+            GameTitle(name: widget.game.name),
             UsersReview(),
             SizedBox(
               height: 10,
@@ -323,7 +322,7 @@ class _GamePreviewState extends State<GamePreview>
                     .map(
                       (e) => GameTag(
                     tag: e,
-                    lightBackground: true,
+                    backgroundColor: Color(0xff50687a),
                   ),
                 )
                     .toList()),

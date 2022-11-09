@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:steam_flutter_layout/app_colors.dart';
-import 'package:steam_flutter_layout/game_tag.dart';
 
 import 'data/game.dart';
 
