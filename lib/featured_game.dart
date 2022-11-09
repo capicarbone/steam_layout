@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:html';
 
 import 'package:flutter/material.dart';
@@ -215,12 +216,49 @@ class _GameDetails extends StatelessWidget {
   }
 }
 
-class _GamePreview extends StatelessWidget {
+class _GamePreview extends StatefulWidget {
   final Game game;
   const _GamePreview({Key? key, required this.game}) : super(key: key);
 
   @override
+  State<_GamePreview> createState() => _GamePreviewState();
+}
+
+class _GamePreviewState extends State<_GamePreview> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _inAnimation;
+  Timer? countdownTimer;
+  var currentScreenshotIndex = 0;
+  var previousScreenshotIndex = 0;
+
+  @override
+  void initState() {
+    _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+    _inAnimation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
+
+    countdownTimer = Timer.periodic(Duration(milliseconds: 1000), (timer) {
+
+      setState(() {
+        previousScreenshotIndex = currentScreenshotIndex;
+        currentScreenshotIndex = (currentScreenshotIndex + 1) % widget.game.screenshots.length;
+        _controller.forward(from: 0);
+      });
+    });
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    countdownTimer!.cancel();
+    super.dispose();
+  }
+
+
+  @override
   Widget build(BuildContext context) {
+
     return Container(
       width: 306 + 7,
       height: 312,
@@ -248,7 +286,7 @@ class _GamePreview extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(bottom: 4),
                     child: Text(
-                      game.name,
+                      widget.game.name,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context)
                           .textTheme
@@ -265,10 +303,22 @@ class _GamePreview extends StatelessWidget {
                           .copyWith(fontSize: 10, color: Color(0xff30455a))),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5),
-                    child: Image.asset(game.screenshots[0],
-                        height: 153,
-                        width: double.infinity,
-                        fit: BoxFit.fitWidth),
+                    child: Stack(
+                      children: [
+                        Image.asset(widget.game.screenshots[previousScreenshotIndex],
+                            height: 153,
+                            width: double.infinity,
+                            fit: BoxFit.fitWidth),
+                        FadeTransition(
+                          opacity: _inAnimation,
+                          child: Image.asset(widget.game.screenshots[currentScreenshotIndex],
+                              height: 153,
+                              width: double.infinity,
+                              fit: BoxFit.fitWidth),
+                        ),
+
+                      ],
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 6),
@@ -312,7 +362,7 @@ class _GamePreview extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 2),
                     child: Row(
-                      children: game.tags
+                      children: widget.game.tags
                           .sublist(0, 3)
                           .map((e) => GameTag(
                                 tag: e,
