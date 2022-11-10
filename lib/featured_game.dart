@@ -439,6 +439,7 @@ class _FeaturedGameState extends State<FeaturedGame>
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
+      cursor: SystemMouseCursors.click,
       onEnter: (_) {
         setState(() {
           _detailsAnimationController.forward(from: 0);

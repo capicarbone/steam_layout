@@ -60,6 +60,7 @@ class _GameItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
+      cursor: SystemMouseCursors.click,
       onEnter: (_) {
         GamesSampleModel.updateSelectedIndex(context, itemIndex);
       },

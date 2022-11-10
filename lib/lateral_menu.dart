@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,43 +21,61 @@ class _SteamGiftCardsBanner extends StatelessWidget {
   }
 }
 
-class _MenuItem extends StatelessWidget {
+class _MenuItem extends StatefulWidget {
   final String text;
   final IconData? icon;
   const _MenuItem({Key? key, required this.text, this.icon}) : super(key: key);
 
+
+  @override
+  State<_MenuItem> createState() => _MenuItemState();
+}
+
+class _MenuItemState extends State<_MenuItem> {
+
+  var _hovered = false;
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 7),
-      child: Row(
-        children: [
-          if (icon != null)
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: Container(
-                width: 16,
-                height: 16,
-                decoration: BoxDecoration(
-                    color: AppColors.darkerBackground,
-                    borderRadius: BorderRadius.circular(3)),
-                child: Center(
-                    child: Icon(
-                  icon,
-                  color: AppColors.highlightedText,
-                  size: 13,
-                )),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) {
+        setState(() => _hovered = true);
+      },
+      onExit: (_) {
+        setState(() => _hovered = false);
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 7),
+        child: Row(
+          children: [
+            if (widget.icon != null)
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Container(
+                  width: 16,
+                  height: 16,
+                  decoration: BoxDecoration(
+                      color: AppColors.darkerBackground,
+                      borderRadius: BorderRadius.circular(3)),
+                  child: Center(
+                      child: Icon(
+                    widget.icon,
+                    color: AppColors.highlightedText,
+                    size: 13,
+                  )),
+                ),
               ),
+            Text(
+              widget.text,
+              style: Theme.of(context).textTheme.displayMedium!.copyWith(
+                  fontSize: 13,
+                  decoration: TextDecoration.none,
+                  fontWeight: FontWeight.w400,
+                  color: !_hovered ? AppColors.highlightedText : Colors.white),
             ),
-          Text(
-            text,
-            style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                fontSize: 13,
-                decoration: TextDecoration.none,
-                fontWeight: FontWeight.w400,
-                color: AppColors.highlightedText),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -10,31 +10,34 @@ class _NavbarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Row(
-        children: [
-          if (icon != null)
-            Padding(
-              padding: const EdgeInsets.only(right: 2),
-              child: Icon(
-                icon!,
-                color: Colors.white.withOpacity(0.5),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: Row(
+          children: [
+            if (icon != null)
+              Padding(
+                padding: const EdgeInsets.only(right: 2),
+                child: Icon(
+                  icon!,
+                  color: Colors.white.withOpacity(0.5),
+                ),
               ),
-            ),
-          Text(text,
-              style: GoogleFonts.nunito(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w700,
-                  decoration: TextDecoration.none,
-                  color: Colors.white,
-                  shadows: <Shadow>[
-                    Shadow(
-                        offset: Offset(0, 2),
-                        blurRadius: 2,
-                        color: Color.fromRGBO(0, 0, 0, 0.3))
-                  ])),
-        ],
+            Text(text,
+                style: GoogleFonts.nunito(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w700,
+                    decoration: TextDecoration.none,
+                    color: Colors.white,
+                    shadows: <Shadow>[
+                      Shadow(
+                          offset: Offset(0, 2),
+                          blurRadius: 2,
+                          color: Color.fromRGBO(0, 0, 0, 0.3))
+                    ])),
+          ],
+        ),
       ),
     );
   }
