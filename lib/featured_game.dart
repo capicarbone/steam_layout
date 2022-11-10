@@ -224,7 +224,8 @@ class _GamePreview extends StatefulWidget {
   State<_GamePreview> createState() => _GamePreviewState();
 }
 
-class _GamePreviewState extends State<_GamePreview> with SingleTickerProviderStateMixin {
+class _GamePreviewState extends State<_GamePreview>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _inAnimation;
   Timer? countdownTimer;
@@ -233,14 +234,15 @@ class _GamePreviewState extends State<_GamePreview> with SingleTickerProviderSta
 
   @override
   void initState() {
-    _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+    _controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
     _inAnimation = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
 
     countdownTimer = Timer.periodic(Duration(milliseconds: 1000), (timer) {
-
       setState(() {
         previousScreenshotIndex = currentScreenshotIndex;
-        currentScreenshotIndex = (currentScreenshotIndex + 1) % widget.game.screenshots.length;
+        currentScreenshotIndex =
+            (currentScreenshotIndex + 1) % widget.game.screenshots.length;
         _controller.forward(from: 0);
       });
     });
@@ -255,10 +257,8 @@ class _GamePreviewState extends State<_GamePreview> with SingleTickerProviderSta
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return Container(
       width: 306 + 7,
       height: 312,
@@ -305,18 +305,19 @@ class _GamePreviewState extends State<_GamePreview> with SingleTickerProviderSta
                     padding: const EdgeInsets.symmetric(vertical: 5),
                     child: Stack(
                       children: [
-                        Image.asset(widget.game.screenshots[previousScreenshotIndex],
+                        Image.asset(
+                            widget.game.screenshots[previousScreenshotIndex],
                             height: 153,
                             width: double.infinity,
                             fit: BoxFit.fitWidth),
                         FadeTransition(
                           opacity: _inAnimation,
-                          child: Image.asset(widget.game.screenshots[currentScreenshotIndex],
+                          child: Image.asset(
+                              widget.game.screenshots[currentScreenshotIndex],
                               height: 153,
                               width: double.infinity,
                               fit: BoxFit.fitWidth),
                         ),
-
                       ],
                     ),
                   ),
@@ -385,7 +386,8 @@ class _GamePreviewState extends State<_GamePreview> with SingleTickerProviderSta
               child: RotatedBox(
                   quarterTurns: -1,
                   child: CustomPaint(
-                    painter: TrianglePainter(const Color.fromRGBO(227, 234, 239, 1)),
+                    painter:
+                        TrianglePainter(const Color.fromRGBO(227, 234, 239, 1)),
                   )),
             ),
           ),
@@ -403,20 +405,36 @@ class FeaturedGame extends StatefulWidget {
   State<FeaturedGame> createState() => _FeaturedGameState();
 }
 
-class _FeaturedGameState extends State<FeaturedGame> {
+class _FeaturedGameState extends State<FeaturedGame>
+    with SingleTickerProviderStateMixin {
   int _selectedIndex = -1;
   bool _hovered = false;
+  late AnimationController _detailsAnimationController;
+  late CurvedAnimation _detailsAnimation;
+
+  @override
+  void initState() {
+    _detailsAnimationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+    _detailsAnimation = CurvedAnimation(
+        parent: _detailsAnimationController, curve: Curves.easeIn);
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
       onEnter: (_) {
         setState(() {
+          _detailsAnimationController.forward(from: 0);
           _hovered = true;
         });
       },
       onExit: (_) {
         setState(() {
           _hovered = false;
+          _detailsAnimationController.reverse(from: 100);
         });
       },
       child: OverflowBox(
@@ -447,8 +465,10 @@ class _FeaturedGameState extends State<FeaturedGame> {
                       children: [
                         _GameDetails(
                           game: widget.game,
-                          onMouseEnter: (i) => setState(() => _selectedIndex = i),
-                          onMouseExit: (i) => setState(() => _selectedIndex = -1),
+                          onMouseEnter: (i) =>
+                              setState(() => _selectedIndex = i),
+                          onMouseExit: (i) =>
+                              setState(() => _selectedIndex = -1),
                           selectedIndex: _selectedIndex,
                         )
                       ],
@@ -478,7 +498,11 @@ class _FeaturedGameState extends State<FeaturedGame> {
                   ],
                 ),
               ),
-              if (_hovered) Positioned( left: 940 - 3, child: _GamePreview(game: widget.game))
+              Positioned(
+                  left: 940 - 3,
+                  child: FadeTransition(
+                      opacity: _detailsAnimation,
+                      child: _GamePreview(game: widget.game)))
             ],
           ),
         ),
