@@ -101,6 +101,42 @@ class StoreNavbar extends StatelessWidget {
                         blurRadius: 0,
                         spreadRadius: 0)
                   ]),
+              child: Row(
+                children: [
+                  Expanded(child: Container()),
+                  Container(
+                    width: 26,
+                    height: 26,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color(0xff8ed4fc),
+                            Color(0xff68c2f5),
+                          ]),
+                      color: Colors.red,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(2),
+                      ),
+                    ),
+                    child: Center(
+                      child: Container(
+                        width: 24,
+                        height: 24,
+                        decoration: BoxDecoration(
+                          color: Color(0xff68c2f5),
+                          borderRadius: BorderRadius.all(Radius.circular(2)),
+                        ),
+                        child: Icon(
+                          Icons.search,
+                          color: Color(0xff2a3e5a),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
             SizedBox(
               width: 3,
