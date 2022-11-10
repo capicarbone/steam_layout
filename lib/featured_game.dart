@@ -406,11 +406,14 @@ class FeaturedGame extends StatefulWidget {
 }
 
 class _FeaturedGameState extends State<FeaturedGame>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   int _selectedIndex = -1;
-  bool _hovered = false;
+  int _previousSelectedIndex = -1;
+  // bool _hovered = false;
   late AnimationController _detailsAnimationController;
+  late AnimationController _screenshotsAnimationController;
   late CurvedAnimation _detailsAnimation;
+  late CurvedAnimation _screenshotsAnimation;
 
   @override
   void initState() {
@@ -419,7 +422,18 @@ class _FeaturedGameState extends State<FeaturedGame>
     _detailsAnimation = CurvedAnimation(
         parent: _detailsAnimationController, curve: Curves.easeIn);
 
+    _screenshotsAnimationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+    _screenshotsAnimation = CurvedAnimation(
+        parent: _screenshotsAnimationController, curve: Curves.easeIn);
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _detailsAnimationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -428,12 +442,12 @@ class _FeaturedGameState extends State<FeaturedGame>
       onEnter: (_) {
         setState(() {
           _detailsAnimationController.forward(from: 0);
-          _hovered = true;
+          // _hovered = true;
         });
       },
       onExit: (_) {
         setState(() {
-          _hovered = false;
+          // _hovered = false;
           _detailsAnimationController.reverse(from: 100);
         });
       },
@@ -465,10 +479,21 @@ class _FeaturedGameState extends State<FeaturedGame>
                       children: [
                         _GameDetails(
                           game: widget.game,
-                          onMouseEnter: (i) =>
-                              setState(() => _selectedIndex = i),
-                          onMouseExit: (i) =>
-                              setState(() => _selectedIndex = -1),
+                          onMouseEnter: (i) {
+                            setState(() {
+                              _previousSelectedIndex = _selectedIndex;
+                              _selectedIndex = i;
+                              _screenshotsAnimationController.forward(from: 0);
+                            });
+                          },
+                          onMouseExit: (i) {
+                            setState(() {
+                              _previousSelectedIndex = _selectedIndex;
+                              _selectedIndex = -1;
+                              _screenshotsAnimationController.forward(from: 0);
+
+                            });
+                          },
                           selectedIndex: _selectedIndex,
                         )
                       ],
@@ -486,11 +511,29 @@ class _FeaturedGameState extends State<FeaturedGame>
                                 blurRadius: 10,
                                 spreadRadius: 5)
                           ]),
-                          child: Image.asset(
-                            _selectedIndex == -1
-                                ? widget.game.horizontalCapsuleAsset
-                                : widget.game.screenshots[_selectedIndex],
-                            fit: BoxFit.fitWidth,
+                          child: Stack(
+                            children: [
+                              Image.asset(
+                                _previousSelectedIndex == -1
+                                    ? widget.game.horizontalCapsuleAsset
+                                    : widget.game
+                                        .screenshots[_previousSelectedIndex],
+                                fit: BoxFit.fitHeight,
+                                width: 616,
+                                height: 353,
+                              ),
+                              FadeTransition(
+                                opacity: _screenshotsAnimation,
+                                child: Image.asset(
+                                  _selectedIndex == -1
+                                      ? widget.game.horizontalCapsuleAsset
+                                      : widget.game.screenshots[_selectedIndex],
+                                  fit: BoxFit.fitHeight,
+                                  width: 616,
+                                  height: 353,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
