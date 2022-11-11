@@ -267,7 +267,7 @@ class MyHomePage extends StatelessWidget {
               children: [
                 Container(
                   width: double.infinity,
-                  color: Color(0xff384582),
+                  color: Color(0xff394784),
                   child: Center(
                     child: Container(
                       height: 450,

@@ -31,18 +31,18 @@ class Game {
   // String usersReview;
 
   String get horizontalCapsuleAsset =>
-      "games/$assetsFolder/capsule_616x353.jpg";
+      "images/games/$assetsFolder/capsule_616x353.jpg";
   String get horizontalSmallCapsuleAsset =>
-      "games/$assetsFolder/capsule_231x87.jpg";
-  String get verticalCapsuleAsset => "games/$assetsFolder/hero_capsule.jpg";
+      "images/games/$assetsFolder/capsule_231x87.jpg";
+  String get verticalCapsuleAsset => "images/games/$assetsFolder/hero_capsule.jpg";
   List<String> get screenshots => [
-        "games/$assetsFolder/screenshot1.jpg",
-        "games/$assetsFolder/screenshot2.jpg",
-        "games/$assetsFolder/screenshot3.jpg",
-        "games/$assetsFolder/screenshot4.jpg",
+        "images/games/$assetsFolder/screenshot1.jpg",
+        "images/games/$assetsFolder/screenshot2.jpg",
+        "images/games/$assetsFolder/screenshot3.jpg",
+        "images/games/$assetsFolder/screenshot4.jpg",
       ];
 
-  String get streamingScreenshot => "games/$assetsFolder/streaming.jpg";
+  String get streamingScreenshot => "images/games/$assetsFolder/streaming.jpg";
 
   Game(
       {required this.name,

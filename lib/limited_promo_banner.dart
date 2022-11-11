@@ -13,7 +13,7 @@ class _LimitedPromoBannerState extends State<LimitedPromoBanner> {
 
   @override
   void initState() {
-    _controller = VideoPlayerController.asset("webm_page_bg_english.webm")
+    _controller = VideoPlayerController.asset("videos/webm_page_bg_english.webm")
       ..initialize().then((value) {
         _controller.setLooping(true);
         _controller.setVolume(0);
