@@ -5,6 +5,7 @@ import 'package:steam_flutter_layout/app_colors.dart';
 import 'package:steam_flutter_layout/data/games_provider.dart';
 import 'package:steam_flutter_layout/featured_game.dart';
 import 'package:steam_flutter_layout/games_sample.dart';
+import 'package:steam_flutter_layout/github_badge.dart';
 import 'package:steam_flutter_layout/lateral_menu.dart';
 import 'package:steam_flutter_layout/limited_promo_banner.dart';
 import 'package:steam_flutter_layout/offers_banner.dart';
@@ -252,548 +253,550 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        color: Color(0xff1b2838),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SectionContainer(
-              child: Header(),
-              height: 104,
-              color: Color(0xff171a21),
-            ),
-            Stack(
-              children: [
-                Container(
-                  width: double.infinity,
-                  color: Color(0xff394784),
-                  child: Center(
-                    child: Container(
-                      height: 450,
-                      child: LimitedPromoBanner(),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 31),
-                  child: SectionContainer(child: StoreNavbar()),
-                ),
-              ],
-            ),
-            SectionContainer(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 42,
-                  ),
-                  ContentPadding(
-                      child: SectionTitle(title: "Featured & Recommended")),
-                  SteamPager(
-                    contentHeight: 353,
-                    automatic: true,
-                    pages: GamesProvider.getMany(10)
-                        .map((e) => FeaturedGame(game: e))
-                        .toList(),
-                  ),
-                  SizedBox(
-                    height: 46,
-                  ),
-                  ContentPadding(
-                      child: SectionTitle(
-                    title: "Special Offers",
-                    links: ['Browse More'],
-                  )),
-                  SteamPager(
-                    contentHeight: 390,
-                    pages: [
-                      OffersBanner(
-                        games: GamesProvider.getMany(4, hasOffer: true),
-                      ),
-                      OffersBanner(
-                        games: GamesProvider.getMany(4, hasOffer: true),
-                      ),
-                      OffersBanner(
-                        games: GamesProvider.getMany(4, hasOffer: true),
-                      ),
-                      OffersBanner(
-                        games: GamesProvider.getMany(4, hasOffer: true),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 76,
-                  ),
-                  ContentPadding(
-                      child: Container(
-                          width: double.infinity,
-                          color: Colors.black.withOpacity(0.2),
-                          child: _SignInSection())),
-                  SizedBox(
-                    height: 76,
-                  ),
-                  ContentPadding(child: SectionTitle(title: "Browser Steam")),
-                  ContentPadding(
-                      child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ...[
-                        "New Releases",
-                        "Specials",
-                        "Free Games",
-                        "By user Tags"
-                      ]
-                          .map((e) => Container(
-                                width: 228,
-                                child: _BluePanel(
-                                  text: e,
-                                ),
-                              ))
-                          .toList()
-                    ],
-                  )),
-                  SizedBox(
-                    height: 38,
-                  ),
-                  ContentPadding(
-                      child: SectionTitle(
-                    title: "Popular VR Games",
-                    links: ['Browse All'],
-                  )),
-                  SteamPager(
-                    pages: List<Widget>.generate(
-                        7,
-                        (index) => Container(
-                              child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: GamesProvider.getMany(4)
-                                      .map(
-                                        (e) => Container(
-                                            width: 229,
-                                            height: 134,
-                                            child: SimpleGameCard(
-                                              game: e,
-                                            )),
-                                      )
-                                      .toList()),
-                            )),
-                    contentHeight: 134,
-                  ),
-                  SizedBox(
-                    height: 51,
-                  ),
-                ],
+    return GithubBadge(
+      child: SingleChildScrollView(
+        child: Container(
+          color: Color(0xff1b2838),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SectionContainer(
+                child: Header(),
+                height: 104,
+                color: Color(0xff171a21),
               ),
-              leftChild: LateralMenu(),
-            ),
-            SectionContainer(
-                color: Color(0xff1b2838),
-                child: ContentPadding(
-                  child: Row(
-                    children: [
-                      _SectionTab(text: "New & Trading", selected: true),
-                      _SectionTab(text: "Top Sellers", selected: false),
-                      _SectionTab(text: "Popular Upcoming", selected: false),
-                      _SectionTab(text: "Specials", selected: false),
-                    ],
-                  ),
-                )),
-            SectionContainer(
-              gradient: LinearGradient(colors: [
-                Color.fromRGBO(42, 71, 94, 1),
-                Color.fromRGBO(42, 71, 94, 0)
-              ], stops: [
-                0.05,
-                0.7
-              ], begin: Alignment.topLeft, end: Alignment.bottomLeft),
-              child: ContentPadding(child: GamesSample()),
-            ),
-            SizedBox(
-              height: 62,
-            ),
-            SectionContainer(
-              child: Column(
-                children: [
-                  ContentPadding(
-                    child: SectionTitle(
-                      title: "Games Streaming Now",
-                      links: ["View All"],
-                    ),
-                  ),
-                  ContentPadding(
-                      child: StreamsGrid(
-                    games: GamesProvider.getMany(6, hasStreaming: true),
-                  ))
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 64,
-            ),
-            SectionContainer(
-                child: Column(
-              children: [
-                ContentPadding(child: SectionTitle(title: "Under \$10 USD")),
-                SteamPager(
-                  pages: List<Widget>.generate(
-                    4,
-                    (index) => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: GamesProvider.getMany(4)
-                            .map(
-                              (e) => Container(
-                                  width: 229,
-                                  height: 134,
-                                  child: SimpleGameCard(
-                                    game: e,
-                                  )),
-                            )
-                            .toList()),
-                  ),
-                  contentHeight: 134,
-                )
-              ],
-            )),
-            SizedBox(
-              height: 78,
-            ),
-            SectionContainer(
-                child: Column(
-              children: [
-                ContentPadding(
-                    child: SectionTitle(title: "Updates and Offers")),
-                ContentPadding(child: Builder(builder: (context) {
-                  var games = GamesProvider.getMany(7);
-                  return UpdatesAndOffers(
-                    featuredGame: games[0],
-                    games: games.sublist(1, 7),
-                  );
-                })),
-              ],
-            )),
-            SizedBox(
-              height: 50,
-            ),
-            SectionContainer(
-                color: Color(0xff000000),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 32,
-                    ),
-                    Text(
-                      "Looking for recommendations?",
-                      style: Theme.of(context)
-                          .textTheme
-                          .displayMedium!
-                          .copyWith(color: Color(0xff67c1f5), fontSize: 24),
-                    ),
-                    _SignInSection()
-                  ],
-                )),
-            SectionContainer(
-              // height: 156,
-              color: Color(0xff171a21),
-              child: Column(
+              Stack(
                 children: [
                   Container(
-                    decoration: BoxDecoration(
-                        border: Border(
-                            bottom: BorderSide(
-                                color: Color(0xffc6d4df), width: 0.5))),
-                    height: 32,
+                    width: double.infinity,
+                    color: Color(0xff394784),
+                    child: Center(
+                      child: Container(
+                        height: 450,
+                        child: LimitedPromoBanner(),
+                      ),
+                    ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 10, bottom: 15),
-                    child: Row(
-                      children: [
-                        Padding(
-                            padding: const EdgeInsets.only(right: 12),
-                            child: Image.asset(
-                              "images/footerLogo_valve_new.png",
-                              height: 25,
-                              width: 88,
-                            )),
-                        Expanded(
-                            child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "© 2022 Valve Corporation.  All rights reserved.  All trademarks are property of their respective owners in the US and other countries.",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                      color: Color(0xff8F98A0), fontSize: 13),
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "VAT included in all prices where applicable.",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .copyWith(
-                                          color: Color(0xff8F98A0),
-                                          fontSize: 13),
-                                ),
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 10),
-                                      child: Text(
-                                        "Privacy Policy",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .copyWith(
-                                                color: Color(0xFFC6D4DF),
-                                                fontSize: 12),
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 12,
-                                      width: 1,
-                                      color: Color(0xFF8F98A0),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 10),
-                                      child: Text(
-                                        "Legal",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .copyWith(
-                                                color: Color(0xFFC6D4DF),
-                                                fontSize: 12),
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 12,
-                                      width: 1,
-                                      color: Color(0xFF8F98A0),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 10),
-                                      child: Text(
-                                        "Steam Subscriber Agreement",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .copyWith(
-                                                color: Color(0xFFC6D4DF),
-                                                fontSize: 12),
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 12,
-                                      width: 1,
-                                      color: Color(0xFF8F98A0),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 10),
-                                      child: Text(
-                                        "Refunds",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .copyWith(
-                                                color: Color(0xFFC6D4DF),
-                                                fontSize: 12),
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 12,
-                                      width: 1,
-                                      color: Color(0xFF8F98A0),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 10),
-                                      child: Text(
-                                        "Cookies",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium!
-                                            .copyWith(
-                                                color: Color(0xFFC6D4DF),
-                                                fontSize: 12),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ],
-                        )),
-                        Image.asset("images/logo_steam_footer.png")
-                      ],
-                    ),
+                    padding: const EdgeInsets.only(top: 31),
+                    child: SectionContainer(child: StoreNavbar()),
                   ),
-                  Container(
-                    height: 20,
-                    decoration: BoxDecoration(
-                        border: Border(
-                            top: BorderSide(
-                                color: Color(0xffc6d4df), width: 0.5))),
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          "About Valve",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
-                        ),
-                      ),
-                      Container(
-                        height: 12,
-                        width: 1,
-                        color: Color(0xFF8F98A0),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          "Jobs",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
-                        ),
-                      ),
-                      Container(
-                        height: 12,
-                        width: 1,
-                        color: Color(0xFF8F98A0),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          "Steamworks",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
-                        ),
-                      ),
-                      Container(
-                        height: 12,
-                        width: 1,
-                        color: Color(0xFF8F98A0),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          "Steam Distribution",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
-                        ),
-                      ),
-                      Container(
-                        height: 12,
-                        width: 1,
-                        color: Color(0xFF8F98A0),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          "Support",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
-                        ),
-                      ),
-                      Container(
-                        height: 12,
-                        width: 1,
-                        color: Color(0xFF8F98A0),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          "Gift Cards",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
-                        ),
-                      ),
-                      Container(
-                        height: 12,
-                        width: 1,
-                        color: Color(0xFF8F98A0),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 14,
-                              height: 14,
-                              child: Image.asset("images/ico_facebook.gif"),
-                              margin: EdgeInsets.only(right: 4),
-                            ),
-                            Text(
-                              "@Steam",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                      color: Color(0xFFC6D4DF), fontSize: 13),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        height: 12,
-                        width: 1,
-                        color: Color(0xFF8F98A0),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 14,
-                              height: 14,
-                              child: Image.asset("images/ico_twitter.gif"),
-                              margin: EdgeInsets.only(right: 4),
-                            ),
-                            Text(
-                              "@Steam",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                      color: Color(0xFFC6D4DF), fontSize: 13),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 32,
-                  )
                 ],
               ),
-            ),
-          ],
+              SectionContainer(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 42,
+                    ),
+                    ContentPadding(
+                        child: SectionTitle(title: "Featured & Recommended")),
+                    SteamPager(
+                      contentHeight: 353,
+                      automatic: true,
+                      pages: GamesProvider.getMany(10)
+                          .map((e) => FeaturedGame(game: e))
+                          .toList(),
+                    ),
+                    SizedBox(
+                      height: 46,
+                    ),
+                    ContentPadding(
+                        child: SectionTitle(
+                      title: "Special Offers",
+                      links: ['Browse More'],
+                    )),
+                    SteamPager(
+                      contentHeight: 390,
+                      pages: [
+                        OffersBanner(
+                          games: GamesProvider.getMany(4, hasOffer: true),
+                        ),
+                        OffersBanner(
+                          games: GamesProvider.getMany(4, hasOffer: true),
+                        ),
+                        OffersBanner(
+                          games: GamesProvider.getMany(4, hasOffer: true),
+                        ),
+                        OffersBanner(
+                          games: GamesProvider.getMany(4, hasOffer: true),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 76,
+                    ),
+                    ContentPadding(
+                        child: Container(
+                            width: double.infinity,
+                            color: Colors.black.withOpacity(0.2),
+                            child: _SignInSection())),
+                    SizedBox(
+                      height: 76,
+                    ),
+                    ContentPadding(child: SectionTitle(title: "Browser Steam")),
+                    ContentPadding(
+                        child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ...[
+                          "New Releases",
+                          "Specials",
+                          "Free Games",
+                          "By user Tags"
+                        ]
+                            .map((e) => Container(
+                                  width: 228,
+                                  child: _BluePanel(
+                                    text: e,
+                                  ),
+                                ))
+                            .toList()
+                      ],
+                    )),
+                    SizedBox(
+                      height: 38,
+                    ),
+                    ContentPadding(
+                        child: SectionTitle(
+                      title: "Popular VR Games",
+                      links: ['Browse All'],
+                    )),
+                    SteamPager(
+                      pages: List<Widget>.generate(
+                          7,
+                          (index) => Container(
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: GamesProvider.getMany(4)
+                                        .map(
+                                          (e) => Container(
+                                              width: 229,
+                                              height: 134,
+                                              child: SimpleGameCard(
+                                                game: e,
+                                              )),
+                                        )
+                                        .toList()),
+                              )),
+                      contentHeight: 134,
+                    ),
+                    SizedBox(
+                      height: 51,
+                    ),
+                  ],
+                ),
+                leftChild: LateralMenu(),
+              ),
+              SectionContainer(
+                  color: Color(0xff1b2838),
+                  child: ContentPadding(
+                    child: Row(
+                      children: [
+                        _SectionTab(text: "New & Trading", selected: true),
+                        _SectionTab(text: "Top Sellers", selected: false),
+                        _SectionTab(text: "Popular Upcoming", selected: false),
+                        _SectionTab(text: "Specials", selected: false),
+                      ],
+                    ),
+                  )),
+              SectionContainer(
+                gradient: LinearGradient(colors: [
+                  Color.fromRGBO(42, 71, 94, 1),
+                  Color.fromRGBO(42, 71, 94, 0)
+                ], stops: [
+                  0.05,
+                  0.7
+                ], begin: Alignment.topLeft, end: Alignment.bottomLeft),
+                child: ContentPadding(child: GamesSample()),
+              ),
+              SizedBox(
+                height: 62,
+              ),
+              SectionContainer(
+                child: Column(
+                  children: [
+                    ContentPadding(
+                      child: SectionTitle(
+                        title: "Games Streaming Now",
+                        links: ["View All"],
+                      ),
+                    ),
+                    ContentPadding(
+                        child: StreamsGrid(
+                      games: GamesProvider.getMany(6, hasStreaming: true),
+                    ))
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 64,
+              ),
+              SectionContainer(
+                  child: Column(
+                children: [
+                  ContentPadding(child: SectionTitle(title: "Under \$10 USD")),
+                  SteamPager(
+                    pages: List<Widget>.generate(
+                      4,
+                      (index) => Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: GamesProvider.getMany(4)
+                              .map(
+                                (e) => Container(
+                                    width: 229,
+                                    height: 134,
+                                    child: SimpleGameCard(
+                                      game: e,
+                                    )),
+                              )
+                              .toList()),
+                    ),
+                    contentHeight: 134,
+                  )
+                ],
+              )),
+              SizedBox(
+                height: 78,
+              ),
+              SectionContainer(
+                  child: Column(
+                children: [
+                  ContentPadding(
+                      child: SectionTitle(title: "Updates and Offers")),
+                  ContentPadding(child: Builder(builder: (context) {
+                    var games = GamesProvider.getMany(7);
+                    return UpdatesAndOffers(
+                      featuredGame: games[0],
+                      games: games.sublist(1, 7),
+                    );
+                  })),
+                ],
+              )),
+              SizedBox(
+                height: 50,
+              ),
+              SectionContainer(
+                  color: Color(0xff000000),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 32,
+                      ),
+                      Text(
+                        "Looking for recommendations?",
+                        style: Theme.of(context)
+                            .textTheme
+                            .displayMedium!
+                            .copyWith(color: Color(0xff67c1f5), fontSize: 24),
+                      ),
+                      _SignInSection()
+                    ],
+                  )),
+              SectionContainer(
+                // height: 156,
+                color: Color(0xff171a21),
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(
+                                  color: Color(0xffc6d4df), width: 0.5))),
+                      height: 32,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 10, bottom: 15),
+                      child: Row(
+                        children: [
+                          Padding(
+                              padding: const EdgeInsets.only(right: 12),
+                              child: Image.asset(
+                                "images/footerLogo_valve_new.png",
+                                height: 25,
+                                width: 88,
+                              )),
+                          Expanded(
+                              child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "© 2022 Valve Corporation.  All rights reserved.  All trademarks are property of their respective owners in the US and other countries.",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                        color: Color(0xff8F98A0), fontSize: 13),
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "VAT included in all prices where applicable.",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                            color: Color(0xff8F98A0),
+                                            fontSize: 13),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 10),
+                                        child: Text(
+                                          "Privacy Policy",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                  color: Color(0xFFC6D4DF),
+                                                  fontSize: 12),
+                                        ),
+                                      ),
+                                      Container(
+                                        height: 12,
+                                        width: 1,
+                                        color: Color(0xFF8F98A0),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 10),
+                                        child: Text(
+                                          "Legal",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                  color: Color(0xFFC6D4DF),
+                                                  fontSize: 12),
+                                        ),
+                                      ),
+                                      Container(
+                                        height: 12,
+                                        width: 1,
+                                        color: Color(0xFF8F98A0),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 10),
+                                        child: Text(
+                                          "Steam Subscriber Agreement",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                  color: Color(0xFFC6D4DF),
+                                                  fontSize: 12),
+                                        ),
+                                      ),
+                                      Container(
+                                        height: 12,
+                                        width: 1,
+                                        color: Color(0xFF8F98A0),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 10),
+                                        child: Text(
+                                          "Refunds",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                  color: Color(0xFFC6D4DF),
+                                                  fontSize: 12),
+                                        ),
+                                      ),
+                                      Container(
+                                        height: 12,
+                                        width: 1,
+                                        color: Color(0xFF8F98A0),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 10),
+                                        child: Text(
+                                          "Cookies",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                  color: Color(0xFFC6D4DF),
+                                                  fontSize: 12),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ],
+                          )),
+                          Image.asset("images/logo_steam_footer.png")
+                        ],
+                      ),
+                    ),
+                    Container(
+                      height: 20,
+                      decoration: BoxDecoration(
+                          border: Border(
+                              top: BorderSide(
+                                  color: Color(0xffc6d4df), width: 0.5))),
+                    ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(
+                            "About Valve",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
+                          ),
+                        ),
+                        Container(
+                          height: 12,
+                          width: 1,
+                          color: Color(0xFF8F98A0),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(
+                            "Jobs",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
+                          ),
+                        ),
+                        Container(
+                          height: 12,
+                          width: 1,
+                          color: Color(0xFF8F98A0),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(
+                            "Steamworks",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
+                          ),
+                        ),
+                        Container(
+                          height: 12,
+                          width: 1,
+                          color: Color(0xFF8F98A0),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(
+                            "Steam Distribution",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
+                          ),
+                        ),
+                        Container(
+                          height: 12,
+                          width: 1,
+                          color: Color(0xFF8F98A0),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(
+                            "Support",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
+                          ),
+                        ),
+                        Container(
+                          height: 12,
+                          width: 1,
+                          color: Color(0xFF8F98A0),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Text(
+                            "Gift Cards",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
+                          ),
+                        ),
+                        Container(
+                          height: 12,
+                          width: 1,
+                          color: Color(0xFF8F98A0),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 14,
+                                height: 14,
+                                child: Image.asset("images/ico_facebook.gif"),
+                                margin: EdgeInsets.only(right: 4),
+                              ),
+                              Text(
+                                "@Steam",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                        color: Color(0xFFC6D4DF), fontSize: 13),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: 12,
+                          width: 1,
+                          color: Color(0xFF8F98A0),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 14,
+                                height: 14,
+                                child: Image.asset("images/ico_twitter.gif"),
+                                margin: EdgeInsets.only(right: 4),
+                              ),
+                              Text(
+                                "@Steam",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                        color: Color(0xFFC6D4DF), fontSize: 13),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 32,
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
