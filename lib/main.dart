@@ -199,6 +199,36 @@ class _SignInSection extends StatelessWidget {
   }
 }
 
+class _BluePanel extends StatelessWidget {
+  final String text;
+  const _BluePanel({Key? key, required this.text}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 58,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Color(0xff06BFFF),
+            Color(0xff2D73FF),
+          ]
+        ),
+
+          borderRadius: BorderRadius.circular(3),
+          boxShadow: <BoxShadow>[
+            BoxShadow(color: Colors.black, offset: Offset(0, 0), blurRadius: 4)
+          ]),
+      child: Center(
+          child: Text(
+        text.toUpperCase(),
+        style: Theme.of(context).textTheme.displayMedium!.copyWith(
+            fontSize: 16, color: Colors.white, fontWeight: FontWeight.w600),
+      )),
+    );
+  }
+}
+
 class _SectionTab extends StatelessWidget {
   final String text;
   final bool selected;
@@ -230,11 +260,8 @@ class _SectionTab extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
-
-
     var categoriesColors = [
       Color.fromARGB(255, 0, 0, 139),
       Color.fromARGB(255, 139, 0, 0),
@@ -317,6 +344,36 @@ class MyHomePage extends StatelessWidget {
                       height: 76,
                     ),
                     ContentPadding(
+                        child: SectionTitle(
+                            title: "Browser By Category and More")),
+                    SteamPager(contentHeight: 223, pages: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ...[
+                            "Survival",
+                            "City & Settlement",
+                            "RAcing",
+                            "Aventure"
+                          ]
+                              .asMap()
+                              .entries
+                              .map((e) => Container(
+                                    width: 228,
+                                    child: GameCategoryPanel(
+                                      text: e.value,
+                                      games: GamesProvider.getMany(6),
+                                      color: categoriesColors[e.key],
+                                    ),
+                                  ))
+                              .toList()
+                        ],
+                      )
+                    ]),
+                    SizedBox(
+                      height: 76,
+                    ),
+                    ContentPadding(
                         child: Container(
                             width: double.infinity,
                             color: Colors.black.withOpacity(0.2),
@@ -324,23 +381,21 @@ class MyHomePage extends StatelessWidget {
                     SizedBox(
                       height: 76,
                     ),
-                    ContentPadding(child: SectionTitle(title: "Browser By Category and More")),
+                    ContentPadding(child: SectionTitle(title: "Browser Steam")),
                     ContentPadding(
                         child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         ...[
-                          "Survival",
-                          "City & Settlement",
-                          "RAcing",
-                          "Aventure"
+                          "New Releases",
+                          "Specials",
+                          "Free Games",
+                          "By user Tags"
                         ]
-                            .asMap().entries.map((e) => Container(
+                            .map((e) => Container(
                                   width: 228,
-                                  child: GameCategoryPanel(
-                                    text: e.value,
-                                    games: GamesProvider.getMany(6),
-                                    color: categoriesColors[e.key],
+                                  child: _BluePanel(
+                                    text: e,
                                   ),
                                 ))
                             .toList()

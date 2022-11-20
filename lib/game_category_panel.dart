@@ -49,7 +49,7 @@ class GameCategoryPanel extends StatelessWidget {
               Transform(
                 alignment: Alignment.center,
                 transform: Matrix4.identity()
-                  ..rotateZ(30 * -math.pi / 180)
+                  ..rotateZ(32 * -math.pi / 180)
                   ..setEntry(3, 0, 0.0005)
                   ..setEntry(3, 1, -0.0015)
                   ..setTranslationRaw(-60, -80, 0),
