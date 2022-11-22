@@ -518,7 +518,7 @@ class _FeaturedGameState extends State<FeaturedGame>
                                 _previousSelectedIndex == -1
                                     ? widget.game.horizontalCapsuleAsset
                                     : widget.game
-                                        .screenshots[_previousSelectedIndex],
+                                        .screenshotsBigger[_previousSelectedIndex],
                                 fit: BoxFit.fitHeight,
                                 width: 616,
                                 height: 353,
@@ -528,7 +528,7 @@ class _FeaturedGameState extends State<FeaturedGame>
                                 child: Image.asset(
                                   _selectedIndex == -1
                                       ? widget.game.horizontalCapsuleAsset
-                                      : widget.game.screenshots[_selectedIndex],
+                                      : widget.game.screenshotsBigger[_selectedIndex],
                                   fit: BoxFit.fitHeight,
                                   width: 616,
                                   height: 353,

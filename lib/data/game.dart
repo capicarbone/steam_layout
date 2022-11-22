@@ -42,6 +42,13 @@ class Game {
         "images/games/$assetsFolder/screenshot4.jpg",
       ];
 
+  List<String> get screenshotsBigger => [
+        "images/games/$assetsFolder/screenshot1-bigger.jpg",
+        "images/games/$assetsFolder/screenshot2-bigger.jpg",
+        "images/games/$assetsFolder/screenshot3-bigger.jpg",
+        "images/games/$assetsFolder/screenshot4-bigger.jpg",
+      ];
+
   String get streamingScreenshot => "images/games/$assetsFolder/streaming.jpg";
 
   Game(
