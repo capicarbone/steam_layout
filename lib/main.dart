@@ -6,7 +6,6 @@ import 'package:steam_flutter_layout/app_colors.dart';
 import 'package:steam_flutter_layout/data/games_provider.dart';
 import 'package:steam_flutter_layout/featured_game.dart';
 import 'package:steam_flutter_layout/games_sample.dart';
-import 'package:steam_flutter_layout/github_badge.dart';
 import 'package:steam_flutter_layout/lateral_menu.dart';
 import 'package:steam_flutter_layout/limited_promo_banner.dart';
 import 'package:steam_flutter_layout/offers_banner.dart';
@@ -18,7 +17,6 @@ import 'package:steam_flutter_layout/streams_grid.dart';
 import 'package:steam_flutter_layout/updates_and_offers.dart';
 import 'package:steam_flutter_layout/utils.dart';
 
-import 'data/game.dart';
 import 'game_category_panel.dart';
 import 'header.dart';
 
@@ -33,7 +31,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Steam',
+      title: 'Welcome to Steam',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primarySwatch: Colors.blue,
@@ -340,8 +338,8 @@ class SteamHomePage extends StatelessWidget {
                     height: 76,
                   ),
                   ContentPadding(
-                      child: SectionTitle(
-                          title: "Browser By Category and More")),
+                      child:
+                          SectionTitle(title: "Browser By Category and More")),
                   SteamPager(contentHeight: 223, pages: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -587,8 +585,8 @@ class SteamHomePage extends StatelessWidget {
                                 Row(
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 10),
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 10),
                                       child: Text(
                                         "Privacy Policy",
                                         style: Theme.of(context)
@@ -605,8 +603,8 @@ class SteamHomePage extends StatelessWidget {
                                       color: Color(0xFF8F98A0),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 10),
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 10),
                                       child: Text(
                                         "Legal",
                                         style: Theme.of(context)
@@ -623,8 +621,8 @@ class SteamHomePage extends StatelessWidget {
                                       color: Color(0xFF8F98A0),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 10),
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 10),
                                       child: Text(
                                         "Steam Subscriber Agreement",
                                         style: Theme.of(context)
@@ -641,8 +639,8 @@ class SteamHomePage extends StatelessWidget {
                                       color: Color(0xFF8F98A0),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 10),
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 10),
                                       child: Text(
                                         "Refunds",
                                         style: Theme.of(context)
@@ -659,8 +657,8 @@ class SteamHomePage extends StatelessWidget {
                                       color: Color(0xFF8F98A0),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 10),
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 10),
                                       child: Text(
                                         "Cookies",
                                         style: Theme.of(context)
@@ -697,8 +695,7 @@ class SteamHomePage extends StatelessWidget {
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
-                              .copyWith(
-                                  color: Color(0xFFC6D4DF), fontSize: 13),
+                              .copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
                         ),
                       ),
                       Container(
@@ -713,8 +710,7 @@ class SteamHomePage extends StatelessWidget {
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
-                              .copyWith(
-                                  color: Color(0xFFC6D4DF), fontSize: 13),
+                              .copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
                         ),
                       ),
                       Container(
@@ -729,8 +725,7 @@ class SteamHomePage extends StatelessWidget {
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
-                              .copyWith(
-                                  color: Color(0xFFC6D4DF), fontSize: 13),
+                              .copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
                         ),
                       ),
                       Container(
@@ -745,8 +740,7 @@ class SteamHomePage extends StatelessWidget {
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
-                              .copyWith(
-                                  color: Color(0xFFC6D4DF), fontSize: 13),
+                              .copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
                         ),
                       ),
                       Container(
@@ -761,8 +755,7 @@ class SteamHomePage extends StatelessWidget {
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
-                              .copyWith(
-                                  color: Color(0xFFC6D4DF), fontSize: 13),
+                              .copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
                         ),
                       ),
                       Container(
@@ -777,8 +770,7 @@ class SteamHomePage extends StatelessWidget {
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium!
-                              .copyWith(
-                                  color: Color(0xFFC6D4DF), fontSize: 13),
+                              .copyWith(color: Color(0xFFC6D4DF), fontSize: 13),
                         ),
                       ),
                       Container(
